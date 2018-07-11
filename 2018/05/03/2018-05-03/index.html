@@ -111,14 +111,14 @@
 <meta property="og:site_name" content="趁早">
 <meta property="og:description" content="1. 在IDEA中使用jstl书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/public/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
-<meta property="og:image" content="http://yoursite.com/public/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png">
-<meta property="og:image" content="http://yoursite.com/2018/05/public/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png">
-<meta property="og:updated_time" content="2018-07-11T01:41:44.564Z">
+<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
+<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png">
+<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png">
+<meta property="og:updated_time" content="2018-07-11T02:00:16.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用IDEA学习SPRING时的问题">
 <meta name="twitter:description" content="1. 在IDEA中使用jstl书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri">
-<meta name="twitter:image" content="http://yoursite.com/public/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
 
 
 
@@ -339,7 +339,7 @@
 
       
         <h3 id="1-在IDEA中使用jstl"><a href="#1-在IDEA中使用jstl" class="headerlink" title="1. 在IDEA中使用jstl"></a>1. 在IDEA中使用jstl</h3><p>书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri<br><a id="more"></a></p>
-<h4 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h4><p>手动下载jstl，然后在IDEA的设置中找到<img src="/public/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png" alt="enter description here"><br>在External Schemas and DTDs中添加，输入jstl的uri和刚刚下载文件中的tld中的c.tld，如下图：<br><img src="/public/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png" alt="enter description here"></p>
+<h4 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h4><p>手动下载jstl，然后在IDEA的设置中找到<img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png" alt="enter description here"><br>在External Schemas and DTDs中添加，输入jstl的uri和刚刚下载文件中的tld中的c.tld，如下图：<br><img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png" alt="enter description here"></p>
 <h4 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h4><p>使用Maven构建项目时，直接导入需要的标签依赖</p>
 <pre><code>&lt;dependency&gt;
    &lt;groupId&gt;taglibs&lt;/groupId&gt;
@@ -351,7 +351,7 @@
    &lt;artifactId&gt;jstl&lt;/artifactId&gt;
    &lt;version&gt;1.2&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre><h3 id="2-关于Spring中资源地址"><a href="#2-关于Spring中资源地址" class="headerlink" title="2. 关于Spring中资源地址"></a>2. 关于Spring中资源地址</h3><p>在使用Spring过程中，难免会要加载各种资源，一般会用到资源地址表达式，Spring支持classpath:，file:，<a href="http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：" target="_blank" rel="noopener">http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：</a><br><img src="../../public/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png" alt="enter description here"><br>在main下的java和resources都是classpath可以访问到的资源，因为这些文件在编译运行都会在target-&gt;classes中生成相应的内容.</p>
+</code></pre><h3 id="2-关于Spring中资源地址"><a href="#2-关于Spring中资源地址" class="headerlink" title="2. 关于Spring中资源地址"></a>2. 关于Spring中资源地址</h3><p>在使用Spring过程中，难免会要加载各种资源，一般会用到资源地址表达式，Spring支持classpath:，file:，<a href="http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：" target="_blank" rel="noopener">http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：</a><br><img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png" alt="enter description here"><br>在main下的java和resources都是classpath可以访问到的资源，因为这些文件在编译运行都会在target-&gt;classes中生成相应的内容.</p>
 
       
     </div>
