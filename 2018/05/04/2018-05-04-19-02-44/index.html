@@ -103,22 +103,22 @@
 
 
 
-<meta name="description" content="第二章 快速入门在第二章中，主要讲解了spring在项目中的一般应用，用到了spring+spring JDBC+spring MVC. 2.1 实例概述这个实例的功能如下：用户进行登录，登录成功提示相应的信息; 登录失败提示信息。实现如下图： 2.2 环境准备2.2.1 构建工具MavenMaven简单来说就是一个管理项目中所需要的包的工具，如果不用Maven，那么项目中需要的包都需要我们自己下">
+<meta name="description" content="第二章 快速入门在第二章中，主要讲解了Spring在项目中的一般应用，用到了Spring+Spring JDBC+Spring MVC.这里用的都是Spring提供的相关组件，所以DAO层用的这个.">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SPRING(2)">
 <meta property="og:url" content="http://yoursite.com/2018/05/04/2018-05-04-19-02-44/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="第二章 快速入门在第二章中，主要讲解了spring在项目中的一般应用，用到了spring+spring JDBC+spring MVC. 2.1 实例概述这个实例的功能如下：用户进行登录，登录成功提示相应的信息; 登录失败提示信息。实现如下图： 2.2 环境准备2.2.1 构建工具MavenMaven简单来说就是一个管理项目中所需要的包的工具，如果不用Maven，那么项目中需要的包都需要我们自己下">
+<meta property="og:description" content="第二章 快速入门在第二章中，主要讲解了Spring在项目中的一般应用，用到了Spring+Spring JDBC+Spring MVC.这里用的都是Spring提供的相关组件，所以DAO层用的这个.">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/2018-05-04/Screenshot-from-2018-05-03-11-45-10-300x90.png">
 <meta property="og:image" content="http://yoursite.com/images/2018-05-04/Screenshot-from-2018-05-03-11-46-55-300x110.png">
 <meta property="og:image" content="http://yoursite.com/images/2018-05-04/Screenshot-from-2018-05-03-13-08-13-300x76.png">
 <meta property="og:image" content="http://yoursite.com/images/2018-05-04/Screenshot-from-2018-05-03-13-20-58-183x300.png">
-<meta property="og:updated_time" content="2018-07-11T02:17:19.368Z">
+<meta property="og:updated_time" content="2018-07-11T02:25:16.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SPRING(2)">
-<meta name="twitter:description" content="第二章 快速入门在第二章中，主要讲解了spring在项目中的一般应用，用到了spring+spring JDBC+spring MVC. 2.1 实例概述这个实例的功能如下：用户进行登录，登录成功提示相应的信息; 登录失败提示信息。实现如下图： 2.2 环境准备2.2.1 构建工具MavenMaven简单来说就是一个管理项目中所需要的包的工具，如果不用Maven，那么项目中需要的包都需要我们自己下">
+<meta name="twitter:description" content="第二章 快速入门在第二章中，主要讲解了Spring在项目中的一般应用，用到了Spring+Spring JDBC+Spring MVC.这里用的都是Spring提供的相关组件，所以DAO层用的这个.">
 <meta name="twitter:image" content="http://yoursite.com/images/2018-05-04/Screenshot-from-2018-05-03-11-45-10-300x90.png">
 
 
@@ -339,7 +339,8 @@
       
 
       
-        <h2 id="第二章-快速入门"><a href="#第二章-快速入门" class="headerlink" title="第二章 快速入门"></a>第二章 快速入门</h2><p>在第二章中，主要讲解了spring在项目中的一般应用，用到了spring+spring JDBC+spring MVC.</p>
+        <h2 id="第二章-快速入门"><a href="#第二章-快速入门" class="headerlink" title="第二章 快速入门"></a>第二章 快速入门</h2><p>在第二章中，主要讲解了Spring在项目中的一般应用，用到了Spring+Spring JDBC+Spring MVC.这里用的都是Spring提供的相关组件，所以DAO层用的这个.</p>
+<a id="more"></a>
 <h3 id="2-1-实例概述"><a href="#2-1-实例概述" class="headerlink" title="2.1 实例概述"></a>2.1 实例概述</h3><p>这个实例的功能如下：用户进行登录，登录成功提示相应的信息; 登录失败提示信息。实现如下图：<br><img src="/images/2018-05-04/Screenshot-from-2018-05-03-11-45-10-300x90.png" alt="enter description here"><br><img src="/images/2018-05-04/Screenshot-from-2018-05-03-11-46-55-300x110.png" alt="enter description here"></p>
 <h3 id="2-2-环境准备"><a href="#2-2-环境准备" class="headerlink" title="2.2 环境准备"></a>2.2 环境准备</h3><h4 id="2-2-1-构建工具Maven"><a href="#2-2-1-构建工具Maven" class="headerlink" title="2.2.1 构建工具Maven"></a>2.2.1 构建工具Maven</h4><p>Maven简单来说就是一个管理项目中所需要的包的工具，如果不用Maven，那么项目中需要的包都需要我们自己下载然后放到项目中去，在自己一个人玩的时候没多大问题，但是在一个团队中，一个项目总是需要不止一个人吧，这时候成员在各自去下载需要的包，就可能会造成项目合并时用到的包的版本不一样什么的问题; 如果用Maven，那么成员就不需要去管理这些包了，通过一个配置文件，所有成员的包都统一了。(ps：以上只是我猜的，我并没有团队开发的经验，所以这也是我刚开始接触Maven)</p>
 <p>下载Maven包后，需要配置M2_HOME环境变量，当然使用maven的前提是安装了jdk</p>
@@ -357,9 +358,10 @@
 <p>也就是说，业务相关的操作需要在事务的环境下，这样操作更加安全。</p>
 <p>这里涉及到了AOP相关的知识，我还不是很了解，后边再深入学习。</p>
 <h4 id="2-4-3-单元测试"><a href="#2-4-3-单元测试" class="headerlink" title="2.4.3 单元测试"></a>2.4.3 单元测试</h4><p>这里测试用到的是TestNG，和JUnit在使用中不清楚有什么区别。要注意的是，在使用”assertXXX()”方法时，要引入 org.testng.Assert.*这个静态包，我在用的时候IDEA不会提示我引入，需要自己手动引入该静态包。</p>
-<h3 id="2-5-展现层"><a href="#2-5-展现层" class="headerlink" title="2.5 展现层"></a>2.5 展现层</h3><h4 id="2-5-1-配置Spring-MVC框架"><a href="#2-5-1-配置Spring-MVC框架" class="headerlink" title="2.5.1 配置Spring MVC框架"></a>2.5.1 配置Spring MVC框架</h4><p>这里会用到Spring MVC，首先要对web.xml文件进行配置，来启动spring容器。需要添加spring配置文件的地址;添加Spring MVC的地址映射，就是配置一个servlet</p>
+<h3 id="2-5-展现层"><a href="#2-5-展现层" class="headerlink" title="2.5 展现层"></a>2.5 展现层</h3><h4 id="2-5-1-配置Spring-MVC框架"><a href="#2-5-1-配置Spring-MVC框架" class="headerlink" title="2.5.1 配置Spring MVC框架"></a>2.5.1 配置Spring MVC框架</h4><p>这里会用到Spring MVC，首先要对web.xml文件进行配置，来启动Spring容器。需要添加Spring配置文件的地址;添加Spring MVC的地址映射，就是配置一个servlet</p>
 <h4 id="2-5-2-处理登录请求"><a href="#2-5-2-处理登录请求" class="headerlink" title="2.5.2 处理登录请求"></a>2.5.2 处理登录请求</h4><p>POJO控制器类，用来控制页面的跳转，需要在spring-mvc.xml文件中进行配置</p>
 <h4 id="2-5-3-JSP视图页面"><a href="#2-5-3-JSP视图页面" class="headerlink" title="2.5.3 JSP视图页面"></a>2.5.3 JSP视图页面</h4><p>写一个登录页面和成功页面.</p>
+<p>##Source code<br> <a href="https://github.com/Hero22/spring2" target="_blank" rel="noopener">https://github.com/Hero22/spring2</a></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>写的很简单，把大致的过程浏览了一遍，其中还有很多不懂的地方，比如说Spring容器，SpringMVC容器是什么东西，注解的应用等等，后面还要加油啊啊啊啊啊啊.</p>
 
       
@@ -400,6 +402,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/2018-05-05-10-17-29/" rel="prev" title="SPRING(3)">
+                SPRING(3) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -480,7 +486,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -493,7 +499,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

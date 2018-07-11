@@ -92,7 +92,7 @@
 
 
 
-  <meta name="keywords" content="IDEA," />
+  <meta name="keywords" content="Spring," />
 
 
 
@@ -103,22 +103,18 @@
 
 
 
-<meta name="description" content="1. 在IDEA中使用jstl书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri">
-<meta name="keywords" content="IDEA">
+<meta name="description" content="第四章 IoC容器4.1 概述4.1.1 Ioc概述IoC全程 Inverse of Control(控制反转)，是Spring容器的内核，AOP，声明式事务等功能就在此基础上进行扩展。">
+<meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用IDEA学习SPRING时的问题">
-<meta property="og:url" content="http://yoursite.com/2018/05/03/2018-05-03-08-51-10/index.html">
+<meta property="og:title" content="spirng(4)">
+<meta property="og:url" content="http://yoursite.com/2018/05/12/2018-05-12-10-33-42/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="1. 在IDEA中使用jstl书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri">
+<meta property="og:description" content="第四章 IoC容器4.1 概述4.1.1 Ioc概述IoC全程 Inverse of Control(控制反转)，是Spring容器的内核，AOP，声明式事务等功能就在此基础上进行扩展。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png">
-<meta property="og:updated_time" content="2018-07-11T02:15:02.118Z">
+<meta property="og:updated_time" content="2018-07-11T02:38:34.682Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用IDEA学习SPRING时的问题">
-<meta name="twitter:description" content="1. 在IDEA中使用jstl书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri">
-<meta name="twitter:image" content="http://yoursite.com/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png">
+<meta name="twitter:title" content="spirng(4)">
+<meta name="twitter:description" content="第四章 IoC容器4.1 概述4.1.1 Ioc概述IoC全程 Inverse of Control(控制反转)，是Spring容器的内核，AOP，声明式事务等功能就在此基础上进行扩展。">
 
 
 
@@ -148,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/03/2018-05-03-08-51-10/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/12/2018-05-12-10-33-42/"/>
 
 
 
 
 
-  <title>使用IDEA学习SPRING时的问题 | 趁早</title>
+  <title>spirng(4) | 趁早</title>
   
 
 
@@ -271,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/03/2018-05-03-08-51-10/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/12/2018-05-12-10-33-42/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -288,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用IDEA学习SPRING时的问题</h1>
+          <h1 class="post-title" itemprop="name headline">spirng(4)</h1>
         
 
         <div class="post-meta">
@@ -300,8 +296,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-03T08:51:10+08:00">
-                2018-05-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-12T10:33:42+08:00">
+                2018-05-12
               </time>
             
 
@@ -338,20 +334,28 @@
       
 
       
-        <h3 id="1-在IDEA中使用jstl"><a href="#1-在IDEA中使用jstl" class="headerlink" title="1. 在IDEA中使用jstl"></a>1. 在IDEA中使用jstl</h3><p>书中没有提到这一点，但是我在使用时确实有问题，IDEA无法识别jstl的那个uri<br><a id="more"></a></p>
-<h4 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h4><p>手动下载jstl，然后在IDEA的设置中找到<img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-52-28-300x128.png" alt="enter description here"><br>在External Schemas and DTDs中添加，输入jstl的uri和刚刚下载文件中的tld中的c.tld，如下图：<br><img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-52-50-300x40.png" alt="enter description here"></p>
-<h4 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h4><p>使用Maven构建项目时，直接导入需要的标签依赖</p>
-<pre><code>&lt;dependency&gt;
-   &lt;groupId&gt;taglibs&lt;/groupId&gt;
-   &lt;artifactId&gt;standard&lt;/artifactId&gt;
-   &lt;version&gt;1.1.2&lt;/version&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-   &lt;groupId&gt;jstl&lt;/groupId&gt;
-   &lt;artifactId&gt;jstl&lt;/artifactId&gt;
-   &lt;version&gt;1.2&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre><h3 id="2-关于Spring中资源地址"><a href="#2-关于Spring中资源地址" class="headerlink" title="2. 关于Spring中资源地址"></a>2. 关于Spring中资源地址</h3><p>在使用Spring过程中，难免会要加载各种资源，一般会用到资源地址表达式，Spring支持classpath:，file:，<a href="http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：" target="_blank" rel="noopener">http://ftp://，等，我在做实验时一般用到的是classpath:，但是对于这个路径到底在哪里却不是很清楚，我用的是IDEA，工程结构大概是这样的：</a><br><img src="/images/2018-05-03/Screenshot-from-2018-05-03-13-19-00-249x300.png" alt="enter description here"><br>在main下的java和resources都是classpath可以访问到的资源，因为这些文件在编译运行都会在target-&gt;classes中生成相应的内容.</p>
+        <h2 id="第四章-IoC容器"><a href="#第四章-IoC容器" class="headerlink" title="第四章 IoC容器"></a>第四章 IoC容器</h2><h3 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h3><h4 id="4-1-1-Ioc概述"><a href="#4-1-1-Ioc概述" class="headerlink" title="4.1.1 Ioc概述"></a>4.1.1 Ioc概述</h4><p>IoC全程 Inverse of Control(控制反转)，是Spring容器的内核，AOP，声明式事务等功能就在此基础上进行扩展。<br><a id="more"></a><br>其包括两方面的内容：</p>
+<p>一. 控制</p>
+<p>二. 反转</p>
+<p>对于我们编写代码来说，就是某一接口的具体实现类的选择控制权从调用类中移除，转交给第三方决定，即由Spring容器借由Bean配置来进行控制。</p>
+<h4 id="4-1-2-IoC的类型"><a href="#4-1-2-IoC的类型" class="headerlink" title="4.1.2 IoC的类型"></a>4.1.2 IoC的类型</h4><p>三种：构造函数注入，属性注入，接口注入，一般就用前两种</p>
+<h3 id="4-2-相关Java基础知识"><a href="#4-2-相关Java基础知识" class="headerlink" title="4.2. 相关Java基础知识"></a>4.2. 相关Java基础知识</h3><p>Bean配置文件的功能实现用到了java的反射机制。</p>
+<p>类加载器ClassLoader<br>类加载器：寻找类的字节码文件并构造出类在JVM内部表示对象的组件。</p>
+<p>在java中，一般分为三步：</p>
+<p>(1) 装载：查找和导入class文件</p>
+<p>(2) 链接：执行校验，准备和解析步骤</p>
+<p>校验：检查载入class文件数据的正确性</p>
+<p>准备：给类的静态变量分配存储空间</p>
+<p>解析：将符号引用转换成直接引用</p>
+<p>(3) 初始化：对类的静态变量，静态代码块执行初始化操作</p>
+<p>JVM的三个ClassLoader：根装载器，ExtClassLoader，AppClassLoader</p>
+<p>JVM装载类时使用“全盘负责委托机制”，“委托机制”是指先委托父装载器寻找目标类</p>
+<h3 id="4-3-资源访问利器"><a href="#4-3-资源访问利器" class="headerlink" title="4.3 资源访问利器"></a>4.3 资源访问利器</h3><h4 id="4-3-1-资源抽象接口"><a href="#4-3-1-资源抽象接口" class="headerlink" title="4.3.1 资源抽象接口"></a>4.3.1 资源抽象接口</h4><p>Spring设计了一个Resource接口，为应用提供更强的底层资源访问能力</p>
+<h5 id="4-3-2-资源加载"><a href="#4-3-2-资源加载" class="headerlink" title="4.3.2 资源加载"></a>4.3.2 资源加载</h5><p>为了避免加载不同的资源需要显示的使用不同的Resource实现类的麻烦，有了下边的</p>
+<p>（1） 资源地址表达式</p>
+<p>（2） 资源加载器</p>
+<h3 id="4-4-BeanFactory和ApplicationContext"><a href="#4-4-BeanFactory和ApplicationContext" class="headerlink" title="4.4 BeanFactory和ApplicationContext"></a>4.4 BeanFactory和ApplicationContext</h3><p>一般称BeanFactory为Ioc容器，称ApplicationContext为应用上下文或Spring容器</p>
+<h3 id="4-5-Bean的生命周期"><a href="#4-5-Bean的生命周期" class="headerlink" title="4.5 Bean的生命周期"></a>4.5 Bean的生命周期</h3><p>后边几点内容太多了，而且我并没有都理解，大多是介绍类继承体系等，这里就先不敲了。</p>
 
       
     </div>
@@ -369,7 +373,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/IDEA/" rel="tag"># IDEA</a>
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
         </div>
       
@@ -382,8 +386,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/02/2018-05-02-08-49-01/" rel="next" title="笔记本安装SSD, 并在SSD中安装系统">
-                <i class="fa fa-chevron-left"></i> 笔记本安装SSD, 并在SSD中安装系统
+              <a href="/2018/05/05/2018-05-05-10-17-29/" rel="next" title="SPRING(3)">
+                <i class="fa fa-chevron-left"></i> SPRING(3)
               </a>
             
           </div>
@@ -392,8 +396,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/04/2018-05-04-19-02-44/" rel="prev" title="SPRING(2)">
-                SPRING(2) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/21/2018-05-21-10-37-48/" rel="prev" title="LINUX下配置环境变量">
+                LINUX下配置环境变量 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -537,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在IDEA中使用jstl"><span class="nav-number">1.</span> <span class="nav-text">1. 在IDEA中使用jstl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案1"><span class="nav-number">1.1.</span> <span class="nav-text">方案1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方案2"><span class="nav-number">1.2.</span> <span class="nav-text">方案2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-关于Spring中资源地址"><span class="nav-number">2.</span> <span class="nav-text">2. 关于Spring中资源地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章-IoC容器"><span class="nav-number">1.</span> <span class="nav-text">第四章 IoC容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-概述"><span class="nav-number">1.1.</span> <span class="nav-text">4.1 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-Ioc概述"><span class="nav-number">1.1.1.</span> <span class="nav-text">4.1.1 Ioc概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-IoC的类型"><span class="nav-number">1.1.2.</span> <span class="nav-text">4.1.2 IoC的类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-相关Java基础知识"><span class="nav-number">1.2.</span> <span class="nav-text">4.2. 相关Java基础知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-资源访问利器"><span class="nav-number">1.3.</span> <span class="nav-text">4.3 资源访问利器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-资源抽象接口"><span class="nav-number">1.3.1.</span> <span class="nav-text">4.3.1 资源抽象接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-资源加载"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">4.3.2 资源加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-BeanFactory和ApplicationContext"><span class="nav-number">1.4.</span> <span class="nav-text">4.4 BeanFactory和ApplicationContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-Bean的生命周期"><span class="nav-number">1.5.</span> <span class="nav-text">4.5 Bean的生命周期</span></a></li></ol></li></ol></div>
             
 
           </div>
