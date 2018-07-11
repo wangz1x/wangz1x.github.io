@@ -103,21 +103,21 @@
 
 
 
-<meta name="description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令Step1. 首先根据关键字查找特定的文件及目录我这里用steam作示范，这样就能找到所有包含’steam’关键字的文件及目录 Step2. 在后边追加操作命令1)  追加命令格式为: -exec command {} \;在{}和\之间必须要有空格，否则会报错. 2)  xargs用于从 标准输入获得参数并且传递给后面的命令，这里">
+<meta name="description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令">
 <meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LINUX删除查找到的所有文件及目录">
 <meta property="og:url" content="http://yoursite.com/2018/07/08/2018-07-08-11-37-13/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令Step1. 首先根据关键字查找特定的文件及目录我这里用steam作示范，这样就能找到所有包含’steam’关键字的文件及目录 Step2. 在后边追加操作命令1)  追加命令格式为: -exec command {} \;在{}和\之间必须要有空格，否则会报错. 2)  xargs用于从 标准输入获得参数并且传递给后面的命令，这里">
+<meta property="og:description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/2018-07-08/Screenshot-from-2018-07-08-12-14-03.png">
 <meta property="og:image" content="http://yoursite.com/images/2018-07-08/Screenshot-from-2018-07-08-12-20-19.png">
 <meta property="og:image" content="http://yoursite.com/images/2018-07-08/Screenshot-from-2018-07-08-12-23-09.png">
-<meta property="og:updated_time" content="2018-07-11T03:42:07.980Z">
+<meta property="og:updated_time" content="2018-07-11T03:44:29.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LINUX删除查找到的所有文件及目录">
-<meta name="twitter:description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令Step1. 首先根据关键字查找特定的文件及目录我这里用steam作示范，这样就能找到所有包含’steam’关键字的文件及目录 Step2. 在后边追加操作命令1)  追加命令格式为: -exec command {} \;在{}和\之间必须要有空格，否则会报错. 2)  xargs用于从 标准输入获得参数并且传递给后面的命令，这里">
+<meta name="twitter:description" content="这里需要用find命令，因为find命令后边可以跟其他可执行的命令">
 <meta name="twitter:image" content="http://yoursite.com/images/2018-07-08/Screenshot-from-2018-07-08-12-14-03.png">
 
 
@@ -338,7 +338,8 @@
       
 
       
-        <h3 id="这里需要用find命令，因为find命令后边可以跟其他可执行的命令"><a href="#这里需要用find命令，因为find命令后边可以跟其他可执行的命令" class="headerlink" title="这里需要用find命令，因为find命令后边可以跟其他可执行的命令"></a>这里需要用find命令，因为find命令后边可以跟其他可执行的命令</h3><h4 id="Step1-首先根据关键字查找特定的文件及目录"><a href="#Step1-首先根据关键字查找特定的文件及目录" class="headerlink" title="Step1. 首先根据关键字查找特定的文件及目录"></a>Step1. 首先根据关键字查找特定的文件及目录</h4><p>我这里用steam作示范，这样就能找到所有包含’steam’关键字的文件及目录<br><img src="/images/2018-07-08/Screenshot-from-2018-07-08-12-14-03.png" alt="enter description here"></p>
+        <h3 id="这里需要用find命令，因为find命令后边可以跟其他可执行的命令"><a href="#这里需要用find命令，因为find命令后边可以跟其他可执行的命令" class="headerlink" title="这里需要用find命令，因为find命令后边可以跟其他可执行的命令"></a>这里需要用find命令，因为find命令后边可以跟其他可执行的命令</h3><a id="more"></a>
+<h4 id="Step1-首先根据关键字查找特定的文件及目录"><a href="#Step1-首先根据关键字查找特定的文件及目录" class="headerlink" title="Step1. 首先根据关键字查找特定的文件及目录"></a>Step1. 首先根据关键字查找特定的文件及目录</h4><p>我这里用steam作示范，这样就能找到所有包含’steam’关键字的文件及目录<br><img src="/images/2018-07-08/Screenshot-from-2018-07-08-12-14-03.png" alt="enter description here"></p>
 <h4 id="Step2-在后边追加操作命令"><a href="#Step2-在后边追加操作命令" class="headerlink" title="Step2. 在后边追加操作命令"></a>Step2. 在后边追加操作命令</h4><h5 id="1-追加命令格式为-exec-command"><a href="#1-追加命令格式为-exec-command" class="headerlink" title="1)  追加命令格式为: -exec command {} \;"></a>1)  追加命令格式为: -exec command {} \;</h5><p><img src="/images/2018-07-08/Screenshot-from-2018-07-08-12-20-19.png" alt="enter description here"><br>在{}和\之间必须要有空格，否则会报错.</p>
 <h5 id="2-xargs用于从-标准输入获得参数并且传递给后面的命令，这里使用的命令是-rm，然后由rm删除前面选择的文件"><a href="#2-xargs用于从-标准输入获得参数并且传递给后面的命令，这里使用的命令是-rm，然后由rm删除前面选择的文件" class="headerlink" title="2)  xargs用于从 标准输入获得参数并且传递给后面的命令，这里使用的命令是 rm，然后由rm删除前面选择的文件"></a>2)  xargs用于从 标准输入获得参数并且传递给后面的命令，这里使用的命令是 rm，然后由rm删除前面选择的文件</h5><p><img src="/images/2018-07-08/Screenshot-from-2018-07-08-12-23-09.png" alt="enter description here"></p>
 
