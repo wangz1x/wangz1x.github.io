@@ -92,7 +92,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="algorithm," />
 
 
 
@@ -103,16 +103,20 @@
 
 
 
-<meta name="description" content="I wish nothing but the best for you.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="趁早">
-<meta property="og:url" content="http://yoursite.com/archives/2018/06/index.html">
+<meta name="description" content="在网上看ＫＭＰ算法相关的博客时，在求next数组时基本上都会有这么一句: k = next[k-1] 或者 k = next[k]">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KMP算法中求NEXT时回溯?">
+<meta property="og:url" content="http://yoursite.com/2018/06/30/ 21:32:58/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="I wish nothing but the best for you.">
+<meta property="og:description" content="在网上看ＫＭＰ算法相关的博客时，在求next数组时基本上都会有这么一句: k = next[k-1] 或者 k = next[k]">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/2018-06-30/IMG_0124-e1530340570219.jpg">
+<meta property="og:updated_time" content="2018-07-11T03:44:42.632Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="趁早">
-<meta name="twitter:description" content="I wish nothing but the best for you.">
+<meta name="twitter:title" content="KMP算法中求NEXT时回溯?">
+<meta name="twitter:description" content="在网上看ＫＭＰ算法相关的博客时，在求next数组时基本上都会有这么一句: k = next[k-1] 或者 k = next[k]">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-06-30/IMG_0124-e1530340570219.jpg">
 
 
 
@@ -142,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/06/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/30/ 21:32:58/"/>
 
 
 
 
 
-  <title>Archive | 趁早</title>
+  <title>KMP算法中求NEXT时回溯? | 趁早</title>
   
 
 
@@ -167,7 +171,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,296 +289,158 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/30/ 21:32:58/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hero22">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">KMP算法中求NEXT时回溯?</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-30T21:32:58+08:00">
+                2018-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 17 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/30/ 21:32:58/" itemprop="url">
-              
-                <span itemprop="name">KMP算法中求NEXT时回溯?</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-30T21:32:58+08:00"
-              content="2018-06-30" >
-          06-30
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/24/ 23:24:09/" itemprop="url">
-              
-                <span itemprop="name">JAVA之ERROR/EXCEPTION</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-24T23:24:09+08:00"
-              content="2018-06-24" >
-          06-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/22/ 11:20:01/" itemprop="url">
-              
-                <span itemprop="name">NETSTAT 命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-22T11:20:01+08:00"
-              content="2018-06-22" >
-          06-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>在网上看ＫＭＰ算法相关的博客时，在求next数组时基本上都会有这么一句:</p>
+<p><strong>k = next[k-1] 或者 k = next[k]</strong></p>
+<a id="more"></a>
+<p>该赋值语句在判断　当前字符　不等于　当前字符的前一个字符的相同前缀的　后一个字符时　用到，</p>
+<p>用语言来描述不太方便，画图试试<br><img src="/images/2018-06-30/IMG_0124-e1530340570219.jpg" alt="enter description here"></p>
+<p>真的是太神奇了，使用k = next[k-1] 或 k=next[k]，就可以保证用最快方式找到应该和 “d” 进行比较的位置，丝毫不拖泥带水，我只能说太巧妙了。</p>
+<p>像上边这个串，第二次比较后还是不一样，那么k就等于-1，退出循环，说明再往前找就找不到和　”d” 前边一样的前缀了，所以　”d”   下边也是-1，即没有匹配的前后缀。</p>
+<p>这个玩意我断断续续想了两天，突然就懂了一些，不得不说”看毛片”还是难啊。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/21/ 16:15:21/" itemprop="url">
-              
-                <span itemprop="name">IDEA编辑POM文件时没有提示</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-21T16:15:21+08:00"
-              content="2018-06-21" >
-          06-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/20/ 22:09:50/" itemprop="url">
-              
-                <span itemprop="name">GIT CLONE BRANCH</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-20T22:09:50+08:00"
-              content="2018-06-20" >
-          06-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/12/ 21:02:16/" itemprop="url">
-              
-                <span itemprop="name">TRY REDIS中的命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-12T21:02:16+08:00"
-              content="2018-06-12" >
-          06-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/12/ 19:59:58/" itemprop="url">
-              
-                <span itemprop="name">LINUX下的JOB, FG, BG, &</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-12T19:59:58+08:00"
-              content="2018-06-12" >
-          06-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/24/ 23:24:09/" rel="next" title="JAVA之ERROR/EXCEPTION">
+                <i class="fa fa-chevron-left"></i> JAVA之ERROR/EXCEPTION
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/08/ 11:37:13/" rel="prev" title="LINUX删除查找到的所有文件及目录">
+                LINUX删除查找到的所有文件及目录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -582,6 +448,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -823,6 +693,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
