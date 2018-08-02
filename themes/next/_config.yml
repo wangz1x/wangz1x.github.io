@@ -28,11 +28,12 @@ override: false
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 favicon:
   #small: /images/favicon-16x16-next.png
-  small: /images/head.jpg
+  #small: /images/head.jpg
+  small: http://pctpggve0.bkt.clouddn.com/head.jpg
   #medium: /images/favicon-32x32-next.png
-  medium: /images/head.jpg
+  medium: http://pctpggve0.bkt.clouddn.com/head.jpg
   #apple_touch_icon: /images/apple-touch-icon-next.png
-  apple_touch_icon: /images/head.jpg
+  apple_touch_icon: http://pctpggve0.bkt.clouddn.com/head.jpg
   safari_pinned_tab: /images/logo.svg
   #android_manifest: /images/manifest.json
   #ms_browserconfig: /images/browserconfig.xml
@@ -158,7 +159,8 @@ links_layout: block
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
 # avatar: /images/avatar.gif
-avatar: /images/head.jpg
+# avatar: /images/head.jpg
+avatar: http://pctpggve0.bkt.clouddn.com/head.jpg
 
 # Table Of Contents in the Sidebar
 toc:
