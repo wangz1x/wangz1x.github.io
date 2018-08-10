@@ -8,7 +8,7 @@ tags:
 java中的static想必很常见了，但是若要问到其具体的用法，你又能说出几种呢
 <!-- more -->
 
-### 1. static修饰变量方法
+### static修饰变量方法
 这应该是最常见的一种用法了，当类中的属性或方法被static修饰后，就变成了类属性，也就是说访问这些方法或属性不需要类的实例，直接 ClassName.fieldName/ClassName.methodName
 一般在访问这些静态变量或方法时，不推荐用类实例来访问
 **示例:**
@@ -52,10 +52,10 @@ public class StaticOne {
 > StaticOne{hello='staticOne1'flag='111'}
 > StaticOne{hello='staticOne2'flag='111'}
 
-可以看到类实例共享类静态属性，类中的静态属性在jvm会有特定的存放位置，现在忘了。。
+可以看到类实例共享类静态属性，类中的静态成员变量在jvm有特定的存放位置，叫做 **方法区**
 
 
-### 2. static修饰代码块
+### static修饰代码块
 static修饰的代码块在类被加载时就运行，而且只在类被加载到jvm中时运行一次，后续创建该类实例时不再运行
 **示例:**
 
@@ -161,7 +161,7 @@ class StaticTwoChild extends StaticTwo{
  2. 所以我们可以看到，jvm在加载StaticTwoChild时，能发现它有父类StaticTwo，所以先去加载他的父类，他的父类没有显示的父类，所以就直接加载，然后在下去加载StaticTwoChild，所以输出前两行是父类静态代码块->子类静态代码块
  3. 子类在执行构造函数时，会先找父类的非默认构造方法并执行，所以下边输出结果就是先父类即StaticTwo的构造方法，再是子类即StaticTwoChild的构造方法，上边也说过了，普通代码块在每次实例化对象时都会最先执行，所以是父类普通代码块->父类构造方法->子类普通代码块->子类构造方法
 
-### 3. static修饰内部类
+### static修饰内部类
 内部类就是在一个类的内部，像定义变量方法那样，定义一个类，就叫内部类。其实在JDK中就有很多的内部类，尤其是在集合类中，比如下边:
 ![enter description here](http://pctpggve0.bkt.clouddn.com/LCEVBC3FJ7LK89S$%5BAADK@H.png)![enter description here](http://pctpggve0.bkt.clouddn.com/%7DZY_%29SO%5DISN5NIYFA814%28PD.png)
 还有很多就不放图了。
@@ -177,7 +177,7 @@ class StaticTwoChild extends StaticTwo{
 可能还是我阅读量太少，并没有体会到内部类的精髓。
 
 
-### 4. 静态引入
+### 静态引入
 想来这也是最不常见的吧，我也不记得第一次在哪看到的了，不过还有影响的是在一个测试类中引入的断言，应该是这样的:
 ``` java
 import static org.junit.Assert.*;
