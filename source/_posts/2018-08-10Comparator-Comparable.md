@@ -16,18 +16,18 @@ Comparable: 可比较的，描述一个类本身的属性。
 #### 最主要的方法
 
 ``` java
-    /**
-     * @param o1 the first object to be compared.
-     * @param o2 the second object to be compared.
-     * @return a negative integer, zero, or a positive integer as the
-     *         first argument is less than, equal to, or greater than the
-     *         second.
-     * @throws NullPointerException if an argument is null and this
-     *         comparator does not permit null arguments
-     * @throws ClassCastException if the arguments' types prevent them from
-     *         being compared by this comparator.
-     */
-    int compare(T o1, T o2);
+/**
+* @param o1 the first object to be compared.
+* @param o2 the second object to be compared.
+* @return a negative integer, zero, or a positive integer as the
+*         first argument is less than, equal to, or greater than the
+*         second.
+* @throws NullPointerException if an argument is null and this
+*         comparator does not permit null arguments
+* @throws ClassCastException if the arguments' types prevent them from
+*         being compared by this comparator.
+*/
+int compare(T o1, T o2);
 ```
 可以看到**当有入参为null时就会抛出异常**
 
@@ -46,16 +46,16 @@ Comparable: 可比较的，描述一个类本身的属性。
 #### 只有一个方法
 
 ``` java
-    /**
-     * @param   o the object to be compared.
-     * @return  a negative integer, zero, or a positive integer as this object
-     *          is less than, equal to, or greater than the specified object.
-     *
-     * @throws NullPointerException if the specified object is null
-     * @throws ClassCastException if the specified object's type prevents it
-     *         from being compared to this object.
-     */
-    public int compareTo(T o);
+/**
+* @param   o the object to be compared.
+* @return  a negative integer, zero, or a positive integer as this object
+*          is less than, equal to, or greater than the specified object.
+*
+* @throws NullPointerException if the specified object is null
+* @throws ClassCastException if the specified object's type prevents it
+*         from being compared to this object.
+*/
+public int compareTo(T o);
 ```
 #### 使用
  1. 实现接口，重写方法
