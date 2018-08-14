@@ -163,7 +163,8 @@ class StaticTwoChild extends StaticTwo{
 
 ### static修饰内部类
 内部类就是在一个类的内部，像定义变量方法那样，定义一个类，就叫内部类。其实在JDK中就有很多的内部类，尤其是在集合类中，比如下边:
-![enter description here](http://pctpggve0.bkt.clouddn.com/LCEVBC3FJ7LK89S$%5BAADK@H.png)![enter description here](http://pctpggve0.bkt.clouddn.com/%7DZY_%29SO%5DISN5NIYFA814%28PD.png)
+![enter description here](https://image.zero22.top/LCEVBC3FJ7LK89S$%5BAADK@H.png)
+![enter description here](https://image.zero22.top/%7DZY_%29SO%5DISN5NIYFA814%28PD.png)
 还有很多就不放图了。
 这里有会涉及静态内部类和普通内部类的区别，这里简单的说几点基本的吧:
  1. 创建实例方式不同

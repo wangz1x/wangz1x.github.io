@@ -48,9 +48,9 @@ java中要实现对象序列化只需要实现java.io.Serializable接口，想�
 > is not the case. The error will be detected at runtime.
 
 大意就是上面说的，实现了Serializable接口的类的子类(没有明确实现Serializable的)要想能够序列化，那么其父类必须要有一个没有参数的子类能够访问的构造方法，下面写个简单的示例:
-![enter description here](http://pctpggve0.bkt.clouddn.com/$VN73C@D%25%7B%7DZLG%5DW4J$ZY%25N.png)
+![enter description here](https://image.zero22.top/$VN73C@D%25%7B%7DZLG%5DW4J$ZY%25N.png)
 父类没有无参构造函数，子类直接报错了，下面在父类中添加无参构造函数
-![enter description here](http://pctpggve0.bkt.clouddn.com/C%28NL3WKG%29_S%29BVOY7P%29%603YK.png)
+![enter description here](https://image.zero22.top/C%28NL3WKG%29_S%29BVOY7P%29%603YK.png)
 可以看到没报错了
 
 > Classes that require special handling during the serialization and deserialization process must implement special methods with these exact signatures:
@@ -80,25 +80,25 @@ java中要实现对象序列化只需要实现java.io.Serializable接口，想�
 >If a serializable class does not explicitly declare a serialVersionUID, then the serialization runtime will calculate a default serialVersionUID value for that class based on various aspects of the class, as described in the Java(TM) Object Serialization Specification. However, it is strongly recommended that all serializable classes explicitly declare serialVersionUID values, since the default serialVersionUID computation is highly sensitive to class details that may vary depending on compiler implementations, and can thus result in unexpected InvalidClassExceptions during deserialization. Therefore, to guarantee a consistent serialVersionUID value across different java compiler implementations, a serializable class must declare an explicit serialVersionUID value. It is also strongly advised that explicit serialVersionUID declarations use the private modifier where possible, since such declarations apply only to the immediately declaring class--serialVersionUID fields are not useful as inherited members. Array classes cannot declare an explicit serialVersionUID, so they always have the default computed value, but the requirement for matching serialVersionUID values is waived for array classes.
 
 这一段很长，主要就是说这个UID很重要，如果你没有明确声明，那么jvm会在序列化时候，计算一个UID作为默认的，但是这个计算方式非常依赖编译器，并且产生的结果和这个类本身(即属性，方法什么的)有很大的关系，所以这样一来，不同的jvm对同一个类默认生成的UID可能不同，而且一旦修改了类内容，那么肯定新的UID非常可能会和旧UID不同，这样很容易导致反序列化失败，我这里做一个修改类的例子:
-![enter description here](http://pctpggve0.bkt.clouddn.com/K4TB~B95B%256PZN49RB6%60B_G.png)
+![enter description here](https://image.zero22.top/K4TB~B95B%256PZN49RB6%60B_G.png)
 很正常的一个类，下面是序列化和反序列化
-![enter description here](http://pctpggve0.bkt.clouddn.com/1.png)
-![enter description here](http://pctpggve0.bkt.clouddn.com/2.png)
+![enter description here](https://image.zero22.top/1.png)
+![enter description here](https://image.zero22.top/2.png)
 反序列化结果:
-![http://pctpggve0.bkt.clouddn.com/result.png](http://pctpggve0.bkt.clouddn.com/result.png)
+![https://image.zero22.top/result.png](https://image.zero22.top/result.png)
 然后我把Book类中的test字段删除，发送端的已经保存到dest1.txt中了，我现在修改Book类相当于是接收端修改了类，然后接收端再从dest1.txt反序列化，结果:
-![enter description here](http://pctpggve0.bkt.clouddn.com/exception.png)
+![enter description here](https://image.zero22.top/exception.png)
 可以看到报异常了，所以说，这个serialVersionUID还是自己声明一个比较好
 
 
 ### transient关键字
 transient说来应该就是为序列化和反序列化服务的，当一个字段声明为transient时，在默认的序列化和反序列化过程中就会跳过该字段，但并不是说该字段就不能被序列化了，我们可以自定义序列化过程来使得其进行序列化，还记得前边的 writeObject/readObject方法吧，我们可以在这些方法中自定义序列化过程。这样一来，我们对于序列化的掌握就更加深了，对于一般的字段，用默认序列化方法即可，对于一些特殊的字段，比如用户密码什么的，我们可以对其声明transient，然后在自定义序列化中对其进行一些加密或其他处理在序列化。其实在上边的示例中仔细看就会发现Book类中flag字段是 transient的，但是在反序列时我依然可以读取该字段，就是因为我自定义了序列化/反序列化:
-![enter description here](http://pctpggve0.bkt.clouddn.com/complete.png)
+![enter description here](https://image.zero22.top/complete.png)
 
 
 ### 序列化扩展
 在上面引用的序列化定义中写道"将一个对象转换成一串二进制表示的字节数组"，那么如今我把这个二进制的字节数组写到了dest1.txt文件，那么我们为什么不看一看文件内容呢
-![enter description here](http://pctpggve0.bkt.clouddn.com/dest.png)
+![enter description here](https://image.zero22.top/dest.png)
 这里有两个文件，左边的dest.txt是没有自定义序列化的，右边的是自定义了序列化的，所以右边比左边多出了一个**flag**，值为1，下边对文件**dest1.txt**内容进行分析，还是参考了这篇[博客](https://www.cnblogs.com/szlbm/p/5504166.html)
 #### 序列化文件头
 
@@ -145,7 +145,7 @@ transient说来应该就是为序列化和反序列化服务的，当一个字�
 #### 额外
  - 在自定义序列化中，可以看到上边我用的是writeInt，写4个字节，还有一个write(int)方法，只写一个字节，当参数超过一个字节时，只写低8位，看一个示例：
  我把上边的flag改为 77777777，很明显这个数超过8个字节了，其16进制为04a2cb71，我们看一下写到文件中的内容：
- ![enter description here](http://pctpggve0.bkt.clouddn.com/dest3.png) 
+ ![enter description here](https://image.zero22.top/dest3.png) 
  只写了一个71
  - **static**变量也不会被序列化
 
