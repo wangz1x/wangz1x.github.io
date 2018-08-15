@@ -52,7 +52,7 @@ footer:
   since: 2017
 
   # Icon between year and copyright info.
-  icon: user
+  icon:
 
   # If not defined, will be used `author` from Hexo main config.
   copyright:
