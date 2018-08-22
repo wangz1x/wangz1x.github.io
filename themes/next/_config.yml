@@ -230,7 +230,8 @@ post_meta:
   item_text: true
   created_at: false
   updated_at: false
-  categories: false
+  tags: true
+  categories: true
 
 # Post wordcount display settings
 # Dependencies: https://github.com/willin/hexo-wordcount
