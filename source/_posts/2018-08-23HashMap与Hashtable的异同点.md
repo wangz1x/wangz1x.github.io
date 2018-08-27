@@ -12,6 +12,8 @@ categories: java
 
 这应该是最明显的一点不同了，`HashMap`不是线程安全的，但是`Hashtable`是的，看一下Hashtable中的方法，基本上都加了`synchronized`，但是呢，这种同步实在是太粗糙了，所以在并发的情况下才会推荐使用`ConcurrentHashMap`吧。
 
+<!--more-->
+
 ### 构造方式
 
 #### 默认容量
