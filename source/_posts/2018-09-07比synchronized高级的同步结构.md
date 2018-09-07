@@ -13,7 +13,7 @@ categories: java
 
 直接用API来介绍吧
 >A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes.
-
+<!--more-->
 简单说来就是让一些线程等待其他线程的操作完成
 
 写一个示例程序:
