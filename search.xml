@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[LeetCode 44. Wildcard Matching]]></title>
     <url>%2F2019%2F03%2F27%2FWildcard-Matching%2F</url>
-    <content type="text"><![CDATA[Question: Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’. 12&apos;?&apos; Matches any single character.&apos;*&apos; Matches any sequence of characters (including the empty sequence). Analysis: *可以匹配任意内容包括空字符串，所以这个*要匹配多少就是最根本的问题。]]></content>
+    <content type="text"><![CDATA[Question: Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’. 12&apos;?&apos; Matches any single character.&apos;*&apos; Matches any sequence of characters (including the empty sequence). Analysis: *可以匹配任意内容包括空字符串，所以这个*要匹配多少就是最根本的问题。 Answer: 动态规划 12345678910111213141516171819202122232425262728293031323334class Solution &#123; public boolean isMatch(String s, String p) &#123; // value[i][j] 表示前i个模式串字符 和 前j个匹配串是否匹配 boolean value[][] = new boolean[p.length()+1][s.length()+1]; value[0][0] = true; // 初始化 for (int j = 1; j &lt;= s.length(); j ++) &#123; value[0][j] = false; &#125; // 遍历模式串进行匹配 for (int i = 1; i &lt;= p.length(); i ++) &#123; char temp = p.charAt(i-1); if (temp == '*') &#123; value[i][0] = value[i - 1][0]; for (int j = 1; j &lt;= s.length(); j ++) &#123; value[i][j] = value[i - 1][j] || value[i][j - 1] || value[i - 1][j - 1]; &#125; &#125; else if (temp == '?') &#123; value[i][0] = false; for (int j = 1; j &lt;= s.length(); j ++) &#123; value[i][j] = value[i - 1][j - 1]; &#125; &#125; else &#123; value[i][0] = false; for (int j = 1; j &lt;= s.length(); j ++) &#123; value[i][j] = (value[i - 1][j - 1]) &amp;&amp; (p.charAt(i - 1) == s.charAt(j - 1)); &#125; &#125; &#125; return value[p.length()][s.length()]; &#125;&#125; 双指针 通过指针记录*匹配的位置. 123456789101112131415161718192021222324252627282930313233343536class Solution &#123; public boolean isMatch(String s, String p) &#123; int sp = 0; int pp = 0; int pstar_idx = -1; int sstar_idx = -1; boolean res = false; while (sp &lt; s.length()) &#123; if (pp &lt; p.length() &amp;&amp; (s.charAt(sp) == p.charAt(pp) || p.charAt(pp) == '?')) &#123; sp ++; pp ++; &#125; else if (pp &lt; p.length() &amp;&amp; p.charAt(pp) == '*') &#123; pstar_idx = pp; sstar_idx = sp; pp ++; &#125; // 记录'*'的位置，当后面不匹配时，就把不匹配的字符归到'*'里，从下一个在进行匹配操作 else if (pstar_idx != -1) &#123; pp = pstar_idx + 1; sp = ++ sstar_idx; &#125; else &#123; break; &#125; &#125; while (pp &lt; p.length() &amp;&amp; (p.charAt(pp) == '*')) &#123; pp ++; &#125; if (pp == p.length() &amp;&amp; sp == s.length()) &#123; res = true; &#125; return res; &#125;&#125; 当模式串中有多个*时，只会保存最新遇到的*，这样做可行吗，举个例子: s:abcdabcd p:ab*da*d 这个模式串的格式为ab...da...d, 当模式串匹配到第二个*时，说明前面的ab*da都已经匹配到了，那么就不用再考虑了，也就只用记录最新碰到的*.]]></content>
       <categories>
         <category>LeetCode</category>
       </categories>
@@ -61,8 +61,8 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[比synchronized高级的同步结构]]></title>
-    <url>%2F2018%2F09%2F07%2F%E6%AF%94synchronized%E9%AB%98%E7%BA%A7%E7%9A%84%E5%90%8C%E6%AD%A5%E7%BB%93%E6%9E%84%2F</url>
+    <title><![CDATA[高级同步结构]]></title>
+    <url>%2F2018%2F09%2F07%2F%E9%AB%98%E7%BA%A7%E5%90%8C%E6%AD%A5%E7%BB%93%E6%9E%84%2F</url>
     <content type="text"><![CDATA[这些同步结构都在java.util.concurrent并发包下，这里只看一下基础的用法。 CountDownLatch直接用API来介绍吧 A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes.简单说来就是让一些线程等待其他线程的操作完成 写一个示例程序: 12345678910111213141516171819202122232425262728293031323334353637383940package concurrent.countdownlatch;import java.util.concurrent.CountDownLatch;public class Test1 &#123; public static void main(String[] args) throws InterruptedException &#123; CountDownLatch countDownLatch = new CountDownLatch(5); // 这里一般对应的操作数，这是几，就要有几次countDown操作 for (int i = 0; i &lt; 5; i ++) &#123; // 新建5个线程跑起来 MyThread myThread = new MyThread(i, countDownLatch); myThread.start(); &#125; System.out.println("prepare to wait for other thread finish work..."); countDownLatch.await(); // 要点1 System.out.println("all threads have finish work!!!"); &#125;&#125;class MyThread extends Thread &#123; private int tId; private CountDownLatch countDownLatch; public MyThread(int tId, CountDownLatch countDownLatch) &#123; this.tId = tId; this.countDownLatch = countDownLatch; &#125; @Override public void run() &#123; try &#123; // Thread.sleep(1000 * (5-tId)); // 模拟工作, 不要介意为啥这样写 &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; System.out.println("thread i=" + tId + " has finish work"); countDownLatch.countDown(); // 要点2 &#125;&#125; 附上运行结果: 注意我注释中标记了要点的地方，CountDownLatch主要操作方式就是await/countDown，在该程序中，await在main方法中执行，从线程方面来看，就是我们的main线程在等待5个MyThread线程执行结束，就是这样 CyclicBarrier再来看看API中的第一句 A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point.允许一堆线程在barrier互相等待 看个示例: 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748package concurrent.cyclicbarrier;import java.util.concurrent.BrokenBarrierException;import java.util.concurrent.CyclicBarrier;public class Test2 &#123; public static void main(String[] args) &#123; CyclicBarrier cyclicBarrier = new CyclicBarrier(5, ()-&gt;&#123; // 要点1 System.out.println("all thread arrive barrier !! "); System.out.println("let's rest a while"); try &#123; Thread.sleep(1000); &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; &#125;); for(int j = 0; j &lt; 5; j ++) &#123; Mythread mythread = new Mythread(cyclicBarrier, j); mythread.start(); &#125; &#125;&#125;class Mythread extends Thread &#123; private CyclicBarrier cyclicBarrier; private int j; // 休息时间 public Mythread(CyclicBarrier cyclicBarrier, int j) &#123; this.cyclicBarrier = cyclicBarrier; this.j = j; &#125; @Override public void run() &#123; for (int i = 0; i &lt; 3; i ++) &#123; try &#123; Thread.sleep(j*1000); // 模拟工作 &#125; catch (InterruptedException e) &#123; e.printStackTrace(); &#125; System.out.println(Thread.currentThread().getName() + " run i=" + i); try &#123; cyclicBarrier.await(); // 要点2 &#125; catch (InterruptedException | BrokenBarrierException e) &#123; e.printStackTrace(); &#125; &#125; &#125;&#125; 运行结果: 先说一下要点1，在创建CyclicBarrier对象时可以传递一个Runnable对象，这个Runnable会在所有的相互等待的线程都到达barrier时执行，从运行结果可以看出来，当我们的5个线程都做完了工作执行await之后，Runnable定义的操作就会运行。 区别这里简单写一下二者的区别 CountDownLatch是一次性的, 因为初始化中传递的count在CountDownLatch中是无法被恢复的; 但是CyclicBarrier是可以用多次的，从运行结果我们也可以看出来, 这是因为CyclicBarrier内部把最初的值保留在parties中, 每次执行减法的是它的拷贝count, 当CyclicBarrier运行完一轮后, 通常会自动调用nextGeneration方法, 在该方法内部又把parties赋值给count了 逻辑上来讲, CountDownLatch是让A组线程等待B组线程全部执行完, 然后A组线程继续做该做的; CyclicBarrier是A组线程中的每个线程都做一些事到达barrier, 即进入等待状态后, CyclicBarrier可以做个总结之类的, 然后A组线程中的每一个又开始继续做事, 这样循环下去]]></content>
       <categories>
         <category>java</category>
@@ -203,22 +203,6 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[多设备使用hexo的实操]]></title>
-    <url>%2F2018%2F07%2F23%2F%E5%A4%9A%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8hexo%E7%9A%84%E5%AE%9E%E6%93%8D%2F</url>
-    <content type="text"><![CDATA[前边写了如何在多终端中使用hexo写东西，今天来实际操作一把。 在寝室我就把hexo环境传到github上的hexo分支了，下面在新设备上操作 1.安装环境首先安装git、node.js、hexo，可以用git bash以linux方式操作，也可以直接去官网下Windows版(新设备是windows)。 2.clone分支然后把github上的hexo分支clone下来，完成后查看如下图： 3.安装依赖然后我们进入XXX.github.io目录下，使用命令1npm install 下载hexo需要的依赖什么，完成后如下图：可以看到多了一个 node_modules 文件夹 4.写东西然后就可以这样1hexo new 'postname' 新建，然后写吧。 5.最后最后就是部署和上传分支了，要保证分支是最新的，不然下次去了新设备你就无法获取最新的hexo分支，会丢失更新的文章，如果你再推送了新文章，那么那些丢失的文章就会在部署的时候被删除。]]></content>
-      <categories>
-        <category>杂谈</category>
-      </categories>
-  </entry>
-  <entry>
-    <title><![CDATA[多终端使用hexo+Github Page写东西]]></title>
-    <url>%2F2018%2F07%2F20%2F%2023-52-51%2F</url>
-    <content type="text"><![CDATA[有一天，我突然想到如果我换了电脑，我要怎么继续往我的Github Page上推送新东西呢? 分析由于使用了hexo，所以肯定和hexo有关系咯。我们先来分析一下hexo的结构 _config.yml全局配置文件，网站的很多信息都在这里配置，诸如网站名称，副标题，描述，作者，语言，主题，部署等等参数。 package.jsonhexo框架的参数和所依赖插件 scaffoldsscaffolds是“脚手架、骨架”的意思，当你新建一篇文章（hexo new ‘title’）的时候，hexo是根据这个目录下的文件进行构建的，相当于是个模板。 source这个目录很重要，新建的文章都是在保存在这个目录下的。_posts 。需要新建的博文都放在_posts 目录下。 _posts 目录下是一个个 markdown 文件。你应该可以看到一个 hello-world.md 的文件，文章就在这个文件中编辑。 _posts 目录下的md文件，会被编译成html文件，放到 public文件夹下，最终部署时也是public中的文件被push到XXX.github.io的master分支下。 themes网站主题目录，hexo有非常好的主题拓展，支持的主题也很丰富。 另外还有一个文件 .gitignore，在git提交时忽略的文件，这也是一个伏笔吧。 解决我们在写文章时，其实用到的就是由这些文件组成的环境，那么只要我们有这个环境了，不就可以想在哪写在哪写吗。这里我直接用github保存这个环境，而且hexo已经给我们提供了.gitignore文件，不就在暗示我们用git提交吗。 这里你可以再创建一个仓库用来保存hexo的环境，或者直接在XXX.github.io仓库中新建一个分支，我是新建分支的。需要注意的是，新建的分支是在master的基础上建立的，所以新分支中还有我们的blog内容，其实是可以不需要的，反正我是不喜欢这两个部分混合在一起。新分支起名hexo，在setting中设置hexo为默认分支，这样方便我们提交，后面会说到。 clone XXX.github.io到本地，此时查看分支就是hexo了，然后先把所有的文件都删掉，这些文件就让他们在master中就好，然后把本地blog下的所有文件都复制到hexo分支中，也就是上面说的hexo环境复制到hexo分支中(都是hexo可别搞混了)。 把本地hexo分支同步到远程hexo分支中，git add . | git commit | git push 就是这一套，然后现在的情况，拿我的来说如下图：hexo分支master分支发现hexo分支下的文件变少了，那是因为.gitignore文件已经帮我们过滤了那些没有必要上传的文件，比如 public/ ，.deploy_git/，node_modules/ 等目录。 有了hexo环境后就好办了，当我们在一个新的设备上要写东西时，就先把hexo分支搞下来，当然新设备上需要git、node、hexo等就不说了，在clone下来的文件中没有node所需要的包什么的，我们要现下，执行命令 1npm install 完成后你会发现多了一个node_modules文件，然后应该就可以用hexo new “blog_name” 写文章了吧。。。(这里我不太确定，明天去单位电脑试试) 平时写完东西后就直接 hexo clean/generate/deploy 一套带走，然后就会发现我们的master分支已经有了新内容了，这是在_config.yml文件中配置的deploy起的作用，指定了master分支(而且Github Page也规定了要用master分支)，但是现在，不仅要更新文章，还要更新我们的hexo环境，所以我们还需要提交我们的环境到hexo分支，你看，master分支的修改我们不用去管，我们主要维护hexo分支，所以把hexo分支设置为默认分支更方便我们提交等(而且clone也比较方便，直接clone的就是hexo分支)。 稍微进一步由此我们可以总结出现在写完东西后需要做的事情，提交hexo分支(因为我们新建的文章都在hexo/source/_posts下面，所以hexo分支是必定会被改动的)，部署，一趟命令下来也不好受，那就直接把这些命令丢到脚本去吧，每次写完文章执行脚本就好了。]]></content>
-      <categories>
-        <category>杂谈</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[hexo每次deploy后需要重新绑定自定义域名]]></title>
     <url>%2F2018%2F07%2F20%2F%2022-30-43%2F</url>
     <content type="text"><![CDATA[在hexo目录下的source下新建一个CNAME文件，写上自定义的域名即可。]]></content>
@@ -282,34 +266,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[IDEA编辑POM文件时没有提示]]></title>
-    <url>%2F2018%2F06%2F21%2F%2016-15-21%2F</url>
-    <content type="text"><![CDATA[这需要我们更新IDEA中maven 的repositories 如下图： 选中本地仓库点击右边的更新，这样再编辑pom文件时就会提示你本地仓库中所含有的坐标]]></content>
-      <categories>
-        <category>杂谈</category>
-      </categories>
-      <tags>
-        <tag>IDEA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[GIT CLONE BRANCH]]></title>
     <url>%2F2018%2F06%2F20%2F%2022-09-50%2F</url>
-    <content type="text"><![CDATA[在使用git clone项目后，查看本地分支，只有master分支，远程仓库的其他分支并没有克隆下来，如果需要其他分支可以用下面两种方法 方法一git branch -a 先查看当前远端分支情况 git checkout origin/xxx 选择远端xxx分支 git branch xxx 创建本地xxx分支 git checkout xxx 选择新创建的分支就可以了 方法二git clone -b]]></content>
+    <content type="text"><![CDATA[在使用git clone项目后，查看本地分支，只有master分支，远程仓库的其他分支并没有克隆下来，如果需要其他分支可以用下面两种方法 方法一git branch -a 先查看当前远端分支情况 git checkout origin/xxx 选择远端xxx分支 git branch xxx 创建本地xxx分支 git checkout xxx 选择新创建的分支就可以了 方法二git clone -b &lt;branch-name&gt; &lt;remote&gt;]]></content>
       <categories>
         <category>git</category>
       </categories>
       <tags>
         <tag>clone</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[TRY REDIS中的命令]]></title>
-    <url>%2F2018%2F06%2F12%2F%2021-02-16%2F</url>
-    <content type="text"><![CDATA[中文官方网站对其的介绍： Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件。 它支持多种类型的数据结构，如 字符串（strings）， 散列（hashes）， 列表（lists）， 集合（sets）， 有序集合（sorted sets）与范围查询， bitmaps， hyperloglogs 和 地理空间（geospatial） 索引半径查询。 Redis 内置了复制（replication），LUA脚本（Lua scripting）， LRU驱动事件（LRUeviction），事务（transactions） 和不同级别的 磁盘持久化（persistence）， 并通过Redis哨兵（Sentinel）和自动 分区（Cluster）提供高可用性（high availability）。 GET/SET Redis is what is called a key-value store, often referred to as aNoSQL database. The essence of a key-value store is the ability tostore some data, called a value, inside a key. This data can later beretrieved only if we know the exact key used to store it. We can usethe command SET to store the value “fido” at key “server:name” 用 SET 对key进行赋值用 GET 获取key的value. DEL Other common operations provided by key-value stores are DEL to deletea given key and associated value, SET-if-not-exists (called SETNX onRedis) that sets a key only if it does not already exist, and INCR toatomically increment a number stored at a given key 用DEL 删除一个变量后，查询该变量变为 nil，意思为”空，零”INCR在Redis中为自加1操作，为原子性的操作. LIVE TIME Redis can be told that a key should only exist for a certain length oftime. This is accomplished with the EXPIRE and TTL commands. 用EXPIRE 规定key的存在时长，单位为秒(默认)用TTL查看key还剩多久删除 The -2 for the TTL of the key means that the key does not exist (anymore). A -1 for the TTL of the key means that it will never expire. Note that if you SET a key, its TTLwill be reset. LIST Redis also supports several more complex data structures. The firstone we’ll look at is a list. A list is a series of ordered values.Some of the important commands for interacting with lists are RPUSH,LPUSH, LLEN, LRANGE, LPOP, and RPOP. You can immediately begin workingwith a key as a list, as long as it doesn’t already exist as adifferent type. RPUSH：放在list的右边LLEN：list的长度LRANGE：显示从start到end的数据LPOP：删除最左边的元素 SET The next data structure that we’ll look at is a set. A set is similarto a list, except it does not have a specific order and each elementmay only appear once. Some of the important commands in working withsets are SADD, SREM, SISMEMBER, SMEMBERS and SUNION. SADD：添加元素SREM：移除元素SISMEMBER：判断set是否包含某一元素SMEMBERS：打印set内容SUNION：合并打印多个set SORTED SETS Sets are a very handy data type, but as they are unsorted they don’twork well for a number of problems. This is why Redis 1.2 introducedSorted Sets. A sorted set is similar to a regular set, but now each value has anassociated score. This score is used to sort the elements in the set. 可以通过设定的score进行排序的setZADD：添加元素 (exp. ZADD hackers 1940 “Alan Kay”)ZRANGE：升序ZREVRANGE：降序 HASHESHashes：用来存放对象很好HSET：存放对象属性和值 (HSET user:1000 name “John Smith”)HGETALL：获取对象的所有属性和值HGET：获取对象某个属性的值HINCRBY：指定对象某个数字属性的值加上HDEL：删除对象某个属性]]></content>
-      <categories>
-        <category>redis</category>
-      </categories>
   </entry>
   <entry>
     <title><![CDATA[LINUX下的JOB, FG, BG, &]]></title>

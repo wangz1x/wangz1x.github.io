@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CountDownLatch,CyclicBarrier," />
 
 
 
@@ -73,21 +73,21 @@
 
 
 
-<meta name="description" content="有一天，我突然想到如果我换了电脑，我要怎么继续往我的Github Page上推送新东西呢?">
+<meta name="description" content="这些同步结构都在java.util.concurrent并发包下，这里只看一下基础的用法。 CountDownLatch直接用API来介绍吧  A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads complet">
+<meta name="keywords" content="CountDownLatch,CyclicBarrier">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多终端使用hexo+Github Page写东西">
-<meta property="og:url" content="https://zero22.top/2018/07/20/ 23-52-51/index.html">
+<meta property="og:title" content="高级同步结构">
+<meta property="og:url" content="https://zero22.top/2018/09/07/高级同步结构/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="有一天，我突然想到如果我换了电脑，我要怎么继续往我的Github Page上推送新东西呢?">
+<meta property="og:description" content="这些同步结构都在java.util.concurrent并发包下，这里只看一下基础的用法。 CountDownLatch直接用API来介绍吧  A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads complet">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-20 23-57-38.png">
-<meta property="og:image" content="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-21 00-23-04.png">
-<meta property="og:image" content="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-21 00-23-28.png">
-<meta property="og:updated_time" content="2019-03-27T04:10:43.136Z">
+<meta property="og:image" content="https://image.zero22.top/countdownlatch.gif">
+<meta property="og:image" content="https://image.zero22.top/cyclicbarrier.gif">
+<meta property="og:updated_time" content="2019-03-27T14:37:46.911Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多终端使用hexo+Github Page写东西">
-<meta name="twitter:description" content="有一天，我突然想到如果我换了电脑，我要怎么继续往我的Github Page上推送新东西呢?">
-<meta name="twitter:image" content="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-20 23-57-38.png">
+<meta name="twitter:title" content="高级同步结构">
+<meta name="twitter:description" content="这些同步结构都在java.util.concurrent并发包下，这里只看一下基础的用法。 CountDownLatch直接用API来介绍吧  A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads complet">
+<meta name="twitter:image" content="https://image.zero22.top/countdownlatch.gif">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <title>多终端使用hexo+Github Page写东西 | 趁早</title>
+  <title>高级同步结构 | 趁早</title>
   
 
 
@@ -264,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2018/07/20/ 23-52-51/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2018/09/07/高级同步结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -281,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">多终端使用hexo+Github Page写东西</h1>
+          <h1 class="post-title" itemprop="name headline">高级同步结构</h1>
         
 
         <div class="post-meta">
@@ -304,8 +304,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -341,31 +341,28 @@
       
 
       
-        <p>有一天，我突然想到如果我换了电脑，我要怎么继续往我的Github Page上推送新东西呢?</p>
-<a id="more"></a>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>由于使用了hexo，所以肯定和hexo有关系咯。我们先来分析一下hexo的结构<br><img src="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-20 23-57-38.png" alt="enter description here"></p>
-<h4 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h4><p>全局配置文件，网站的很多信息都在这里配置，诸如网站名称，副标题，描述，作者，语言，主题，部署等等参数。</p>
-<h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><p>hexo框架的参数和所依赖插件</p>
-<h4 id="scaffolds"><a href="#scaffolds" class="headerlink" title="scaffolds"></a>scaffolds</h4><p>scaffolds是“脚手架、骨架”的意思，当你新建一篇文章（hexo new ‘title’）的时候，hexo是根据这个目录下的文件进行构建的，相当于是个模板。</p>
-<h4 id="source"><a href="#source" class="headerlink" title="source"></a>source</h4><p>这个目录很重要，新建的文章都是在保存在这个目录下的。_posts 。需要新建的博文都放在_posts 目录下。</p>
-<p>_posts 目录下是一个个 markdown 文件。你应该可以看到一个 hello-world.md 的文件，文章就在这个文件中编辑。</p>
-<p>_posts 目录下的md文件，会被编译成html文件，放到 public文件夹下，最终部署时也是public中的文件被push到XXX.github.io的master分支下。</p>
-<h4 id="themes"><a href="#themes" class="headerlink" title="themes"></a>themes</h4><p>网站主题目录，hexo有非常好的主题拓展，支持的主题也很丰富。</p>
-<p>另外还有一个文件 .gitignore，在git提交时忽略的文件，这也是一个伏笔吧。</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>我们在写文章时，其实用到的就是由这些文件组成的环境，那么只要我们有这个环境了，不就可以想在哪写在哪写吗。这里我直接用github保存这个环境，而且hexo已经给我们提供了.gitignore文件，不就在暗示我们用git提交吗。</p>
+        <p>这些同步结构都在<code>java.util.concurrent</code>并发包下，这里只看一下基础的用法。</p>
+<h3 id="CountDownLatch"><a href="#CountDownLatch" class="headerlink" title="CountDownLatch"></a>CountDownLatch</h3><p>直接用API来介绍吧</p>
+<blockquote>
+<p>A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes.<br><a id="more"></a><br>简单说来就是让一些线程等待其他线程的操作完成</p>
+</blockquote>
+<p>写一个示例程序:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> concurrent.countdownlatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">5</span>);      <span class="comment">// 这里一般对应的操作数，这是几，就要有几次countDown操作</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i ++) &#123;                              <span class="comment">// 新建5个线程跑起来</span></span><br><span class="line">             MyThread myThread = <span class="keyword">new</span> MyThread(i, countDownLatch);</span><br><span class="line">             myThread.start();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"prepare to wait for other thread finish work..."</span>);</span><br><span class="line">        countDownLatch.await();                                     <span class="comment">// 要点1</span></span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"all threads have finish work!!!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> tId;</span><br><span class="line">    <span class="keyword">private</span> CountDownLatch countDownLatch;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyThread</span><span class="params">(<span class="keyword">int</span> tId, CountDownLatch countDownLatch)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.tId = tId;</span><br><span class="line">        <span class="keyword">this</span>.countDownLatch = countDownLatch;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//</span></span><br><span class="line">            Thread.sleep(<span class="number">1000</span> * (<span class="number">5</span>-tId));                           <span class="comment">// 模拟工作, 不要介意为啥这样写</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"thread i="</span> + tId + <span class="string">" has finish work"</span>);</span><br><span class="line">        countDownLatch.countDown();                                 <span class="comment">// 要点2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>附上运行结果:<br><img src="https://image.zero22.top/countdownlatch.gif" alt="CountDownLatch"></p>
+<p>注意我注释中标记了要点的地方，<code>CountDownLatch</code>主要操作方式就是<code>await/countDown</code>，在该程序中，<code>await</code>在<code>main</code>方法中执行，从线程方面来看，就是我们的<code>main</code>线程在等待5个<code>MyThread</code>线程执行结束，就是这样</p>
+<h3 id="CyclicBarrier"><a href="#CyclicBarrier" class="headerlink" title="CyclicBarrier"></a>CyclicBarrier</h3><p>再来看看API中的第一句</p>
+<blockquote>
+<p>A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point.<br>允许一堆线程在<code>barrier</code>互相等待</p>
+</blockquote>
+<p>看个示例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> concurrent.cyclicbarrier;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.BrokenBarrierException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CyclicBarrier;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test2</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(<span class="number">5</span>, ()-&gt;&#123;            <span class="comment">// 要点1</span></span><br><span class="line">            System.out.println(<span class="string">"all thread arrive barrier !! "</span>);</span><br><span class="line">            System.out.println(<span class="string">"let's rest a while"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j ++) &#123;</span><br><span class="line">            Mythread mythread = <span class="keyword">new</span> Mythread(cyclicBarrier, j);</span><br><span class="line">            mythread.start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mythread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> CyclicBarrier cyclicBarrier;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> j;                                                          <span class="comment">// 休息时间</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mythread</span><span class="params">(CyclicBarrier cyclicBarrier, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cyclicBarrier = cyclicBarrier;</span><br><span class="line">        <span class="keyword">this</span>.j = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i ++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(j*<span class="number">1000</span>);                                       <span class="comment">// 模拟工作</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">" run i="</span> + i);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cyclicBarrier.await();                                      <span class="comment">// 要点2</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException | BrokenBarrierException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果:<br><img src="https://image.zero22.top/cyclicbarrier.gif" alt="CyclicBarrier"></p>
+<p>先说一下要点1，在创建<code>CyclicBarrier</code>对象时可以传递一个<code>Runnable</code>对象，这个<code>Runnable</code>会在所有的相互等待的线程都到达<code>barrier</code>时执行，从运行结果可以看出来，当我们的5个线程都做完了工作执行<code>await</code>之后，<code>Runnable</code>定义的操作就会运行。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>这里简单写一下二者的区别</p>
 <ol>
-<li>这里你可以再创建一个仓库用来保存hexo的环境，或者直接在XXX.github.io仓库中新建一个分支，我是新建分支的。需要注意的是，新建的分支是在master的基础上建立的，所以新分支中还有我们的blog内容，其实是可以不需要的，反正我是不喜欢这两个部分混合在一起。新分支起名hexo，在setting中设置hexo为默认分支，这样方便我们提交，后面会说到。</li>
-<li>clone XXX.github.io到本地，此时查看分支就是hexo了，然后先把所有的文件都删掉，这些文件就让他们在master中就好，然后把本地blog下的所有文件都复制到hexo分支中，也就是上面说的hexo环境复制到hexo分支中(都是hexo可别搞混了)。</li>
-<li><p>把本地hexo分支同步到远程hexo分支中，git add .  |   git commit   | git push 就是这一套，然后现在的情况，拿我的来说如下图：<br>hexo分支<br><img src="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-21 00-23-04.png" alt="enter description here"><br>master分支<br><img src="https://image.zero22.top/images/2018-07-20/Screenshot from 2018-07-21 00-23-28.png" alt="enter description here"><br>发现hexo分支下的文件变少了，那是因为.gitignore文件已经帮我们过滤了那些没有必要上传的文件，比如 public/ ，.deploy_git/，node_modules/ 等目录。</p>
-</li>
-<li><p>有了hexo环境后就好办了，当我们在一个新的设备上要写东西时，就先把hexo分支搞下来，当然新设备上需要git、node、hexo等就不说了，在clone下来的文件中没有node所需要的包什么的，我们要现下，执行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<p>完成后你会发现多了一个node_modules文件，然后应该就可以用hexo new “blog_name” 写文章了吧。。。(这里我不太确定，明天去单位电脑试试)</p>
-</li>
-<li><p>平时写完东西后就直接 hexo clean/generate/deploy 一套带走，然后就会发现我们的master分支已经有了新内容了，这是在_config.yml文件中配置的deploy起的作用，指定了master分支(而且Github Page也规定了要用master分支)，但是现在，不仅要更新文章，还要更新我们的hexo环境，所以我们还需要提交我们的环境到hexo分支，你看，master分支的修改我们不用去管，我们主要维护hexo分支，所以把hexo分支设置为默认分支更方便我们提交等(而且clone也比较方便，直接clone的就是hexo分支)。</p>
-</li>
+<li><code>CountDownLatch</code>是一次性的, 因为初始化中传递的<code>count</code>在<code>CountDownLatch</code>中是无法被恢复的; 但是<code>CyclicBarrier</code>是可以用多次的，从运行结果我们也可以看出来, 这是因为<code>CyclicBarrier</code>内部把最初的值保留在<code>parties</code>中, 每次执行减法的是它的拷贝<code>count</code>, 当<code>CyclicBarrier</code>运行完一轮后, 通常会自动调用<code>nextGeneration</code>方法, 在该方法内部又把<code>parties</code>赋值给<code>count</code>了</li>
+<li>逻辑上来讲, <code>CountDownLatch</code>是让A组线程等待B组线程全部执行完, 然后A组线程继续做该做的; <code>CyclicBarrier</code>是A组线程中的每个线程都做一些事到达<code>barrier</code>, 即进入等待状态后, <code>CyclicBarrier</code>可以做个总结之类的, 然后A组线程中的每一个又开始继续做事, 这样循环下去</li>
 </ol>
-<h3 id="稍微进一步"><a href="#稍微进一步" class="headerlink" title="稍微进一步"></a>稍微进一步</h3><p>由此我们可以总结出现在写完东西后需要做的事情，提交hexo分支(因为我们新建的文章都在hexo/source/_posts下面，所以hexo分支是必定会被改动的)，部署，一趟命令下来也不好受，那就直接把这些命令丢到脚本去吧，每次写完文章执行脚本就好了。</p>
 
       
     </div>
@@ -381,6 +378,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/CountDownLatch/" rel="tag"># CountDownLatch</a>
+          
+            <a href="/tags/CyclicBarrier/" rel="tag"># CyclicBarrier</a>
+          
+        </div>
+      
 
       
       
@@ -390,8 +395,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/20/ 22-30-43/" rel="next" title="hexo每次deploy后需要重新绑定自定义域名">
-                <i class="fa fa-chevron-left"></i> hexo每次deploy后需要重新绑定自定义域名
+              <a href="/2018/08/23/HashMap与Hashtable的异同点/" rel="next" title="HashMap与Hashtable的异同点">
+                <i class="fa fa-chevron-left"></i> HashMap与Hashtable的异同点
               </a>
             
           </div>
@@ -400,8 +405,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/23/多设备使用hexo的实操/" rel="prev" title="多设备使用hexo的实操">
-                多设备使用hexo的实操 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/08/Dijkstra-单源最短路径问题/" rel="prev" title="Dijkstra-单源最短路径问题">
+                Dijkstra-单源最短路径问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -483,7 +488,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -494,7 +499,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -505,7 +510,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -552,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#config-yml"><span class="nav-number">1.1.</span> <span class="nav-text">_config.yml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#package-json"><span class="nav-number">1.2.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scaffolds"><span class="nav-number">1.3.</span> <span class="nav-text">scaffolds</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#source"><span class="nav-number">1.4.</span> <span class="nav-text">source</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#themes"><span class="nav-number">1.5.</span> <span class="nav-text">themes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决"><span class="nav-number">2.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稍微进一步"><span class="nav-number">3.</span> <span class="nav-text">稍微进一步</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CountDownLatch"><span class="nav-number">1.</span> <span class="nav-text">CountDownLatch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">2.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别"><span class="nav-number">3.</span> <span class="nav-text">区别</span></a></li></ol></div>
             
 
           </div>
