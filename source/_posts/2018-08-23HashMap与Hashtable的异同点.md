@@ -2,7 +2,6 @@
 title: HashMap与Hashtable的异同点
 date: 2018-08-23 11:15:38
 tags:
-- different
 categories: java
 ---
 
