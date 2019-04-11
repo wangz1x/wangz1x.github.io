@@ -73,16 +73,17 @@
 
 
 
-<meta name="description" content="I wish nothing but the best for you.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="趁早">
-<meta property="og:url" content="https://zero22.top/tags/different/index.html">
+<meta name="description" content="Question:  The set [1,2,3,…,n] contains a total of n! unique permutations.By listing and labeling all of the permutations in order, we get the following sequence for n = 3:1.”123”2.”132”3.”213”4.”231”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 60. Permutation Sequence">
+<meta property="og:url" content="https://zero22.top/2019/04/11/permutation-sequence/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="I wish nothing but the best for you.">
+<meta property="og:description" content="Question:  The set [1,2,3,…,n] contains a total of n! unique permutations.By listing and labeling all of the permutations in order, we get the following sequence for n = 3:1.”123”2.”132”3.”213”4.”231”">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-11T02:34:21.168Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="趁早">
-<meta name="twitter:description" content="I wish nothing but the best for you.">
+<meta name="twitter:title" content="LeetCode 60. Permutation Sequence">
+<meta name="twitter:description" content="Question:  The set [1,2,3,…,n] contains a total of n! unique permutations.By listing and labeling all of the permutations in order, we get the following sequence for n = 3:1.”123”2.”132”3.”213”4.”231”">
 
 
 
@@ -116,7 +117,7 @@
 
 
 
-  <title>Tag: different | 趁早</title>
+  <title>LeetCode 60. Permutation Sequence | 趁早</title>
   
 
 
@@ -135,7 +136,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,54 +246,165 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>different<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/04/11/permutation-sequence/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hero22">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/08/23/HashMap与Hashtable的异同点/" itemprop="url">
-              
-                <span itemprop="name">HashMap与Hashtable的异同点</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">LeetCode 60. Permutation Sequence</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-23T11:15:38+08:00"
-              content="2018-08-23" >
-          08-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Question:</p>
+<blockquote>
+<p>The set [1,2,3,…,n] contains a total of n! unique permutations.<br>By listing and labeling all of the permutations in order, we get the following sequence for n = 3:<br>1.”123”<br>2.”132”<br>3.”213”<br>4.”231”<br>5.”312”<br>6.”321”<br>Given n(1~9) and k, return the k<sup>th</sup> permutation sequence.  </p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>Analysis:  </p>
+<p>通过观察示例我们会发现，当<code>n=3</code>时，第一位上每个数字重复的个数为2，这个重复的个数其实是由后边几位有多少种排列方式决定的。比如当<code>n=4</code>时，第一位上的重复的个数是由后边<code>3</code>位全拍列个数决定的，那就是第一位上会重复<code>6</code>次。也就是说，所有的全拍列已经被各个位上相同的数字分好了组，通过这种方式，我们可以从第一位开始，只用循环判断<code>n</code>次就能找到指定位置的排列组合。</p>
+<p>Answer:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPermutation</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] fac=&#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">24</span>, <span class="number">120</span>, <span class="number">720</span>, <span class="number">5040</span>, <span class="number">40320</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">            nums.add(i+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        String res = <span class="string">""</span>;</span><br><span class="line">        k--;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">            index = k / fac[i];</span><br><span class="line">            res += nums.remove(index);</span><br><span class="line">            k = k % fac[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>More:</p>
+<p>这里的k为什么要提前减1呢?</p>
+<p>举个例子，当<code>n=3</code>时，比如说我们要求第二个，此时<code>k=2</code>。</p>
+<p>如果我们不把k减1，得到的<code>index</code>为1，余数为0，那么按照<code>123</code>来取，第一位取到的就是<code>2</code>了。进一步归纳一下，如果k不减1，当余数为0时，其实是上一组（index-1）的最后一个。这样就会使得处理起来不那么方便。</p>
+<p>如果我们把k减1，就是把全拍列的组合是从0开始计数的。按照上边的例子，此时<code>index</code>为0，余数为1，也就是第1组的第二个，要知道我们存储<code>nums</code>的数组也是从0开始计算的，这样就不用考虑当余数为0时是<code>index</code>还是<code>index-1</code>的问题，可以统一处理，比较方便。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/30/n-queens/" rel="next" title="LeetCode 51. N-Queens I">
+                <i class="fa fa-chevron-left"></i> LeetCode 51. N-Queens I
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -300,6 +412,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -340,7 +456,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -362,7 +478,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -530,6 +646,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
