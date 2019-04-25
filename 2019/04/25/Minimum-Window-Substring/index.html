@@ -73,16 +73,17 @@
 
 
 
-<meta name="description" content="I wish nothing but the best for you.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="趁早">
-<meta property="og:url" content="https://zero22.top/categories/杂谈/index.html">
+<meta name="description" content="Question:  Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 76. Minimum Window Substring">
+<meta property="og:url" content="https://zero22.top/2019/04/25/Minimum-Window-Substring/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="I wish nothing but the best for you.">
+<meta property="og:description" content="Question:  Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-25T01:28:24.024Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="趁早">
-<meta name="twitter:description" content="I wish nothing but the best for you.">
+<meta name="twitter:title" content="LeetCode 76. Minimum Window Substring">
+<meta name="twitter:description" content="Question:  Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).">
 
 
 
@@ -116,7 +117,7 @@
 
 
 
-  <title>Category: 杂谈 | 趁早</title>
+  <title>LeetCode 76. Minimum Window Substring | 趁早</title>
   
 
 
@@ -135,7 +136,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,83 +246,140 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>杂谈<small>Category</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/04/25/Minimum-Window-Substring/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hero22">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/07/20/ 22-30-43/" itemprop="url">
-              
-                <span itemprop="name">hexo每次deploy后需要重新绑定自定义域名</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">LeetCode 76. Minimum Window Substring</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-20T22:30:43+08:00"
-              content="2018-07-20" >
-          07-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/02/ 08-49-01/" itemprop="url">
-              
-                <span itemprop="name">笔记本安装SSD, 并在SSD中安装系统</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-02T08:49:01+08:00"
-              content="2018-05-02" >
-          05-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <p>Question:</p>
+<blockquote>
+<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<p>Analysis:</p>
+<p>在S串中找到一个子串，包含T中所有的字符。可以通过滑动窗口来求解，所谓的窗口在这就可以理解为S的子串。利用数组分别保存窗口中各个字符的个数和T串中字符的个数，同时设置一个计数器，用来统计窗口中的符合T串的字符的个数。那么如何判断哪些字符是在T串中的呢，只需要判断在窗口中该字符出现的次数是否小于T串中该字符出现的次数就好了。</p>
+<p>Answer:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">minWindow</span><span class="params">(String s, String t)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 在s中找一个子串，包含t中所有的字符</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (s.length() &lt; t.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> lenS = s.length();</span><br><span class="line">        <span class="keyword">int</span> lenT = t.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] sFre = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">58</span>];</span><br><span class="line">        <span class="keyword">int</span>[] tFre = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">58</span>];</span><br><span class="line">        <span class="comment">// 窗口边界</span></span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 记录最小窗口</span></span><br><span class="line">        <span class="keyword">int</span> start = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> end = lenS + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 记录当前窗口匹配的字符个数</span></span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenT; i ++) &#123;</span><br><span class="line">            tFre[t.charAt(i) - <span class="string">'A'</span>] ++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 比如 s="adceba" t="abc", 那么 l &lt;= 3, 如果l超过3,后边所有字符长度也不够t的长度了</span></span><br><span class="line">        <span class="keyword">while</span> (l &lt;= lenS - lenT) &#123;</span><br><span class="line">            <span class="comment">// 窗口右标没有越界, 并且还没有把t串完全包含</span></span><br><span class="line">            <span class="keyword">if</span> (r &lt; lenS &amp;&amp; count &lt; lenT) &#123;</span><br><span class="line">                <span class="keyword">char</span> temp = s.charAt(r);</span><br><span class="line">                sFre[temp - <span class="string">'A'</span>] ++;</span><br><span class="line">                <span class="comment">// 当s频率小于t中的频率, 说明该字符包含在t中 </span></span><br><span class="line">                <span class="keyword">if</span> (sFre[temp - <span class="string">'A'</span>] &lt;= tFre[temp - <span class="string">'A'</span>]) &#123;</span><br><span class="line">                    count ++;</span><br><span class="line">                &#125;</span><br><span class="line">                r ++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (count &gt;= lenT) &#123;</span><br><span class="line">                <span class="keyword">char</span> temp = s.charAt(l);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (r - l &lt; end - start) &#123;</span><br><span class="line">                    start = l;</span><br><span class="line">                    end = r;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (sFre[temp - <span class="string">'A'</span>] &lt;= tFre[temp - <span class="string">'A'</span>]) &#123;</span><br><span class="line">                    count --;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                sFre[temp - <span class="string">'A'</span>] --;</span><br><span class="line">                l ++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> start == -<span class="number">1</span>? <span class="string">""</span>: s.substring(start, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/11/permutation-sequence/" rel="next" title="LeetCode 60. Permutation Sequence">
+                <i class="fa fa-chevron-left"></i> LeetCode 60. Permutation Sequence
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -329,6 +387,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -559,6 +621,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
