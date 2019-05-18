@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LeetCode 84. Maximal Rectangle]]></title>
+    <url>%2F2019%2F05%2F18%2FMaximal-Rectangle%2F</url>
+    <content type="text"><![CDATA[Question: Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram. Example: Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3]. The largest rectangle is shown in the shaded area, which has area = 10 unit. Analysis: 暴力循环是可以求出来，但是超时。通过观察可以发现，最大的面积一般不是由最高的柱决定，但是往往都会把它包含起来。所以，在找最大面积时，可以在找到了一个顶点时，再往前扫描计算面积。拿示例来说，0位置的2是一个顶点，计算面积；往后到了3位置的6又是一个顶点，往前扫描分别得到6， 10等。如此一来，就避免了很多无谓的计算。由于是在找到顶点时再计算面积，所以需要保存前面的值来判断哪个值是顶点，使用单调递增栈这一数据结构可以保存这些信息。单调递增栈，首先是个栈，其次保存的数据是递增的，当入栈的值小于栈顶时，对栈顶元素做出栈操作，直到当前值可以作为栈顶元素。 Answer: 12345678910111213141516171819202122232425262728293031323334class Solution &#123; public int largestRectangleArea(int[] heights) &#123; // 保存最大的长方形 int maxR = 0; // 取出的栈顶 int nowH = 0; //单调递增栈 ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;(); // 这里循环到 heights.length for (int i = 0; i &lt;= heights.length; i ++) &#123; if ((stack.isEmpty()) || (i &lt; heights.length &amp;&amp; heights[stack.peekLast()] &lt;= heights[i])) &#123; // 栈里边放的是位置，便于计算宽 stack.offerLast(i); &#125; else &#123; // 取出的栈顶当做当前矩形的高 nowH = stack.pollLast(); // 由于栈中是递增顺序的，取出栈顶nowH后，栈如果为空且nowH前边原本是有元素的，说明nowH比前边的都要小，也就是以[nowH]为高时可以把前边的也包含住， // 所以宽为 i // 如果取出nowH后，栈不为空，根据相应位置计算宽 maxR = Math.max(maxR, heights[nowH]*(stack.isEmpty()? i: (i - 1 - stack.peekLast()))); i --; &#125; &#125; return maxR; &#125;&#125;]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>单调栈</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode 76. Minimum Window Substring]]></title>
     <url>%2F2019%2F04%2F25%2FMinimum-Window-Substring%2F</url>
     <content type="text"><![CDATA[Question: Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). Analysis: 在S串中找到一个子串，包含T中所有的字符。可以通过滑动窗口来求解，所谓的窗口在这就可以理解为S的子串。利用数组分别保存窗口中各个字符的个数和T串中字符的个数，同时设置一个计数器，用来统计窗口中的符合T串的字符的个数。那么如何判断哪些字符是在T串中的呢，只需要判断在窗口中该字符出现的次数是否小于T串中该字符出现的次数就好了。 Answer: 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364class Solution &#123; public String minWindow(String s, String t) &#123; // 在s中找一个子串，包含t中所有的字符 if (s.length() &lt; t.length()) &#123; return ""; &#125; int lenS = s.length(); int lenT = t.length(); int[] sFre = new int[58]; int[] tFre = new int[58]; // 窗口边界 int l = 0; int r = 0; // 记录最小窗口 int start = -1; int end = lenS + 1; // 记录当前窗口匹配的字符个数 int count = 0; for (int i = 0; i &lt; lenT; i ++) &#123; tFre[t.charAt(i) - 'A'] ++; &#125; // 比如 s="adceba" t="abc", 那么 l &lt;= 3, 如果l超过3,后边所有字符长度也不够t的长度了 while (l &lt;= lenS - lenT) &#123; // 窗口右标没有越界, 并且还没有把t串完全包含 if (r &lt; lenS &amp;&amp; count &lt; lenT) &#123; char temp = s.charAt(r); sFre[temp - 'A'] ++; // 当s频率小于t中的频率, 说明该字符包含在t中 if (sFre[temp - 'A'] &lt;= tFre[temp - 'A']) &#123; count ++; &#125; r ++; &#125; else if (count &gt;= lenT) &#123; char temp = s.charAt(l); if (r - l &lt; end - start) &#123; start = l; end = r; &#125; if (sFre[temp - 'A'] &lt;= tFre[temp - 'A']) &#123; count --; &#125; sFre[temp - 'A'] --; l ++; &#125; else &#123; break; &#125; &#125; return start == -1? "": s.substring(start, end); &#125;&#125;]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>substring</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[LeetCode 60. Permutation Sequence]]></title>
