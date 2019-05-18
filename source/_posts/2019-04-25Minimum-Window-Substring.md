@@ -1,7 +1,8 @@
 ---
 title: LeetCode 76. Minimum Window Substring
 date: 2019-04-25 08:27:50
-tags:
+tags: substring
+categories: LeetCode
 ---
 
 Question:
