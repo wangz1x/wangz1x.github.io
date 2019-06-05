@@ -48,9 +48,9 @@ class Solution {
                 // 取出的栈顶当做当前矩形的高
                 nowH = stack.pollLast();
 
-                // 由于栈中是递增顺序的，取出栈顶nowH后，栈如果为空且nowH前边原本是有元素的，说明nowH比前边的都要小，也就是以[nowH]为高时可以把前边的也包含住，
-                // 所以宽为 i
-                // 如果取出nowH后，栈不为空，根据相应位置计算宽
+                // 1. 由于栈中是递增顺序的，取出栈顶nowH后，栈如果为空且nowH前边原本是有元素的，说明nowH比前边的都要小，也就是以[nowH]为高时可以
+                //      把前边的也包含住，所以宽为 i
+                // 2. 如果取出nowH后，栈不为空，根据相应位置计算宽
                 maxR = Math.max(maxR, heights[nowH]*(stack.isEmpty()? i: (i - 1 - stack.peekLast())));
 
                 i --;
