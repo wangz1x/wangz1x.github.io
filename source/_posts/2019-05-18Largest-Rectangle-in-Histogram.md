@@ -1,5 +1,5 @@
 ---
-title: LeetCode 84. Maximal Rectangle
+title: LeetCode 84. Largest Rectangle in Histogram
 date: 2019-05-18 11:27:34
 tags: 单调栈
 categories: LeetCode
