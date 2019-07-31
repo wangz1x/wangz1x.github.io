@@ -2,7 +2,7 @@
 title: 本科毕业答辩
 date: 2019-06-05 15:43:23
 tags: reply
-categories: nichijou
+categories: Nichijou
 ---
 
 答辩这点小事。

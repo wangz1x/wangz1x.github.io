@@ -1,7 +1,7 @@
 ---
 title: java中的static
 date: 2018-08-08 18:27:33
-categories: java
+categories: Java
 ---
 
 java中的static想必很常见了，但是若要问到其具体的用法，你又能说出几种呢

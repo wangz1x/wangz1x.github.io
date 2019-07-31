@@ -3,7 +3,7 @@ title: Huffman Coding
 date: 2018-09-17 14:48:06
 tags:
 - huffman
-categories: algorithm
+categories: Algorithm
 ---
 
 前两天做笔试题时碰到了久违的哈夫曼编码, 想当初还用c实现过了, 但是做题的时候突然就忘了哈夫曼的实现过程- -，下面记录一下具体的步骤。

@@ -3,7 +3,7 @@ title: java中的transient
 date: 2018-08-10 09:02:00
 tags:
 - transient
-categories: java
+categories: Java
 ---
 
 ### transient本意
