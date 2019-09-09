@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="单调栈," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -73,21 +73,16 @@
 
 
 
-<meta name="description" content="Question:  Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.">
-<meta name="keywords" content="单调栈">
-<meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 84. Maximal Rectangle">
-<meta property="og:url" content="https://zero22.top/2019/05/18/Maximal-Rectangle/index.html">
+<meta name="description" content="I wish nothing but the best for you.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="趁早">
+<meta property="og:url" content="https://zero22.top/categories/LeetCode/page/2/index.html">
 <meta property="og:site_name" content="趁早">
-<meta property="og:description" content="Question:  Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.">
+<meta property="og:description" content="I wish nothing but the best for you.">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://image.zero22.top/max/rectangle/histogram.png">
-<meta property="og:image" content="https://image.zero22.top/max/rectangle/histogram_area.png">
-<meta property="og:updated_time" content="2019-05-18T05:16:03.432Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode 84. Maximal Rectangle">
-<meta name="twitter:description" content="Question:  Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.">
-<meta name="twitter:image" content="https://image.zero22.top/max/rectangle/histogram.png">
+<meta name="twitter:title" content="趁早">
+<meta name="twitter:description" content="I wish nothing but the best for you.">
 
 
 
@@ -121,7 +116,7 @@
 
 
 
-  <title>LeetCode 84. Maximal Rectangle | 趁早</title>
+  <title>Category: LeetCode | 趁早</title>
   
 
 
@@ -140,7 +135,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -250,171 +245,87 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>LeetCode<small>Category</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/05/18/Maximal-Rectangle/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hero22">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/03/27/Pow/" itemprop="url">
+              
+                <span itemprop="name">LeetCode 50. Pow(x, n)</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">LeetCode 84. Maximal Rectangle</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-03-27T14:00:11+08:00"
+              content="2019-03-27" >
+          03-27
+        </time>
+      </div>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>Question:</p>
-<blockquote>
-<p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
-</blockquote>
-<a id="more"></a>
-<p>Example:</p>
-<p><img src="https://image.zero22.top/max/rectangle/histogram.png" alt="histogram"><br>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
-<p><img src="https://image.zero22.top/max/rectangle/histogram_area.png" alt="largest"><br>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
-<p>Analysis:</p>
-<p>暴力循环是可以求出来，但是超时。通过观察可以发现，最大的面积一般不是由最高的柱决定，但是往往都会把它包含起来。所以，在找最大面积时，可以在找到了一个顶点时，再往前扫描计算面积。拿示例来说，0位置的2是一个顶点，计算面积；往后到了3位置的6又是一个顶点，往前扫描分别得到6， 10等。如此一来，就避免了很多无谓的计算。由于是在找到顶点时再计算面积，所以需要保存前面的值来判断哪个值是顶点，使用单调递增栈这一数据结构可以保存这些信息。单调递增栈，首先是个栈，其次保存的数据是递增的，当入栈的值小于栈顶时，对栈顶元素做出栈操作，直到当前值可以作为栈顶元素。</p>
-<p>Answer:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存最大的长方形</span></span><br><span class="line">        <span class="keyword">int</span> maxR = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 取出的栈顶</span></span><br><span class="line">        <span class="keyword">int</span> nowH = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//单调递增栈</span></span><br><span class="line">        ArrayDeque&lt;Integer&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里循环到 heights.length</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= heights.length; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((stack.isEmpty()) || (i &lt; heights.length &amp;&amp; heights[stack.peekLast()] &lt;= heights[i])) &#123;</span><br><span class="line">                <span class="comment">// 栈里边放的是位置，便于计算宽</span></span><br><span class="line">                stack.offerLast(i);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 取出的栈顶当做当前矩形的高</span></span><br><span class="line">                nowH = stack.pollLast();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 1. 由于栈中是递增顺序的，取出栈顶nowH后，栈如果为空且nowH前边原本是有元素的，说明nowH比前边的都要小，也就是以[nowH]为高时可以</span></span><br><span class="line">                <span class="comment">//      把前边的也包含住，所以宽为 i</span></span><br><span class="line">                <span class="comment">// 2. 如果取出nowH后，栈不为空，根据相应位置计算宽</span></span><br><span class="line">                maxR = Math.max(maxR, heights[nowH]*(stack.isEmpty()? i: (i - <span class="number">1</span> - stack.peekLast())));</span><br><span class="line"></span><br><span class="line">                i --;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> maxR;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/单调栈/" rel="tag"># 单调栈</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/25/Minimum-Window-Substring/" rel="next" title="LeetCode 76. Minimum Window Substring">
-                <i class="fa fa-chevron-left"></i> LeetCode 76. Minimum Window Substring
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/05/graduation-reply/" rel="prev" title="graduation reply">
-                graduation reply <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
+      
+        
 
-    <div class="post-spread">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/08/14/Manacher算法求最长回文串/" itemprop="url">
+              
+                <span itemprop="name">LeetCode 5. Longest Palindromic Substring</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-08-14T14:23:53+08:00"
+              content="2018-08-14" >
+          08-14
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/LeetCode/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/categories/LeetCode/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
 
           </div>
@@ -422,10 +333,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -466,7 +373,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -477,7 +384,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -488,7 +395,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -656,10 +563,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 

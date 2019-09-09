@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/06/05/graduation-reply/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/09/07/PR-ROC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/05/graduation-reply/" itemprop="url">graduation reply</a></h1>
+                <a class="post-title-link" href="/2019/09/07/PR-ROC/" itemprop="url">PR,ROC</a></h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nichijou/" itemprop="url" rel="index">
-                    <span itemprop="name">nichijou</span>
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
                   </a>
                 </span>
 
@@ -340,10 +340,152 @@
 
       
         
-          <p>答辩这点小事。<br>
+          
+            <h3 id="混淆矩阵"><a href="#混淆矩阵" class="headerlink" title="混淆矩阵"></a>混淆矩阵</h3><p>在对分类问题进行评估时考虑使用混淆矩阵，如下图所示：</p>
+<p><img src="https://image.zero22.top/PR_ROC/confusion_matrix.png" alt="confusion matrix"></p>
+<p>根据该矩阵可以得到不同的评估指标。</p>
+<p><strong>精确度</strong>(precision): 预测结果为<code>P</code>的实例中，确实为<code>P</code>的实例所占比例.</p>
+<pre><code>precision = TP/(TP+FP)
+</code></pre><p><strong>召回率</strong>(recall): 正确预测为<code>P</code>的实例占所有为<code>P</code>的实例的比例</p>
+<pre><code>recall = TP/(TP+FN)
+</code></pre><h3 id="PR图"><a href="#PR图" class="headerlink" title="PR图"></a>PR图</h3><p><img src="https://image.zero22.top/PR_ROC/pr.png" alt="pr"></p>
+<p>从图中可以看出，<code>precision</code>和<code>recall</code>是成反比关系的，因此在评估一个分类模型时，需要同时考虑这两个指标.</p>
+<h3 id="ROC图"><a href="#ROC图" class="headerlink" title="ROC图"></a>ROC图</h3><p><code>ROC</code>全称为<code>receiver operating characteristic</code>, 该曲线描述了正报率和误报率之间的关系，其图像大致为:</p>
+<p><img src="https://image.zero22.top/PR_ROC/roc.png" alt="roc"></p>
+<p>通过比较ROC曲线下方的面积(area under the curve/AUC)来比较不同的分类模型，一个理想的分类模型其<code>AUC</code>等于1.</p>
+<h3 id="用哪一个图"><a href="#用哪一个图" class="headerlink" title="用哪一个图"></a>用哪一个图</h3><p>当正类数量很少，或者更关注<code>FP</code>而不是<code>FN</code>时，最好选择<code>PR图</code>;其他情况下可以考虑使用<code>ROC图</code>.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/26/prepare-the-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hero22">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/26/prepare-the-data/" itemprop="url">机器学习(1). 数据预处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ML/" itemprop="url" rel="index">
+                    <span itemprop="name">ML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在训练模型之前，需要对数据进行预处理，主要包括以下几步：划分数据集、数据清理、处理非数值类型等。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/05/graduation-reply/#more" rel="contents">
+            <a class="btn" href="/2019/07/26/prepare-the-data/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -394,7 +536,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/05/18/Maximal-Rectangle/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/25/Binary-Tree-Maximum-Path-SUm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -413,7 +555,124 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/18/Maximal-Rectangle/" itemprop="url">LeetCode 84. Maximal Rectangle</a></h1>
+                <a class="post-title-link" href="/2019/07/25/Binary-Tree-Maximum-Path-SUm/" itemprop="url">LeetCode 124.Binary Tree Maximum Path Sum</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Question:</p>
+<blockquote>
+<p>Given a non-empty binary tree, find the maximum path sum.</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/25/Binary-Tree-Maximum-Path-SUm/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/25/Distinct-Subsequences/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hero22">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/25/Distinct-Subsequences/" itemprop="url">LeetCode 115.Distinct Subsequences</a></h1>
         
 
         <div class="post-meta">
@@ -476,11 +735,11 @@
         
           <p>Question:</p>
 <blockquote>
-<p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
+<p>Given a string S and a string T, count the number of distinct subsequences of S which equals T.</p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/05/18/Maximal-Rectangle/#more" rel="contents">
+            <a class="btn" href="/2019/07/25/Distinct-Subsequences/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -531,7 +790,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/04/25/Minimum-Window-Substring/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/13/Interleaving-String/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -550,7 +809,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/25/Minimum-Window-Substring/" itemprop="url">LeetCode 76. Minimum Window Substring</a></h1>
+                <a class="post-title-link" href="/2019/07/13/Interleaving-String/" itemprop="url">LeetCode 97.Interleaving_String</a></h1>
         
 
         <div class="post-meta">
@@ -613,11 +872,11 @@
         
           <p>Question:</p>
 <blockquote>
-<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+<p>Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.</p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/25/Minimum-Window-Substring/#more" rel="contents">
+            <a class="btn" href="/2019/07/13/Interleaving-String/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -668,7 +927,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/04/11/permutation-sequence/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/06/Unique-Binary-Search-Trees/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -687,7 +946,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/11/permutation-sequence/" itemprop="url">LeetCode 60. Permutation Sequence</a></h1>
+                <a class="post-title-link" href="/2019/07/06/Unique-Binary-Search-Trees/" itemprop="url">LeetCode 95.Unique Binary Search Trees II</a></h1>
         
 
         <div class="post-meta">
@@ -750,11 +1009,11 @@
         
           <p>Question:</p>
 <blockquote>
-<p>The set [1,2,3,…,n] contains a total of n! unique permutations.<br>By listing and labeling all of the permutations in order, we get the following sequence for n = 3:<br>1.”123”<br>2.”132”<br>3.”213”<br>4.”231”<br>5.”312”<br>6.”321”<br>Given n(1~9) and k, return the k<sup>th</sup> permutation sequence.  </p>
+<p>Given an integer n, generate all structurally unique BST’s (binary search trees) that store values 1 … n.</p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/11/permutation-sequence/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/Unique-Binary-Search-Trees/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -805,7 +1064,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/03/30/n-queens/">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/07/03/decode-ways/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hero22">
@@ -824,7 +1083,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/30/n-queens/" itemprop="url">LeetCode 51. N-Queens I</a></h1>
+                <a class="post-title-link" href="/2019/07/03/decode-ways/" itemprop="url">LeetCode 91.Decode ways</a></h1>
         
 
         <div class="post-meta">
@@ -885,288 +1144,13 @@
 
       
         
-          <p>Question:</p>
+          <p>Question</p>
 <blockquote>
-<p>The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.<br><img src="https://image.zero22.top/8-queens.png" alt="n-queens"><br>Given an integer n, return the number of distinct solutions to the n-queens puzzle.</p>
+<p>A message containing letters from A-Z is being encoded to numbers using the following mapping:</p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/03/30/n-queens/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/03/27/Wildcard-Matching/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hero22">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/27/Wildcard-Matching/" itemprop="url">LeetCode 44. Wildcard Matching</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Question:  </p>
-<blockquote>
-<p>Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;?&apos; Matches any single character.</span><br><span class="line">&apos;*&apos; Matches any sequence of characters (including the empty sequence).</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/27/Wildcard-Matching/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2019/03/27/Pow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hero22">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://image.zero22.top/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/27/Pow/" itemprop="url">LeetCode 50. Pow(x, n)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Question:</p>
-<blockquote>
-<p>Implement pow(x, n), which calculates x raised to the power n (x<sup>n</sup>).</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/27/Pow/#more" rel="contents">
+            <a class="btn" href="/2019/07/03/decode-ways/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1208,7 +1192,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1258,7 +1242,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1269,7 +1253,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1280,7 +1264,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
