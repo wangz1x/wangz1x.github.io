@@ -279,7 +279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/07/PR-ROC/" itemprop="url">PR,ROC</a></h1>
+                <a class="post-title-link" href="/2019/09/07/PR-ROC/" itemprop="url">机器学习(2) PR,ROC</a></h1>
         
 
         <div class="post-meta">
@@ -340,22 +340,14 @@
 
       
         
-          
-            <h3 id="混淆矩阵"><a href="#混淆矩阵" class="headerlink" title="混淆矩阵"></a>混淆矩阵</h3><p>在对分类问题进行评估时考虑使用混淆矩阵，如下图所示：</p>
-<p><img src="https://image.zero22.top/PR_ROC/confusion_matrix.png" alt="confusion matrix"></p>
-<p>根据该矩阵可以得到不同的评估指标。</p>
-<p><strong>精确度</strong>(precision): 预测结果为<code>P</code>的实例中，确实为<code>P</code>的实例所占比例.</p>
-<pre><code>precision = TP/(TP+FP)
-</code></pre><p><strong>召回率</strong>(recall): 正确预测为<code>P</code>的实例占所有为<code>P</code>的实例的比例</p>
-<pre><code>recall = TP/(TP+FN)
-</code></pre><h3 id="PR图"><a href="#PR图" class="headerlink" title="PR图"></a>PR图</h3><p><img src="https://image.zero22.top/PR_ROC/pr.png" alt="pr"></p>
-<p>从图中可以看出，<code>precision</code>和<code>recall</code>是成反比关系的，因此在评估一个分类模型时，需要同时考虑这两个指标.</p>
-<h3 id="ROC图"><a href="#ROC图" class="headerlink" title="ROC图"></a>ROC图</h3><p><code>ROC</code>全称为<code>receiver operating characteristic</code>, 该曲线描述了正报率和误报率之间的关系，其图像大致为:</p>
-<p><img src="https://image.zero22.top/PR_ROC/roc.png" alt="roc"></p>
-<p>通过比较ROC曲线下方的面积(area under the curve/AUC)来比较不同的分类模型，一个理想的分类模型其<code>AUC</code>等于1.</p>
-<h3 id="用哪一个图"><a href="#用哪一个图" class="headerlink" title="用哪一个图"></a>用哪一个图</h3><p>当正类数量很少，或者更关注<code>FP</code>而不是<code>FN</code>时，最好选择<code>PR图</code>;其他情况下可以考虑使用<code>ROC图</code>.</p>
-
-          
+          <p>简述一下PR图和ROC曲线.</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/07/PR-ROC/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -421,7 +413,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/26/prepare-the-data/" itemprop="url">机器学习(1). 数据预处理</a></h1>
+                <a class="post-title-link" href="/2019/07/26/prepare-the-data/" itemprop="url">机器学习(1) 数据预处理</a></h1>
         
 
         <div class="post-meta">
