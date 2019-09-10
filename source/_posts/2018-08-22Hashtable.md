@@ -3,6 +3,7 @@ title: Hashtable
 date: 2018-08-22 11:27:40
 tags:
 - fail-fast
+- Hashtable
 categories: Java
 ---
 

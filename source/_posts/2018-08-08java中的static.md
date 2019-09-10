@@ -1,6 +1,8 @@
 ---
 title: java中的static
 date: 2018-08-08 18:27:33
+tags:
+- static
 categories: Java
 ---
 
