@@ -10,6 +10,8 @@ categories: ML
 
 **训练模型**为`DecisionTreeClassifier`决策树.  
 
+<!--more-->
+
 ``` python
 import numpy as np
 from sklearn.datasets import make_moons
