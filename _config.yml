@@ -101,4 +101,5 @@ math:
       # KaTeX config
 
 # Enable Mathjax
-mathjax: true
+mathjax: 
+  enable: true
