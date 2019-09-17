@@ -4,10 +4,6 @@ date: 2019-09-17 14:40:38
 tags:
 categories: Dependable Systems
 ---
-<!-- <script id="MathJax-script" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script> -->
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 由于没有可信计算的背景知识，看师哥的故障树文章感觉很困难，主要是没有系统的学习其中的分析方法，表达式，以及概率计算公式，大致记录一下《An Algebraic Binary Decision Diagram for Analysis of Dynamic Fault Tree》一文中出现的名词。
 
