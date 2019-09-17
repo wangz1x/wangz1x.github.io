@@ -87,19 +87,3 @@ search:
   field: post
   format: html
   limit: 10000
-
-math:
-  engine: 'mathjax' # or 'katex'
-  mathjax:
-    src: custom_mathjax_source
-    config:
-      # MathJax config
-  katex:
-    css: custom_css_source
-    js: custom_js_source # not used
-    config:
-      # KaTeX config
-
-# Enable Mathjax
-mathjax: 
-  enable: true
