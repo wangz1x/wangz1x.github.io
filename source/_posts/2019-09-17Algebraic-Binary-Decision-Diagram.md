@@ -2,7 +2,7 @@
 title: Algebraic Binary Decision Diagram
 date: 2019-09-17 14:40:38
 tags:
-categories: Dependable Systems
+categories: Academia
 mathjax: true
 ---
 
