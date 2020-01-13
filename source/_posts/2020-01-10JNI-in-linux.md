@@ -98,8 +98,10 @@ gcc -I/root/jdk-11.0.5/include
 
 `-fPIC`: 当编译的时候不用这个指令的话，在后边生成动态库会出问题：
 
-  /usr/bin/ld: HelloJni.o: relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
-  /usr/bin/ld: final link failed: Nonrepresentable section on output
+
+    /usr/bin/ld: HelloJni.o: relocation R_X86_64_32 against .rodata can not be used when making a shared object; recompile with -fPIC
+    /usr/bin/ld: final link failed: Nonrepresentable section on output
+
 
 编译好后得到`HelloJni.o`文件，做进一步处理：
 
@@ -114,7 +116,7 @@ gcc -shared -o libHelloJni.so HelloJni.o
 
 如果直接运行，还是会报错，
 
-  Exception in thread "main" java.lang.UnsatisfiedLinkError: no HelloJni in java.library.path: [/usr/java/packages/lib, /usr/lib64, /lib64, /lib, /usr/lib]
+    Exception in thread "main" java.lang.UnsatisfiedLinkError: no HelloJni in java.library.path: [/usr/java/packages/lib, /usr/lib64, /lib64, /lib, /usr/lib]
 
 会发现我们得到的链接文件不在后边的`path`中，可以选择把得到的链接文件拷一份，或者使用命令:
 
