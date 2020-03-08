@@ -73,9 +73,9 @@ categories: Algorithm
 
 #### 兄弟为红
 
-通过旋转往这边均个点改为黑的(图优点问题，还没刷新)。
+通过旋转往这边均个点改为黑的。
 
-![](https://image.zero22.top/red-black/deletecase3fu.png)
+![](https://image.zero22.top/red-black/deletecase3.png)
 
 #### 兄弟同边孩子为红
 
