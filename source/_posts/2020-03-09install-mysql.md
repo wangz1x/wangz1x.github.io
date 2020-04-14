@@ -1,6 +1,6 @@
 ---
 title: install mysql
-date: 2019-03-09 11:12:42
+date: 2020-03-09 11:12:42
 tags: mysql
 categories: 
 ---
