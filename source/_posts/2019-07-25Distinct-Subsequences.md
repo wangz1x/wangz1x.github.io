@@ -3,7 +3,7 @@ title: LeetCode 115.Distinct Subsequences
 date: 2019-07-25 08:42:38
 tags: 
 - dp
-- leetCode
+- leetcode
 ---
 
 Question:
