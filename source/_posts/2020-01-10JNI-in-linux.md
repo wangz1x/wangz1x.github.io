@@ -2,7 +2,6 @@
 title: JNI in linux
 date: 2020-01-10 11:58:41
 tags: JNI
-categories: Java
 ---
 
 在复习`JVM`时又看到了本地方法栈, 那么本地方法是个什么方法呢。`JNI`即`java native interface`, 通过这个东西可以实现在`Java`中调用其他编程语言实现的功能，在和系统底层交互时`Java`大都通过`JNI`调用`C/C++`来实现的。

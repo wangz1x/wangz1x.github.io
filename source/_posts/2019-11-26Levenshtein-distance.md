@@ -2,7 +2,8 @@
 title: Levenshtein distance
 date: 2019-11-26 21:40:43
 tags:
-categories: Algorithm
+- 编辑距离
+- dp
 ---
 
 `Levenshtein distance`就是编辑距离，简单说就是将一个字符串A通过删除、插入、替换三种操作转化为字符串B，最少的操作数就称为编辑距离。可以通过DP实现编辑距离求解.

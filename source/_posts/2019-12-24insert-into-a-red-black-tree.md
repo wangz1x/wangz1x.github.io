@@ -1,8 +1,9 @@
 ---
 title: insert into a red-black tree
 date: 2019-12-24 15:08:48
-tags: red-black-tree
-categories: Algorithm
+tags: 
+- 红黑树
+- RedBlackTree
 ---
 
 ### 性质

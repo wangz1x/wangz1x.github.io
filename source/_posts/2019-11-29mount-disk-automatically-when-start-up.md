@@ -2,7 +2,7 @@
 title: Mount disk automatically when start up
 date: 2019-11-29 20:54:50
 tags:
-categories: Linux
+- linux
 ---
 
 其实不用手动操作，`deepin`也会自动挂载磁盘，只不过它的路径看起来太长了。

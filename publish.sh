@@ -9,7 +9,7 @@ git push
 # update blog to master branch which used to show blogs
 # when change the theme and the changes do not work, you should run hexo clean
 # hexo clean
-# hexo g -d
+hexo g -d
 
 # same to hexo g -d
 # hexo d -g

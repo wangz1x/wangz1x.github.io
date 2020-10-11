@@ -3,7 +3,7 @@ title: 原子类AtomicInteger的自增
 date: 2018-08-13 16:38:56
 tags:
 - unsafe
-categories: Java
+- automic
 ---
 
 包 java.util.concurrent.atomic 下有很多原子类，可以在不使用锁的前提下实现并发，下面就AtomicInteger来深入看看原子类。

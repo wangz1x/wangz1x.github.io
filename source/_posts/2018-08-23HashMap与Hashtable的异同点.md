@@ -4,7 +4,6 @@ date: 2018-08-23 11:15:38
 tags:
 - HashMap
 - Hashtable
-categories: Java
 ---
 
 总结一下`HashMap`和`Hashtable`的区别，可能会不全，后面有发现了再补充。

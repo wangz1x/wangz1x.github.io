@@ -2,8 +2,9 @@
 title: LeetCode 44. Wildcard Matching
 date: 2019-03-27 14:32:41
 tags:
-- match
-categories: LeetCode
+- 通配符匹配
+- leetCode
+- 双指针
 ---
 
 Question:  

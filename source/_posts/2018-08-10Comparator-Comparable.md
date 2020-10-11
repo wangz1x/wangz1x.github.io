@@ -1,7 +1,7 @@
 ---
 title: Comparator/Comparable
 date: 2018-08-10 15:32:44
-categories: Java
+tag: comparator/comparable
 ---
 
 关于java中的Comparator和Comparable，经常会看到，但是因为没有深入的研究，老是把这两个东西搞混淆，很烦，在这里总结一下。

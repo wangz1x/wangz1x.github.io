@@ -1,8 +1,9 @@
 ---
 title: LeetCode 85.Maximal Rectangle
 date: 2019-06-21 12:31:09
-tags: binary
-categories: LeetCode
+tags: 
+- 二进制
+- leetCode
 ---
 
 Question:

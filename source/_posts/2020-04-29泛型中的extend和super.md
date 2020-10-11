@@ -2,7 +2,8 @@
 title: 泛型中的extend和super
 date: 2020-04-29 16:13:28
 tags:
-categories: Java
+- 泛型
+- generics
 ---
 
 在`java`中经常会看到泛型中使用`<? extends T>/<? super T>` ，这个[回答](https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java)很好，这里记下我看后的思考。

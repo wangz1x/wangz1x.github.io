@@ -1,8 +1,9 @@
 ---
 title: LeetCode 91.Decode ways
 date: 2019-07-03 08:29:25
-tags: dp
-categories: LeetCode
+tags: 
+- dp
+- leetCode
 ---
 
 Question

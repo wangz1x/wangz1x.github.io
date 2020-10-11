@@ -2,7 +2,7 @@
 title: LeetCode 60. Permutation Sequence
 date: 2019-04-11 09:49:11
 tags:
-categories: LeetCode
+- leetCode
 ---
 
 Question:

@@ -4,7 +4,6 @@ date: 2018-08-22 11:27:40
 tags:
 - fail-fast
 - Hashtable
-categories: Java
 ---
 
 基本上不会用到了，在官方API中这样写道：

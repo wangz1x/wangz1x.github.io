@@ -4,7 +4,6 @@ date: 2019-09-10 21:31:25
 tags:
 - hexo
 - git
-categories: Gossip
 ---
 
 ### 问题

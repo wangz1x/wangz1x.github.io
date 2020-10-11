@@ -1,9 +1,8 @@
 ---
-title: JAVA之ERROR/EXCEPTION
+title: error/exception in java
 date: 2018-06-24 23:24:09
 tags:
 - error/exception
-categories: Java
 ---
 
 ### java异常分为Error和Exception，二者都是继承自Throwable

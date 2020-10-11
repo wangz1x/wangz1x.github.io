@@ -2,7 +2,10 @@
 title: Java中的String
 date: 2020-07-31 19:20:32
 tags:
-categories: Java
+- java
+- 字符串常量池
+- StringTable
+- jvm
 ---
 
 ```java

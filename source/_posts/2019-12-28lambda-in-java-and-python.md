@@ -2,7 +2,6 @@
 title: lambda in java and python
 date: 2019-12-28 15:22:20
 tags: lambda
-categories: Trick
 ---
 
 [Anonymous function](https://en.wikipedia.org/wiki/Anonymous_function): In computer programming, an anonymous function (function literal, lambda abstraction, or lambda expression) is a function definition that is not bound to an identifier. 

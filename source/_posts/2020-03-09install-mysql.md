@@ -2,7 +2,6 @@
 title: install mysql
 date: 2020-03-09 11:12:42
 tags: mysql
-categories: 
 ---
 
 在`windows`中使用数据库，首先下载，网不好的话可以去[这](https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/MySQL-8.0/mysql-8.0.17-winx64.msi)
