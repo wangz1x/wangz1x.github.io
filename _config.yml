@@ -79,8 +79,9 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:Hero22/Hero22.github.io.git
-  repository: git@gitee.com:wangz1x/wangz1x.git
+  repository: 
+    git@github.com:Hero22/Hero22.github.io.git
+    git@gitee.com:wangz1x/wangz1x.git
   branch: master
 
 search:
