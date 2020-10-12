@@ -50,7 +50,7 @@ public static void main(String[] args) {
 
 依次点击`Tools->Object Histogram`, 在列出来的类中双击`String`类型，然后找到上边写的`str`串，如下图
 
-![](https://image.zero22.top/string_in_java/str.png)
+![](fig1.png)
 
 发现如下三点：
 
@@ -71,7 +71,7 @@ public static void main(String[] args) {
 
 这次只修改了字符串的声明，仍然按照上述步骤，看到的信息如下
 
-![](https://image.zero22.top/string_in_java/str1.png)
+![](fig2.png)
 
 发现这里出现了两个`str1`，继续
 
@@ -86,7 +86,7 @@ public static void main(String[] args) {
 
 对**case1**进行修改，`append`一个不一样的串，结果如下
 
-![](https://image.zero22.top/string_in_java/strstr1.png)
+![](fig3.png)
 
 在类似的地址上找到了三个串，继续变
 
@@ -101,7 +101,7 @@ public static void main(String[] args) {
 
 这次也不追加了，就一个，结果如下
 
-![](https://image.zero22.top/string_in_java/strstr.png)
+![](fig4.png)
 
 结果和**case2**一样，继续
 
@@ -116,7 +116,7 @@ public static void main(String[] args) {
 
 结果如下，只有一个串
 
-![](https://image.zero22.top/string_in_java/str2.png)
+![](fig5.png)
 
 -------
 
@@ -137,7 +137,7 @@ public static void main(String[] args) {
 
 再对这个例子画个小图
 
-![](https://image.zero22.top/string_in_java/figstr.png)
+![](fig6.png)
 
 -----
 

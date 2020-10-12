@@ -14,9 +14,9 @@ tags:
 1. 计算各个待编码字符出现的频率. 比如`HELLOWORLD`，一共10个字符，`H` `E` `W` `R` `D`各1次，`L`3次，`O`2次，各自出现的频率就是**次数/总数**。
 2. 在频率中找最小的两个值，相加，结果放进频率集中。这样做的目的是，频率越小，说明出现的次数相对越少，那么在进行`Huffman`编码时，这些小频率的字符就在`Huffman`树的底层，则生成的编码就越长，相对的，频率高的就出现在`Huffman`树的高层，生成的编码越短，这样就可能起到压缩的效果。例如当前的频率集为`0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3`，选取两个0.1进行操作，新的频率集为`0.1, 0.1, 0.1, 0.2, 0.2, 0.3`。
 3. 构造`Huffman`树:
-![enter description here](https://image.zero22.top/huffmancoding/huffman.png)
+![enter description here](fig1.png)
 4. 重复第二步直到构造出完整的`Huffman`树，接下来就是编码了，很简单，左右子树分别标记为0/1，如下图:
-![enter description here](https://image.zero22.top/huffmancoding/huffman2.png)
+![enter description here](fig2.png)
 每个字符的编码就是从根节点到该节点路径上的标识，比如`W`为`000`，`H`为`1010`。
 
 ### 总结

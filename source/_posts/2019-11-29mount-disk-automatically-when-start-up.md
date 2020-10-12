@@ -18,11 +18,11 @@ tags:
 2. 查看磁盘的UUID
 
 可以使用命令`blkid`，或者是`lsblk --fs`
-![haha](https://image.zero22.top/mount/lsblk2.jpg)
+![haha](fig1.jpg)
 
-![xixi](https://image.zero22.top/mount/blkid.jpg)
+![xixi](fig2.jpg)
 
 3. 编辑文件
 
 `/etc/fstab`这个文件应该就是控制系统启动时所加载的磁盘，仿照上边规范的写法，加上自定的加载磁盘就好。
-![heihei](https://image.zero22.top/mount/fstab.jpg)
+![heihei](fig3.jpg)

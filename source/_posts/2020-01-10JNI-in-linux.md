@@ -127,4 +127,3 @@ export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
 
 最后直接运行`java`代码，当然首先要`javac`。
 
-![](https://image.zero22.top/jni/jni.png)

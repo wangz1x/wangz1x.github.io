@@ -14,7 +14,7 @@ tags:
 
 假设我们现在要求字符串A的前i个字符转化为字符串B的前j个字符的最小操作数，如**图1**所示
 
-![图1](https://image.zero22.top/levenshtein/levenshtein.png)
+![图1](fig1.png)
 
 图中的箭头表示这个状态矩阵填写的顺序，因此我们也已经有了`T[i-1][j]`, `T[i][j-1]`, `T[i-1][j-1]`等知识
 

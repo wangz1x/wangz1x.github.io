@@ -37,9 +37,9 @@ int compare(T o1, T o2);
 
 #### 示例
 代码:
-![按照销量升序](https://image.zero22.top/example1.png)
+![按照销量升序](fig1.png)
 结果:
-![enter description here](https://image.zero22.top/result1.png)
+![enter description here](fig2.png)
 
 ### java.util.Comparable
 #### 只有一个方法
@@ -62,22 +62,22 @@ public int compareTo(T o);
 
 #### 示例
 代码:
-![enter description here](https://image.zero22.top/example2.png)
+![enter description here](fig3.png)
 结果:
-![enter description here](https://image.zero22.top/result2.png)
+![enter description here](fig4.png)
 
 ### 扩展
 java.util.Collections.sort最终还是会调用java.util.Arrays里的sort方法，我们跟着他在源码中跳几下，看看这个过程
 #### step0
-![程序中调用Collections.sort](https://image.zero22.top/sort0.png)
+![程序中调用Collections.sort](fig5.png)
 #### step1
-![调用List的sort](https://image.zero22.top/sort1.png)
+![调用List的sort](fig6.png)
 #### step2
-![List中调用Arrays.sort](https://image.zero22.top/sort2.png)
+![List中调用Arrays.sort](fig7.png)
 #### step3
-![根据是否有比较器](https://image.zero22.top/sort3.png)
+![根据是否有比较器](fig8.png)
 ##### 没有比较器
-![enter description here](https://image.zero22.top/sort4.png)
+![enter description here](fig9.png)
 ###### 介绍
 > /**
 >      * Sorts the specified array of objects into ascending order, according
@@ -90,14 +90,14 @@ java.util.Collections.sort最终还是会调用java.util.Arrays里的sort方法�
 
 **数组中的元素必须实现Comparable接口**
 ###### 使用
-![enter description here](https://image.zero22.top/sort5.png)
+![enter description here](fig10.png)
 
 
 ##### 有比较器
 我这里看的是 **TimSort.sort**
-![enter description here](https://image.zero22.top/sort6.png)
+![enter description here](fig11.png)
 继续看 **binarySort**
-![enter description here](https://image.zero22.top/sort7.png)
+![enter description here](fig12.png)
 
 #### step4
 哇，这里还有好多的sort啊，看的我脑袋都大了，over

@@ -32,14 +32,14 @@ tags:
 
 用Wireshark来看看三次握手：
 
-![总的](https://image.zero22.top/three-way-handshark.png)
+![总的](fig1.png)
 
 首先我给服务器发送一个TCP报文：
-![第一次握手](https://image.zero22.top/handshark-1.png)
+![第一次握手](fig2.png)
 随后服务器端回我一个：
-![第二次握手](https://image.zero22.top/handshark-2.png)
+![第二次握手](fig3.png)
 最后我再给服务器发一个：
-![第三次握手](https://image.zero22.top/handshark-3.png)
+![第三次握手](fig4.png)
 由上边可以知道，客户端和服务器端发送的Sequence number是没有关系的，各自算各自的。
 
 至于建立连接之后，客户端与服务器端数据的传送，现在不想看了，大概根据对方的ip和mac地址，传到相应的主机？解析后主机在给相应的应用程序？不很清楚，再看吧 - -

@@ -28,3 +28,7 @@ tags:
     可以采用间接临时文件名作为中转就行了:
     $ git mv java/ temp/
     $ git mv temp/ Java
+
+===
+
+现在已经不用分类了，太麻烦了，直接用`tag`
