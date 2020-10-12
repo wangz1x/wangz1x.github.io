@@ -80,7 +80,7 @@ theme: next
 deploy:
   type: git
   repo: 
-    github: git@github.com:Hero22/Hero22.github.io.git
+    github: git@github.com:wangz1x/wangz1x.github.io.git
   branch: master
 
 search:
