@@ -6,7 +6,7 @@ tags:
 ---
 
 ### java异常分为Error和Exception，二者都是继承自Throwable
-![enter description here](https://image.zero22.top/images/2018-06-24/2018-06-24-21-10-20.png)
+![enter description here](fig1.png)
 <!-- more -->
 
 #### 先来看看Exception：
@@ -53,4 +53,4 @@ tags:
 > exceptions.
 
 Error是程序中严重的错误，任何合理的程序都不能去捕获Error。
-![enter description here](https://image.zero22.top/images/2018-06-24/2018-06-24-02.png)
+![enter description here](fig2.png)
