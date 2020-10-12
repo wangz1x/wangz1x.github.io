@@ -35,7 +35,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -54,8 +54,8 @@ index_generator:
   order_by: -date
   
 # Category & Tag
-default_category: uncategorized
-category_map:
+# default_category: uncategorized
+# category_map:
 tag_map:
 
 # Date / Time format
@@ -81,7 +81,6 @@ deploy:
   type: git
   repo: 
     github: git@github.com:Hero22/Hero22.github.io.git
-    gitee: git@gitee.com:wangz1x/wangz1x.git
   branch: master
 
 search:
