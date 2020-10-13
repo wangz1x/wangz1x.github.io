@@ -1,5 +1,5 @@
 ---
-title: Huffman Coding
+title: Huffman Code
 date: 2018-09-17 14:48:06
 tags:
 - huffman
