@@ -160,7 +160,7 @@ links_layout: block
 # in site  directory(source/uploads): /uploads/avatar.gif
 # avatar: /images/avatar.gif
 # avatar: /images/head.jpg
-avatar: https://image.zero22.top/head.jpg
+avatar: /images/head.jpg
 
 # Table Of Contents in the Sidebar
 toc:
