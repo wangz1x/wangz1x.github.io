@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[jdk Dynamic Proxy]]></title>
+    <url>%2F2021%2F04%2F09%2Fjdk-Dynamic-Proxy%2F</url>
+    <content type="text"><![CDATA[jdk动态代理使用jdk提供的动态代理技术，主要包含以下几个步骤： 创建服务接口 实现服务接口，称为服务类，作为被代理类 实现InvocationHandler接口，可以通过构造函数的形式，将被代理类传进去 该接口主要需要实现invoke(Object proxy, Method method, Object[] args)方法，其中proxy为生成的代理对象，method为代理对象调用的方法(在使用时)，args为方法参数 在实现该方法时，可以通过传进来的被代理类对象，调用被代理类的原生方法，在前后可以做增强操作 调用Proxy.newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h)方法 loader 指定生产代理类时的类加载器 interfaces 指定代理类实现的接口 h 上边自定义的InvocationHandler实现类 这样就得到了一个代理类了，在调用代理类的方法时，实际上执行的是InvocationHander的invoke方法。 限制jdk提供的动态代理只能代理，实现了接口的类；当代理一个没有实现接口的类的时候，得到的代理对象其实是没用的。 从源码看代理过程 看Proxy.newProxyInstance方法 1234567891011121314151617181920212223242526272829303132333435public static Object newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h) throws IllegalArgumentException&#123; Objects.requireNonNull(h); final Class&lt;?&gt;[] intfs = interfaces.clone(); // 权限检查 ... /* * Look up or generate the designated proxy class. * !!!!!! 查找或者生成代理类， 注意是 Class !!!!!! */ Class&lt;?&gt; cl = getProxyClass0(loader, intfs); /* * Invoke its constructor with the designated invocation handler. */ try &#123; if (sm != null) &#123; checkNewProxyPermission(Reflection.getCallerClass(), cl); &#125; // 获取生成代理类的，参数类型为 InvocationHandler 的构造方法 final Constructor&lt;?&gt; cons = cl.getConstructor(constructorParams); final InvocationHandler ih = h; // 设置构造方法可访问 // ... // 通过该构造方法创建一个代理对象 // newProxyInstance方法中的InvocationHander参数,其实是该代理对象的一个参数 return cons.newInstance(new Object[]&#123;h&#125;); &#125; // ...&#125; 该方法中，最重要的就是Class&lt;?&gt; cl = getProxyClass0(loader, intfs); 通过这个方法调用，就得到了代理对象类了，因此下一步看这个 getProxyClass0方法 1234567891011private static Class&lt;?&gt; getProxyClass0(ClassLoader loader, Class&lt;?&gt;... interfaces) &#123; if (interfaces.length &gt; 65535) &#123; throw new IllegalArgumentException("interface limit exceeded"); &#125; // If the proxy class defined by the given loader implementing // the given interfaces exists, this will simply return the cached copy; // otherwise, it will create the proxy class via the ProxyClassFactory return proxyClassCache.get(loader, interfaces);&#125; 根据注释得知，当该缓存中不存在时，会通过ProxyClassFactory创建代理类，而这个ProxyClassFactory类是Proxy类的静态内部类，直接去看这个类 ProxyClassFactory类 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556private static final class ProxyClassFactory implements BiFunction&lt;ClassLoader, Class&lt;?&gt;[], Class&lt;?&gt;&gt;&#123; // prefix for all proxy class names private static final String proxyClassNamePrefix = "$Proxy"; // next number to use for generation of unique proxy class names private static final AtomicLong nextUniqueNumber = new AtomicLong(); @Override public Class&lt;?&gt; apply(ClassLoader loader, Class&lt;?&gt;[] interfaces) &#123; Map&lt;Class&lt;?&gt;, Boolean&gt; interfaceSet = new IdentityHashMap&lt;&gt;(interfaces.length); for (Class&lt;?&gt; intf : interfaces) &#123; // 对待实现接口的一系列验证 // 确认类加载器解析该接口的到的名字一致 // 确认该接口确实是接口对象 // 确认接口没有重复的 &#125; String proxyPkg = null; // package to define proxy class in int accessFlags = Modifier.PUBLIC | Modifier.FINAL; /* * Record the package of a non-public proxy interface so that the * proxy class will be defined in the same package. Verify that * all non-public proxy interfaces are in the same package. */ for (Class&lt;?&gt; intf : interfaces) &#123; // 确认所有的 非公有 接口，都在同一个包下，因为最终生成的代理对象会定义在 // 和 非公有 接口相同的包下，如果有多个，就不晓得最后要放哪了 &#125; if (proxyPkg == null) &#123; // if no non-public proxy interfaces, use com.sun.proxy package proxyPkg = ReflectUtil.PROXY_PACKAGE + "."; &#125; // 生成代理对象的名字，一般匿名内部类的名字也含有$ long num = nextUniqueNumber.getAndIncrement(); // jdk1.8 中就是 com.sun.proxy.$Proxynum String proxyName = proxyPkg + proxyClassNamePrefix + num; // 生成具体的 代理类的 class 文件 byte[] proxyClassFile = ProxyGenerator.generateProxyClass( proxyName, interfaces, accessFlags); try &#123; return defineClass0(loader, proxyName, proxyClassFile, 0, proxyClassFile.length); &#125; catch (ClassFormatError e) &#123; // invalid aspect of the arguments supplied to the proxy // class creation (such as virtual machine limitations exceeded). throw new IllegalArgumentException(e.toString()); &#125; &#125;&#125; 该类实现了一个函数式接口(简单理解为只包含一个抽象方法，会加上注解@FunctionalInterface)，其apply方法，会在上一步缓存中没找到该代理对象时调用。该类中的apply方法中最重要的就是byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);这一句，看看 ProxyGenerator.generateProxyClass方法 12345678910111213public static byte[] generateProxyClass(final String name, Class&lt;?&gt;[] interfaces, int accessFlags)&#123; ProxyGenerator gen = new ProxyGenerator(name, interfaces, accessFlags); final byte[] classFile = gen.generateClassFile(); if (saveGeneratedFiles) &#123; // 保存class文件 &#125; return classFile;&#125; 在下一步，通过gen.generateClassFile()方法就得到字节码文件了！！！！ generateClassFile方法 123456789101112131415161718192021222324252627282930private byte[] generateClassFile() &#123; // 为接口中的方法提供代理 for (Class&lt;?&gt; intf : interfaces) &#123; for (Method m : intf.getMethods()) &#123; addProxyMethod(m, intf); &#125; &#125; try &#123; // 提供构造方法 methods.add(generateConstructor()); // ... &#125; // ... /* ============================================================ * Step 3: Write the final class file. */ // ... try &#123; // ... 父类: "java/lang/reflect/Proxy" dout.writeShort(cp.getClass(superclassName)); // ... &#125; return bout.toByteArray();&#125; 通过该方法就可以知道，代理类是Proxy的子类!!! 有上述可知，如果某个类没有实现接口，那么最终代理出来的类完全是和该类没有关系的，是个无用的代理类；但是如果实现了接口，那么代理类中就会有该接口的方法，在使用该代理类时，可以通过转化为相应的接口（多态）而代替原被代理类。]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>jdk</tag>
+        <tag>动态代理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[create container in docker]]></title>
+    <url>%2F2021%2F03%2F06%2Fcreate-container-in-docker%2F</url>
+    <content type="text"><![CDATA[ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问123456789docker run -d \-p 20:20 -p 21:21 -p 21000-21200 \-v /home/docker/ftp:/home/vsftpd \-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \-e PASV_ADDRESS=XXX.XXX.XXX.XXX \-e PASV_MIN_PORT=21000 \-e PASV_MAX_PORT=21200 \--name ftp-1 \fauria/vsftpd:latest tomcat12345docker run -d \-p 8081:8080 \-v /home/docker/tomcat:/var/tomcat \--name tomcat-1 \tomcat:8.5.64-jdk8-adoptopenjdk-hotspot redis12345docker run -d \-p 6379:6379 \-v /home/docker/redis/:/var/redis \--name redis-1 \redis:latest 这里有个问题，当我想指定配置文件时，看教程都是在后边加上 redis-server /xxx/redis.conf，但是一直无法启动 mysql123456docker run -d \-p 3306:3306 \-v /home/docker/mysql/:/var/mysql \-e MYSQL_ROOT_PASSWORD=XXXX \--name mysql-1 \mysql:5.7]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[欧拉回环与哈密尔顿图]]></title>
+    <url>%2F2021%2F03%2F05%2FEuler-circuit-and-Hamiltonian-graph%2F</url>
+    <content type="text"><![CDATA[欧拉回环：一笔画问题，每条边只能走一次，能否遍历所有的边。 第一种递归：后序遍历，为了保证能把中间节点的环放到整个大环里边 第二种递归：先序遍历，但是需要优先访问大的边，这样可以把所有的边都访问完了才回去 哈密尔顿图：每个节点只能访问一次，能否遍历所有的点。比上边的苛刻很多，一个点只能遍历一次，那么该点所有的边只有一条会被遍历，其他都无法访问了（不然就重复访问了该点）]]></content>
+      <tags>
+        <tag>欧拉回环</tag>
+        <tag>Eulerian path</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[区间相关问题]]></title>
+    <url>%2F2020%2F12%2F31%2Fintervals-question%2F</url>
+    <content type="text"><![CDATA[区间问题的总集： 区间重合判断 -《编程之美2.19》 安排会议 - 无重叠区间 最少重合区间 打气球]]></content>
+      <tags>
+        <tag>leetcode</tag>
+        <tag>intervals</tag>
+        <tag>区间问题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[github connection timed out]]></title>
     <url>%2F2020%2F11%2F23%2Fgithub-connection-timed-out%2F</url>
     <content type="text"><![CDATA[修改协议很麻烦，无法保证修改后可以使用，那就直接在.ssh下新建config文件，内容如下： 123Host github.comHostname ssh.github.comPort 443 但是就算这样改了，也不能保证一定可行，那就过一段时间在push]]></content>
@@ -50,8 +87,8 @@
     <content type="text"><![CDATA[首先有一个递增的数组，它会在某一位进行旋转，就是把后边的放到前边去，然后需要查找一个元素 首先确定是二分，但是和普通的二分不一样，会存在两种情况（mid为断层的情况也包含了）： 这两种情况可以按照nums[mid]和nums[start]（nums[end]也可以）的大小来判断 nums[mid] &gt; nums[start], 则是左边情况 否则就是右边情况 先确定好这两种大的情况后，在继续分左右讨论，这里以第一种情况为例： 如果是下图这样，就把end挪到mid那； 如果不是上图那样，就把start挪到mid那。 第二种情况类似，不再赘述。 12345678910111213141516171819202122232425262728293031323334class Solution &#123; public int search(int[] nums, int target) &#123; if (nums.length == 1) return nums[0] == target ? 0 : -1; if (nums[0] &gt; target &amp;&amp; nums[nums.length-1] &lt; target) return -1; // (begin+end)/2: four int start = 0; int end = nums.length -1; while (start &lt;= end) &#123; int mid = (start+end) &gt;&gt;&gt; 1; if (nums[mid] == target) return mid; // 第二种情况 if (nums[mid] &lt; nums[end]) &#123; // target在左边 if (target &lt; nums[mid] || target &gt; nums[end]) &#123; end = mid - 1; &#125;// target在右边 else &#123; start = mid + 1; &#125; &#125; // 第一种情况 else &#123; if (target &gt; nums[mid] || target &lt; nums[start]) &#123; start = mid + 1; &#125; else &#123; end = mid - 1; &#125; &#125; &#125; return -1; &#125;&#125; 小结开始想的时候，情况分的太细了，想着直接用if… else if… else if… else if…直接把脑袋想炸了，可以的话还是先大情况，再分小情况，Orz]]></content>
       <tags>
         <tag>leetcode</tag>
-        <tag>二分法</tag>
         <tag>二分查找</tag>
+        <tag>二分法</tag>
       </tags>
   </entry>
   <entry>
@@ -60,8 +97,8 @@
     <content type="text"><![CDATA[不用乘/除/求余三个操作，计算两数整除的结果 溢出的情况大概就一种吧，被除数为0x80000000, 除数为-1，此时会溢出，按照题目要求返回0x7fffffff即可，可以把这种情况单独拿出来判断。 方法1两数一直相加或相减（根据符号判断），直到结果大于0或小于0停止，进行的操作数就是最终的商了 1234567891011121314151617181920212223242526272829303132333435363738class Solution &#123; public int divide(int dividend, int divisor) &#123; if (divisor == 1) return dividend; if (divisor == -1) return dividend == 0x80000000 ? 0x7fffffff : -dividend; if (dividend == 0) return 0; int res = 0; if (dividend &gt; 0 &amp;&amp; divisor &gt; 0) &#123; while (dividend &gt;= divisor) &#123; dividend -= divisor; res ++; &#125; &#125; else if (dividend &lt; 0 &amp;&amp; divisor &lt; 0) &#123; while (dividend &lt;= divisor) &#123; dividend -= divisor; res ++; &#125; &#125; else if (dividend &gt; 0 &amp;&amp; divisor &lt; 0)&#123; while (dividend + divisor &gt;= 0) &#123; dividend += divisor; res ++; &#125; res = -res; &#125; else if (dividend &lt; 0 &amp;&amp; divisor &gt; 0) &#123; while (dividend + divisor &lt;= 0) &#123; dividend += divisor; res ++; &#125; res = -res; &#125; return res; &#125;&#125; 非常慢 方法2除数二倍二倍的增加，如果被除数依然大于增大后的除数，则商也翻倍；当被除数小于增大后的除数时，说明剩下的被除数小于除数的一半了，此时就在拿剩下的被除数和原始除数继续做这种操作，如下图所示： 123456789101112131415161718192021222324252627282930313233343536373839class Solution &#123; public int divide(int dividend, int divisor) &#123; if (divisor == 1) return dividend; if (divisor == -1) return dividend == 0x80000000 ? 0x7fffffff : -dividend; if (dividend == 0) return 0; // 保留结果的符号 int sign = -1; if ((dividend &lt; 0 &amp;&amp; divisor &lt; 0) || (dividend &gt; 0 &amp;&amp; divisor &gt; 0)) sign = 1; // 这里的符号已经没用了，但毕竟两个数同符号比较好操作一点， // 为什么选择负数呢，因为被除数和除数都可能等于0x80000000， // 换成正数的话就直接溢出了，所以负数比较好 dividend = dividend &lt; 0 ? dividend : -dividend; divisor = divisor &lt; 0 ? divisor : -divisor; return sign == -1 ? -dfs(dividend, divisor) : dfs(dividend, divisor); &#125; public int dfs(int dividend, int divisor) &#123; int count = 0; if (dividend &lt;= divisor) &#123; int tempDivisor = divisor; count = 1; // 注意除数翻倍的时候也可能会溢出，所以这一提前判断不然一般超过这个阈值 // 如果超过了这个阈值，就没必要再循环了，因为被除数不可能小于0x80000000 while (tempDivisor &gt;= 0xc0000000 &amp;&amp; dividend &lt;= tempDivisor+tempDivisor) &#123; tempDivisor = tempDivisor+tempDivisor; count += count; &#125; // 如果没有除尽的话，就用剩余的部分（被除数）和原始除数继续做上述操作 if (tempDivisor != dividend) &#123; count += dfs(dividend-tempDivisor, divisor); &#125; &#125; return count; &#125;&#125; 这样快乐多了 小结类似的还有最小公倍数和Fibonacci数列求解，都可采用移位+二分法法，只不过移位也算作乘除，这一题没用， 比如最小公倍数： 两数都为偶数时，右移一位（表示除以2），最终结果（公倍数）乘以2 一奇一偶时，偶数右移一位，最终结果不动（比如3和6，6右移一位变为3，再继续操作） 两奇时，相减（辗转相减法） 当小的为0时，大的就是中间结果了 而Fibonacci数列，根据资料显示，二阶递推式可以化为矩阵相乘，这样一来，求Fn就变成求矩阵的n次方了，再把n转化为二进制，最多遍历32次，即看每一位是不是1，是1就乘到结果里边，是0就跳过。]]></content>
       <tags>
         <tag>leetcode</tag>
-        <tag>两数相除</tag>
         <tag>二分法</tag>
+        <tag>两数相除</tag>
         <tag>gcd</tag>
         <tag>斐波那契</tag>
         <tag>Fibonacci</tag>
@@ -724,9 +761,9 @@
     <url>%2F2018%2F06%2F12%2Fjob%2F</url>
     <content type="text"><![CDATA[在使用linux过程中，偶尔会不自觉的按ctrl + z，这时候会显示[1]+ Stopped 之类的，而且如果这时候你在做一些操作，比如编辑文件等，会直接回到命令状态。那么之前的工作去哪了呢? 去了Stopped于后台中了。 这是输入jobs命令，就可以查看Linux中的任务列表及任务状态，包括后台运行的任务。 bg(background) 将后台暂停的任务启动，在后台继续运行 fg(foreground) 将后台任务调至前台执行 &amp; 放在命令的最后，用于将任务放在后台执行]]></content>
       <tags>
-        <tag>linux</tag>
         <tag>bg</tag>
         <tag>fg</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -742,8 +779,8 @@
     <url>%2F2018%2F05%2F21%2Flinux_env%2F</url>
     <content type="text"><![CDATA[有些东西不自己写一下，总是会忘记，当然写了也可能还是会忘，但是找起来印象会深一点吧。之前在需要配置环境变量的时候就直接查了一下，完成配置后就没管了，最近再次想到这个问题，结果已经忘记该怎么配置了。所以什么东西都是写一下比较好吧. 方式一：使用export使用export命令直接修改PATH变量 方式二：修改/etc/profile 如果要立即生效需要执行命令 source /etc/profile 使用这种方式，所有用户都会受影响,当第一个用户登录时,该文件被执行. 类似的还有/etc/enviroment文件，影响所有用户 方式三：修改~/.bashrc 同样立即生效需要： source ~/.bashrc 专属于个人bash shell的信息，当该用户登录时以及每次打开新的shell时,该文件被读取. 类似的还有~/.profile，当用户登录时,该文件仅仅执行一次!默认情况下,它设置一些环境变量,然后执行用户的.bashrc文件.]]></content>
       <tags>
-        <tag>path</tag>
         <tag>linux</tag>
+        <tag>path</tag>
       </tags>
   </entry>
   <entry>
