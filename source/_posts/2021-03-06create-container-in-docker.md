@@ -21,6 +21,8 @@ fauria/vsftpd:latest
 
 ## tomcat
 
+容器中的 WorkingDir为 `/usr/local/tomcat`
+
 ```shell
 docker run -d \
 -p 8081:8080 \
@@ -39,7 +41,7 @@ docker run -d \
 redis:latest
 ```
 
-这里有个问题，当我想指定配置文件时，看教程都是在后边加上 `redis-server /xxx/redis.conf`，但是一直无法启动
+指定配置文件时，后边加上 `redis-server /xxx/redis.conf`，要注意容器内redis的版本和指定的配置文件的版本，不对应的话可能会报错，`line XXX, bad directive or wrong number of arguments`
 
 ## mysql
 
