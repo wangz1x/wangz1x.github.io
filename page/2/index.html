@@ -247,6 +247,243 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/20/mysql-in-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/20/mysql-in-docker/" itemprop="url">mysql-in-docker</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>在docker中启动一个mysql容器，在容器外部进行连接的时候，指定ip可以为<code>127.0.0.1</code>，也可以为本机（运行docker的机器）的ip，还可以为docker为该容器分配的ip（docker inspect container_name），啊</p>
+<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>这个问题我自己没有遇到，在查看ip相关的blog时，发现有人提到这一点，就是用5.7的mysql client去连接8.0的mysql server会由于两个版本验证方式不同而无法连接，需要修改mysql server中的认证方式：</p>
+<p>这样查看plugin（不晓得怎么翻译）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> host,<span class="keyword">user</span>,<span class="keyword">plugin</span> <span class="keyword">from</span> mysql.user;</span><br></pre></td></tr></table></figure></p>
+<p>8.0的应该是<code>caching_sha2_password</code>，需要修改5.7用的<code>mysql_native_password</code>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> <span class="string">'root'</span>@<span class="string">'%'</span> <span class="keyword">identified</span> <span class="keyword">with</span> mysql_native_password <span class="keyword">by</span> <span class="string">'your_password'</span>;</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br></pre></td></tr></table></figure>
+<p>一般blog都说要加上后边的密码，但是我这不加密码也行？</p>
+<p>太多问题了</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/19/password-free-using-sudo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/19/password-free-using-sudo/" itemprop="url">password free using sudo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>可能有两种方式，但都是修改一个文件：<code>/etc/sudoers</code></p>
+<p>查看这个文件，要求必须使用<code>visudo</code>命令修改!!!</p>
+<h3 id="修改方式一"><a href="#修改方式一" class="headerlink" title="修改方式一"></a>修改方式一</h3><ol>
+<li><p>将当前想体验免密码的用户加到<code>sudo</code>用户组里，可以直接编辑<code>/etc/group</code>文件，或者使用<code>usermod -G sudo current_user</code></p>
+</li>
+<li><p>命令<code>sudo visudo</code>，将<code>%sudo  ALL=(ALL:ALL) ALL</code> -&gt; <code>%sudo  ALL=(ALL:ALL) NOPASSWD:ALL</code></p>
+</li>
+</ol>
+<h3 id="修改方式二"><a href="#修改方式二" class="headerlink" title="修改方式二"></a>修改方式二</h3><p>命令<code>sudo visudo</code>，将在<code>%sudo  ALL=(ALL:ALL) ALL</code>行下补充 -&gt; <code>username  ALL=(ALL) NOPASSWD:ALL</code></p>
+<p>但是生效好像要重启，暂时先这样</p>
+<h3 id="额外"><a href="#额外" class="headerlink" title="额外"></a>额外</h3><p><code>%sudo  ALL=(ALL:ALL) ALL</code></p>
+<p>对应表示：授权用户组（加%）/用户   在哪个主机登录可进行授权=（切换到哪些用户：切换到哪些组）[是否需要密码]  可授权执行的命令</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/19/modify-password/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -817,246 +1054,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/01/os-process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangz1x">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/11/01/os-process/" itemprop="url">操作系统中的进程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>进程不只是运行的程序（text section/code section），还包括</p>
-<ul>
-<li>当前活动如程序计数器（program counter）的值和处理器寄存器的内容</li>
-<li>进程堆栈（stack），存储临时数据，如函数参数，返回地址和局部变量</li>
-<li>数据段（data section），包括全局变量</li>
-<li>堆（heap），进程在运行时动态分配的内存</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/11/01/os-process/" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/01/leetcode213week/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangz1x">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/11/01/leetcode213week/" itemprop="url">LeetCode213Week</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>leetcode第213场周赛，四个题目：</p>
-<ul>
-<li><a href="#能否连接形成数组">能否连接形成数组</a></li>
-<li><a href="#统计字典序元音字符串的数目">统计字典序元音字符串的数目</a></li>
-<li>可以到达的最远建筑</li>
-<li>第K条最小指令</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/11/01/leetcode213week/" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1109,7 +1106,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1122,7 +1119,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">108</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

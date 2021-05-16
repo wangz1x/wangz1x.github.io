@@ -247,6 +247,233 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/04/14/String-in-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/14/String-in-java/" itemprop="url">java中的String</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="字节码层面"><a href="#字节码层面" class="headerlink" title="字节码层面"></a>字节码层面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">String str0 = <span class="string">"str0"</span>;</span><br><span class="line">String str1 = <span class="string">"str"</span>+<span class="string">"str1"</span>;</span><br><span class="line">String str2 = <span class="keyword">new</span> String(<span class="string">"str2"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字节码为：</span></span><br><span class="line"> 0 ldc #2 &lt;str0&gt;</span><br><span class="line"> <span class="number">2</span> astore_1</span><br><span class="line"> 3 ldc #3 &lt;str1str2&gt;</span><br><span class="line"> <span class="number">5</span> astore_2</span><br><span class="line"> 6 new #4 &lt;java/lang/String&gt;</span><br><span class="line"> <span class="number">9</span> dup</span><br><span class="line">10 ldc #5 &lt;newString&gt;</span><br><span class="line">12 invokespecial #6 &lt;java/lang/String.&lt;init&gt;&gt;</span><br><span class="line"><span class="number">15</span> astore_3</span><br><span class="line"><span class="number">16</span> <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>带有引号的字符串在编译阶段，为放到<code>Class</code>文件的常量池中，在类加载的加载阶段，二进制字节流会按照虚拟机设定的格式存储在方法取中，而常量池就被放到运行时常量池中。</p>
+<p><code>ldc</code>指令的含义为：将<code>int</code>, <code>float</code>, <code>String</code>类型的常量值从常量池中推送至栈顶，因此<code>str0</code>,<code>str1</code>都是直接指向了常量池中的字符串；而<code>str2</code>则是根据常量池中的<code>str2</code>作为参数构造一个新的字符串对象。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/04/14/number-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/04/14/number-format/" itemprop="url">java中四舍五入保留指定位数小数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在做一些笔试编程题的时候，偶尔需要输出指定位数的小数，目前用了两种简单方式：</p>
+<ol>
+<li>直接调用<code>System.out.printf(&quot;%.4f&quot;, number)</code>，四舍五入保留4位小数, 注意该方法</li>
+<li>偶尔可能要把数据处理完了统一输出，那就先把结果保存，<code>double/float res = xx.xxxxxx</code>, 在输出的时候，调用<code>String.format(&quot;%.4f&quot;, res)</code></li>
+</ol>
+<p>上述两种形式，最终都是通过<code>Formatter().format()</code>方法实现的</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/04/09/jdk-Dynamic-Proxy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -459,9 +686,10 @@
         
           
             <h2 id="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"><a href="#ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问" class="headerlink" title="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"></a>ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 20:20 -p 21:21 -p 21000-21200 \</span><br><span class="line">-v /home/docker/ftp:/home/vsftpd \</span><br><span class="line">-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \</span><br><span class="line">-e PASV_ADDRESS=XXX.XXX.XXX.XXX \</span><br><span class="line">-e PASV_MIN_PORT=21000 \</span><br><span class="line">-e PASV_MAX_PORT=21200 \</span><br><span class="line">--name ftp-1 \</span><br><span class="line">fauria/vsftpd:latest</span><br></pre></td></tr></table></figure>
-<h2 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 8081:8080 \</span><br><span class="line">-v /home/docker/tomcat:/var/tomcat \</span><br><span class="line">--name tomcat-1 \</span><br><span class="line">tomcat:8.5.64-jdk8-adoptopenjdk-hotspot</span><br></pre></td></tr></table></figure>
+<h2 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h2><p>容器中的 WorkingDir为 <code>/usr/local/tomcat</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 8081:8080 \</span><br><span class="line">-v /home/docker/tomcat:/var/tomcat \</span><br><span class="line">--name tomcat-1 \</span><br><span class="line">tomcat:8.5.64-jdk8-adoptopenjdk-hotspot</span><br></pre></td></tr></table></figure>
 <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-v /home/docker/redis/:/var/redis \</span><br><span class="line">--name redis-1 \</span><br><span class="line">redis:latest</span><br></pre></td></tr></table></figure>
-<p>这里有个问题，当我想指定配置文件时，看教程都是在后边加上 <code>redis-server /xxx/redis.conf</code>，但是一直无法启动</p>
+<p>指定配置文件时，后边加上 <code>redis-server /xxx/redis.conf</code>，要注意容器内redis的版本和指定的配置文件的版本，不对应的话可能会报错，<code>line XXX, bad directive or wrong number of arguments</code></p>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-v /home/docker/mysql/:/var/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=XXXX \</span><br><span class="line">--name mysql-1 \</span><br><span class="line">mysql:5.7</span><br></pre></td></tr></table></figure>
           
         
@@ -841,243 +1069,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/20/mysql-in-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangz1x">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/11/20/mysql-in-docker/" itemprop="url">mysql-in-docker</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>在docker中启动一个mysql容器，在容器外部进行连接的时候，指定ip可以为<code>127.0.0.1</code>，也可以为本机（运行docker的机器）的ip，还可以为docker为该容器分配的ip（docker inspect container_name），啊</p>
-<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>这个问题我自己没有遇到，在查看ip相关的blog时，发现有人提到这一点，就是用5.7的mysql client去连接8.0的mysql server会由于两个版本验证方式不同而无法连接，需要修改mysql server中的认证方式：</p>
-<p>这样查看plugin（不晓得怎么翻译）<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> host,<span class="keyword">user</span>,<span class="keyword">plugin</span> <span class="keyword">from</span> mysql.user;</span><br></pre></td></tr></table></figure></p>
-<p>8.0的应该是<code>caching_sha2_password</code>，需要修改5.7用的<code>mysql_native_password</code>:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> <span class="string">'root'</span>@<span class="string">'%'</span> <span class="keyword">identified</span> <span class="keyword">with</span> mysql_native_password <span class="keyword">by</span> <span class="string">'your_password'</span>;</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br></pre></td></tr></table></figure>
-<p>一般blog都说要加上后边的密码，但是我这不加密码也行？</p>
-<p>太多问题了</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/11/19/password-free-using-sudo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangz1x">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/11/19/password-free-using-sudo/" itemprop="url">password free using sudo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>可能有两种方式，但都是修改一个文件：<code>/etc/sudoers</code></p>
-<p>查看这个文件，要求必须使用<code>visudo</code>命令修改!!!</p>
-<h3 id="修改方式一"><a href="#修改方式一" class="headerlink" title="修改方式一"></a>修改方式一</h3><ol>
-<li><p>将当前想体验免密码的用户加到<code>sudo</code>用户组里，可以直接编辑<code>/etc/group</code>文件，或者使用<code>usermod -G sudo current_user</code></p>
-</li>
-<li><p>命令<code>sudo visudo</code>，将<code>%sudo  ALL=(ALL:ALL) ALL</code> -&gt; <code>%sudo  ALL=(ALL:ALL) NOPASSWD:ALL</code></p>
-</li>
-</ol>
-<h3 id="修改方式二"><a href="#修改方式二" class="headerlink" title="修改方式二"></a>修改方式二</h3><p>命令<code>sudo visudo</code>，将在<code>%sudo  ALL=(ALL:ALL) ALL</code>行下补充 -&gt; <code>username  ALL=(ALL) NOPASSWD:ALL</code></p>
-<p>但是生效好像要重启，暂时先这样</p>
-<h3 id="额外"><a href="#额外" class="headerlink" title="额外"></a>额外</h3><p><code>%sudo  ALL=(ALL:ALL) ALL</code></p>
-<p>对应表示：授权用户组（加%）/用户   在哪个主机登录可进行授权=（切换到哪些用户：切换到哪些组）[是否需要密码]  可授权执行的命令</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1130,7 +1121,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1143,7 +1134,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">108</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

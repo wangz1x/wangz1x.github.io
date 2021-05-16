@@ -81,7 +81,7 @@
 <meta property="og:site_name" content="趁早">
 <meta property="og:description" content="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问123456789docker run -d \-p 20:20 -p 21:21 -p 21000-21200 \-v /home/docker/ftp:/home/vsftpd \-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \-e PASV_ADDRESS=XXX.XXX.XXX.XXX \-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-04-09T03:32:47.415Z">
+<meta property="og:updated_time" content="2021-05-16T06:26:32.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="create container in docker">
 <meta name="twitter:description" content="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问123456789docker run -d \-p 20:20 -p 21:21 -p 21000-21200 \-v /home/docker/ftp:/home/vsftpd \-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \-e PASV_ADDRESS=XXX.XXX.XXX.XXX \-">
@@ -309,9 +309,10 @@
 
       
         <h2 id="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"><a href="#ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问" class="headerlink" title="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"></a>ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 20:20 -p 21:21 -p 21000-21200 \</span><br><span class="line">-v /home/docker/ftp:/home/vsftpd \</span><br><span class="line">-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \</span><br><span class="line">-e PASV_ADDRESS=XXX.XXX.XXX.XXX \</span><br><span class="line">-e PASV_MIN_PORT=21000 \</span><br><span class="line">-e PASV_MAX_PORT=21200 \</span><br><span class="line">--name ftp-1 \</span><br><span class="line">fauria/vsftpd:latest</span><br></pre></td></tr></table></figure>
-<h2 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 8081:8080 \</span><br><span class="line">-v /home/docker/tomcat:/var/tomcat \</span><br><span class="line">--name tomcat-1 \</span><br><span class="line">tomcat:8.5.64-jdk8-adoptopenjdk-hotspot</span><br></pre></td></tr></table></figure>
+<h2 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h2><p>容器中的 WorkingDir为 <code>/usr/local/tomcat</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 8081:8080 \</span><br><span class="line">-v /home/docker/tomcat:/var/tomcat \</span><br><span class="line">--name tomcat-1 \</span><br><span class="line">tomcat:8.5.64-jdk8-adoptopenjdk-hotspot</span><br></pre></td></tr></table></figure>
 <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-v /home/docker/redis/:/var/redis \</span><br><span class="line">--name redis-1 \</span><br><span class="line">redis:latest</span><br></pre></td></tr></table></figure>
-<p>这里有个问题，当我想指定配置文件时，看教程都是在后边加上 <code>redis-server /xxx/redis.conf</code>，但是一直无法启动</p>
+<p>指定配置文件时，后边加上 <code>redis-server /xxx/redis.conf</code>，要注意容器内redis的版本和指定的配置文件的版本，不对应的话可能会报错，<code>line XXX, bad directive or wrong number of arguments</code></p>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-v /home/docker/mysql/:/var/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=XXXX \</span><br><span class="line">--name mysql-1 \</span><br><span class="line">mysql:5.7</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -424,7 +425,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">91</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -437,7 +438,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">108</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
