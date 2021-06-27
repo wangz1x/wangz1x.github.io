@@ -81,7 +81,7 @@
 <meta property="og:site_name" content="趁早">
 <meta property="og:description" content="字节码层面123456789101112131415String str0 = &quot;str0&quot;;String str1 = &quot;str&quot;+&quot;str1&quot;;String str2 = new String(&quot;str2&quot;);// 字节码为： 0 ldc #2 &amp;lt;str0&amp;gt; 2 astore_1 3 ldc #3 &amp;lt;str1str2&amp;gt; 5 astore_2 6 new #4 &amp;lt;j">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-04-14T11:21:38.507Z">
+<meta property="og:updated_time" content="2021-06-25T06:28:50.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java中的String">
 <meta name="twitter:description" content="字节码层面123456789101112131415String str0 = &quot;str0&quot;;String str1 = &quot;str&quot;+&quot;str1&quot;;String str2 = new String(&quot;str2&quot;);// 字节码为： 0 ldc #2 &amp;lt;str0&amp;gt; 2 astore_1 3 ldc #3 &amp;lt;str1str2&amp;gt; 5 astore_2 6 new #4 &amp;lt;j">
@@ -309,7 +309,7 @@
 
       
         <h3 id="字节码层面"><a href="#字节码层面" class="headerlink" title="字节码层面"></a>字节码层面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">String str0 = <span class="string">"str0"</span>;</span><br><span class="line">String str1 = <span class="string">"str"</span>+<span class="string">"str1"</span>;</span><br><span class="line">String str2 = <span class="keyword">new</span> String(<span class="string">"str2"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 字节码为：</span></span><br><span class="line"> 0 ldc #2 &lt;str0&gt;</span><br><span class="line"> <span class="number">2</span> astore_1</span><br><span class="line"> 3 ldc #3 &lt;str1str2&gt;</span><br><span class="line"> <span class="number">5</span> astore_2</span><br><span class="line"> 6 new #4 &lt;java/lang/String&gt;</span><br><span class="line"> <span class="number">9</span> dup</span><br><span class="line">10 ldc #5 &lt;newString&gt;</span><br><span class="line">12 invokespecial #6 &lt;java/lang/String.&lt;init&gt;&gt;</span><br><span class="line"><span class="number">15</span> astore_3</span><br><span class="line"><span class="number">16</span> <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
-<p>带有引号的字符串在编译阶段，为放到<code>Class</code>文件的常量池中，在类加载的加载阶段，二进制字节流会按照虚拟机设定的格式存储在方法取中，而常量池就被放到运行时常量池中。</p>
+<p>带有引号的字符串在编译阶段，会放到<code>Class</code>文件的常量池中，在类加载的加载阶段，二进制字节流会按照虚拟机设定的格式存储在方法区中，而常量池就被放到运行时常量池中。</p>
 <p><code>ldc</code>指令的含义为：将<code>int</code>, <code>float</code>, <code>String</code>类型的常量值从常量池中推送至栈顶，因此<code>str0</code>,<code>str1</code>都是直接指向了常量池中的字符串；而<code>str2</code>则是根据常量池中的<code>str2</code>作为参数构造一个新的字符串对象。</p>
 
       
@@ -425,7 +425,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">93</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -438,7 +438,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
