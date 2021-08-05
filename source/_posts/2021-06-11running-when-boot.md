@@ -44,3 +44,11 @@ WantedBy：这里相当于设置软件，选择运行在linux的哪个运行级�
 
 
 
+### rc.local
+
+```shell
+sudo vim /etc/rc.local
+```
+
+在该文件的`exit 0`之前加入自己想要启动时执行的命令
+

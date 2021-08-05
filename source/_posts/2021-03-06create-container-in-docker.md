@@ -53,3 +53,12 @@ docker run -d \
 --name mysql-1 \
 mysql:5.7
 ```
+
+## Zookeeper
+
+```shell
+docker run --name zookeeper-2 --restart always -d -e "ZOO_MY_ID=2" -e ZOO_SERVERS="server.1=172.17.0.4:2888:3888;2181 server.2=172.17.0.5:2888:3888;2181 server.3=172.17.0.6:2888:3888;2181" zookeeper
+```
+
+某些容器中的配置项可以通过 `-e` 来改写，如果修改的配置不多的话，这样比较方便，避免了创建文件进行映射等操作。
+
