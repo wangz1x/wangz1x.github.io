@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kmp,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="KMP是以三位发明者命名的，全称为Knuth-Morris-Pratt，是一种字符串查找算法，可在一个主文本字符串S内查找一个词W的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。">
+<meta name="keywords" content="kmp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kmp">
+<meta property="og:url" content="https://zero22.top/2020/10/19/kmp/index.html">
+<meta property="og:site_name" content="趁早">
+<meta property="og:description" content="KMP是以三位发明者命名的，全称为Knuth-Morris-Pratt，是一种字符串查找算法，可在一个主文本字符串S内查找一个词W的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig1.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig2.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig3.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig4.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig5.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig6.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig7.png">
+<meta property="og:image" content="https://zero22.top/2020/10/19/kmp/fig8.png">
+<meta property="og:updated_time" content="2021-12-05T09:11:42.746Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kmp">
+<meta name="twitter:description" content="KMP是以三位发明者命名的，全称为Knuth-Morris-Pratt，是一种字符串查找算法，可在一个主文本字符串S内查找一个词W的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。">
+<meta name="twitter:image" content="https://zero22.top/2020/10/19/kmp/fig1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>kmp | 趁早</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">趁早</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/10/19/kmp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">kmp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>KMP</code>是以三位发明者命名的，全称为<code>Knuth-Morris-Pratt</code>，是一种字符串查找算法，可在一个主文本字符串<code>S</code>内查找一个词<code>W</code>的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。</p>
+<a id="more"></a>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>采用最简单的字符串匹配时，当发现<code>W</code>当前位置和<code>S</code>当前位置不匹配时，则<code>W</code>前进一位，再从头和当前对应的<code>S</code>进行匹配，如下图1所示：</p>
+<p><img src="fig1.png" alt="fig1"></p>
+<p>传统的做法是：</p>
+<p><img src="fig2.png" alt="fig2"></p>
+<p>发现开头就不匹配，然后<code>W</code>再前进一位…</p>
+<p><code>KMP</code>算法就提出了一种方案，跳过这些无用匹配。在初始匹配到第五位的时候，说明前面四位都是匹配的，即<code>S[0]=W[0], S[1]=W[1]...</code>，原始方法在<code>W</code>移动时还要去比较<code>W[0]</code>与<code>S[1]</code>，其实可以通过提前比较<code>W[0]</code>与<code>W[1]</code>来实现。具体效果为，当发现第五位不匹配时，<code>W</code>可以直接移动两位，如下图3所示：</p>
+<p><img src="fig3.png" alt="fig3"></p>
+<p>具体是如何实现的呢？</p>
+<h3 id="next"><a href="#next" class="headerlink" title="next"></a>next</h3><p><code>KMP</code>算法中有一个很重要的概念，即<code>next</code>数组，<code>next[i]</code>表示的是一个坐标，即<code>W[i]</code>和<code>W[next[i]]</code>相同，且<code>0-next[i]</code>这一段字符串也出现在<code>x-W[i]</code>中（通俗讲就是前缀和后缀要相同）。（理解与实现都是按照自己方式来的，可能和其他更专业的讲解有所不同，而且实现也没有别人的优雅，但是我感觉这样好理解一点点）</p>
+<p>下面针对<code>ababa</code>计算其<code>next</code>数组：</p>
+<p><code>next[0]</code>直接初始化为<code>-1</code></p>
+<p><code>next[1]</code>看字符串<code>ab</code>，由于<code>next[0]=-1</code>，则只用比较最后的字符<code>b</code>和开头的字符<code>a</code>，由于他们不同，则<code>next[1]=-1</code></p>
+<p><code>next[2]</code>看字符串<code>aba</code>，同样只用比较开头和结束字符，即后缀<code>a</code>和前缀<code>a</code>相同，则<code>next[1]=0</code>（指向相同点的坐标）</p>
+<p><code>next[3]</code>看字符串<code>abab</code>，由于<code>next[2]=0</code>，这里就直接比较<code>W[3]</code>和<code>W[0+1]</code>，因为是要取相同的最长前后缀，当<code>W[3]==W[0+1]</code>时，就表明了<code>W[01]==W[23]</code>，否则的话就再比较<code>W[3]</code>和<code>W[0]</code>。而这里判断是相同的，则<code>next[3]=1</code>，指向当前匹配的前边的<code>b</code>的坐标</p>
+<p><code>next[4]</code>看字符串<code>ababa</code>，由于<code>next[3]=1!=-1</code>，同上，先直接比较<code>W[4]</code>和<code>W[1+1]</code>，发现相等，此时就说明了前缀<code>aba</code>等于后缀<code>aba</code>，<code>next[4]=2</code></p>
+<p>综上，<code>next=[-1, -1, 0, 1, 2]</code></p>
+<p>其中<code>-1</code>表示当前字符字串不存在任何前缀和后缀相等的情况。</p>
+<h3 id="使用next"><a href="#使用next" class="headerlink" title="使用next"></a>使用next</h3><p>有了<code>next</code>，下一步就是要利用它来实现高效匹配，以上边的例子进行说明，为什么当<code>S[4]!=W[4]</code>时，<code>W</code>能前进两格。</p>
+<p>当<code>S[4]!=W[4]</code>时，说明前四个字符是匹配的，不然也不会匹配到这来，那么就看前四个字符<code>abab</code>最长匹配前缀和后缀了，将相同的前缀补在相同的后缀上，再接着往后匹配，画图表示为：</p>
+<p><img src="fig4.png" alt="fig4"></p>
+<p>其中粉色部分表示<code>W</code>当前判断字符前的字串的最长的前缀和后缀，当当前字符不相符时，直接把前缀挪到后缀去：</p>
+<p><img src="fig5.png" alt="fig5"></p>
+<p>至于为什么中间的全能跳过去，其原理就是通过<code>W</code>子串的前缀和后缀之间的关系，来反应<code>W</code>和<code>S</code>串之间的关系，因为<code>W</code>串的特点保证了就算不跳这么远，只一个一个的移动，还是无法将<code>W</code>和<code>S</code>的当前位置进行匹配的。</p>
+<p>根据这一般的情况，再看字符串<code>abab</code>，由<code>next[3]=1</code>可知<code>W[01]==W[23]</code>，因此直接把<code>ab</code>（前缀）移动到<code>ab</code>(后缀)的位置，再接着比较<code>W[2]</code>与<code>S[4]</code>即可（因为这时候已经保证了<code>W[2]</code>前边和<code>S</code>是一一对应的）。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Kmp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String p = <span class="string">"ababa"</span>;</span><br><span class="line">        String s = <span class="string">"ababcababaca"</span>;</span><br><span class="line">        System.out.println(match(s, p));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] calculateNext(String pattern) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[pattern.length()];</span><br><span class="line">        next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> tempIndex = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> compareIndex = next[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">while</span> (tempIndex &lt; pattern.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pattern.charAt(tempIndex) == pattern.charAt(compareIndex + <span class="number">1</span>)) &#123;</span><br><span class="line">                next[tempIndex] = compareIndex + <span class="number">1</span>;</span><br><span class="line">                compareIndex = next[tempIndex];</span><br><span class="line">                tempIndex++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (compareIndex != -<span class="number">1</span>) &#123;    <span class="comment">// 可能还有较短的前缀和后缀匹配</span></span><br><span class="line">                compareIndex = next[compareIndex];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next[tempIndex] = -<span class="number">1</span>;</span><br><span class="line">                compareIndex = -<span class="number">1</span>;</span><br><span class="line">                tempIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">match</span><span class="params">(String source, String pattern)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// not decrease</span></span><br><span class="line">        <span class="keyword">int</span> s_point = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// up and down</span></span><br><span class="line">        <span class="keyword">int</span> p_point = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span>[] next = calculateNext(pattern);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (s_point &lt; source.length() &amp;&amp; p_point &lt; next.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source.charAt(s_point) == pattern.charAt(p_point)) &#123;</span><br><span class="line">                s_point++;</span><br><span class="line">                p_point++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (p_point == <span class="number">0</span>) &#123;  <span class="comment">// P[0]都不和S匹配，那S只好向前挪一格</span></span><br><span class="line">                s_point++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p_point = next[p_point - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (p_point &gt;= next.length) &#123;</span><br><span class="line">            System.out.println(<span class="string">"match from: "</span> + (s_point - next.length));</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"not match!"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2020-11-3-更新"><a href="#2020-11-3-更新" class="headerlink" title="2020/11/3 更新"></a>2020/11/3 更新</h1><p>以上述方法求出来next数组，再进行优化更新的时候就比较麻烦，先来看看为什么要优化</p>
+<p><img src="fig6.png" alt="fig6"></p>
+<p>当a和c不匹配时，按照上边计算的next数组，pattern会移动到虚线框所示的位置，发现此时依然是a和c比，就浪费了一次比较的机会，更理想的情况是：</p>
+<p><img src="fig7.png" alt="fig7"></p>
+<p>优化的主要思想是，当前待匹配位置发生失配时，如果跳到下一个位置和该字符依然相等的话，就需要更新当前待匹配位置的next值</p>
+<p>为了能够方便的优化，计算next数组的方式需要改变一下，即让next值直接表示发生失配时，下一个应匹配的位置；而上文中计算下一个位置还需要看前边元素的next值+1，实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] otherNext(String pattern) &#123;</span><br><span class="line">    <span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[pattern.length()];</span><br><span class="line">    next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> comparePointer = <span class="number">0</span>;           <span class="comment">// 前缀的最后一个字符</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pattern.length(); i++) &#123;</span><br><span class="line">        <span class="comment">// 直接指到这来</span></span><br><span class="line">        next[i] = comparePointer;</span><br><span class="line">        <span class="comment">// 调整位置</span></span><br><span class="line">        <span class="keyword">while</span> (comparePointer &gt; <span class="number">0</span> &amp;&amp; pattern.charAt(i) != pattern.charAt(comparePointer)) &#123;</span><br><span class="line">            comparePointer = next[comparePointer];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// </span></span><br><span class="line">        <span class="keyword">if</span> (pattern.charAt(comparePointer) == pattern.charAt(i)) comparePointer++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 优化过程</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; pattern.length(); i ++) &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = next[i];</span><br><span class="line">        <span class="keyword">while</span> (temp &gt;= <span class="number">0</span> &amp;&amp; pattern.charAt(i) == pattern.charAt(temp)) &#123;</span><br><span class="line">            temp = next[temp];</span><br><span class="line">        &#125;</span><br><span class="line">        next[i] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">otherMatch</span><span class="params">(String s, String p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] next = otherNext(p);</span><br><span class="line">    <span class="keyword">int</span> s_point = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> p_point = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> compareTime = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (s_point &lt; s.length() &amp;&amp; p_point &lt; p.length()) &#123;</span><br><span class="line">        compareTime ++;</span><br><span class="line">        <span class="keyword">if</span> (s.charAt(s_point) == p.charAt(p_point)) &#123;</span><br><span class="line">            s_point++;</span><br><span class="line">            p_point++;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (next[p_point] != -<span class="number">1</span>) &#123;</span><br><span class="line">            p_point = next[p_point];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            p_point = <span class="number">0</span>;</span><br><span class="line">            s_point ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (p_point == p.length()) &#123;</span><br><span class="line">        <span class="keyword">return</span> s_point - p.length();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述两种方式计算出来的next如下：</p>
+<p>针对字符串”ababa”</p>
+<p>next: [-1, -1, 0, 1, 2]</p>
+<p>otherNext: [-1, 0, 0, 1, 2]   优化后变为：[-1, 0, -1, 0, -1]</p>
+<p>可以发现第二种方法计算出来的next数组就是第一种方法计算出的next数组各元素加1并右移一位，同时在0补上-1</p>
+<p><img src="fig8.png" alt="fig8"></p>
+<p>对于上述的示例，优化前和优化后需要比较的次数分别为：13，11</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kmp/" rel="tag"># kmp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/17/ants-crawl/" rel="next" title="ants crawl">
+                <i class="fa fa-chevron-left"></i> ants crawl
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/25/leetcode1024/" rel="prev" title="LeetCode 1024. Video Stitching">
+                LeetCode 1024. Video Stitching <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.jpg" alt="wangz1x">
+            
+              <p class="site-author-name" itemprop="name">wangz1x</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzx22@163.com" target="_blank" title="E-Mail">
+                      E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+
+  
+</div>
+
+<!--
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

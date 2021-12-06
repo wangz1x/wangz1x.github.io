@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next gemini" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="包含两个部分，一是内存空间还有剩余，但是执行DEL等删除键的操作；二是内存空间不够了，类似GC随机删除某些键。">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis--删除策略">
+<meta property="og:url" content="https://zero22.top/2020/02/25/redis-6/index.html">
+<meta property="og:site_name" content="趁早">
+<meta property="og:description" content="包含两个部分，一是内存空间还有剩余，但是执行DEL等删除键的操作；二是内存空间不够了，类似GC随机删除某些键。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://zero22.top/2020/02/25/redis-6/fig1.png">
+<meta property="og:updated_time" content="2021-12-05T09:11:42.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis--删除策略">
+<meta name="twitter:description" content="包含两个部分，一是内存空间还有剩余，但是执行DEL等删除键的操作；二是内存空间不够了，类似GC随机删除某些键。">
+<meta name="twitter:image" content="https://zero22.top/2020/02/25/redis-6/fig1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>redis--删除策略 | 趁早</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">趁早</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2020/02/25/redis-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis--删除策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>包含两个部分，一是内存空间还有剩余，但是执行<code>DEL</code>等删除键的操作；二是内存空间不够了，类似<code>GC</code>随机删除某些键。</p>
+<a id="more"></a>
+<h3 id="数据删除"><a href="#数据删除" class="headerlink" title="数据删除"></a>数据删除</h3><p>配置文件中的<code>LAZY FREEING</code>部分讲述了两种删除键的机制：</p>
+<ol>
+<li><p>定时删除<code>blocking deletion</code></p>
+<p>即删除键时是一个阻塞操作，调用的时候就必须要进行删除，等不得，相当于<strong>时间换空间</strong></p>
+<ul>
+<li><code>DEL</code> 操作</li>
+<li>内存不够，需要阻塞删除 <code>maxmemory 60Mb</code></li>
+<li>设置过期时间，到时间阻塞删除 <code>expire</code></li>
+<li>更新值时，会阻塞删除旧值，比如 <code>rename</code> ,<code>sunionstore</code>, <code>set</code></li>
+<li>主从复制时，加载主机的<code>RDB</code>文件时要先删除所有库的内容</li>
+</ul>
+</li>
+<li><p>惰性删除 <code>non-blocking</code></p>
+<p>数据到期时并不一定马上删除，等下次访问时，先判断是否过期，未过期返回，已过期再删除，<strong>空间换时间</strong></p>
+<ul>
+<li><code>unlink</code> 非阻塞删除</li>
+<li><code>async</code>选项，如<code>flushdb async</code></li>
+<li>配置文件中提供配置选项 <code>lazyfree-lazy-eviction|expire|server-del no</code>, <code>replica-lazy-flush no</code></li>
+</ul>
+<p>在查询键时，首先会调用<code>expireIfNeeded</code>方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">expireIfNeeded</span><span class="params">(redisDb *db, robj *key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!keyIsExpired(db,key)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* If we are running in the context of a slave, instead of</span></span><br><span class="line"><span class="comment">     * evicting the expired key from the database, we return ASAP:</span></span><br><span class="line"><span class="comment">     * the slave key expiration is controlled by the master that will</span></span><br><span class="line"><span class="comment">     * send us synthesized DEL operations for expired keys.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Still we try to return the right information to the caller,</span></span><br><span class="line"><span class="comment">     * that is, 0 if we think the key should be still valid, 1 if</span></span><br><span class="line"><span class="comment">     * we think the key is expired at this time. */</span></span><br><span class="line">    <span class="keyword">if</span> (server.masterhost != <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">1</span>;   <span class="comment">// 如果是slave的话</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Delete the key */</span>      </span><br><span class="line">    server.stat_expiredkeys++;                 <span class="comment">// 在master中进行删除</span></span><br><span class="line">    propagateExpire(db,key,server.lazyfree_lazy_expire);</span><br><span class="line">    notifyKeyspaceEvent(NOTIFY_EXPIRED,</span><br><span class="line">        <span class="string">"expired"</span>,key,db-&gt;id);</span><br><span class="line">    <span class="keyword">return</span> server.lazyfree_lazy_expire ? dbAsyncDelete(db,key) : <span class="comment">//可配置</span></span><br><span class="line">                                         dbSyncDelete(db,key);   <span class="comment">//的关键字</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定期删除</p>
+<p><code>serverCron()</code>是一个定期执行的函数，需要执行一系列的任务，由<code>server.hz</code>设定工作周期，即每秒执行<code>server.hz</code>次，默认是<code>10</code>,</p>
+<p>其完成的工作中第一项：<code>Active expired keys collection (it is also performed in a lazy way on lookup)</code>,具体工作在<code>databasesCron()</code>中进行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">databasesCron</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* Expire keys by random sampling. Not required for slaves</span></span><br><span class="line"><span class="comment">     * as master will synthesize DELs for us. */</span></span><br><span class="line">    <span class="keyword">if</span> (server.active_expire_enabled) &#123;</span><br><span class="line">        <span class="keyword">if</span> (server.masterhost == <span class="literal">NULL</span>) &#123;    <span class="comment">// 如果是master的话，执行删除</span></span><br><span class="line">            activeExpireCycle(ACTIVE_EXPIRE_CYCLE_SLOW);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            expireSlaveKeys();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继续到<code>activeExpireCycle()</code>方法中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activeExpireCycle</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* This function has some global state in order to continue the work</span></span><br><span class="line"><span class="comment">     * incrementally across calls. */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> current_db = <span class="number">0</span>; <span class="comment">/* Last DB tested. */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> timelimit_exit = <span class="number">0</span>;      <span class="comment">/* Time limit hit in previous call? */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">long</span> <span class="keyword">long</span> last_fast_cycle = <span class="number">0</span>; <span class="comment">/* When last fast cycle ran. */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> j, iteration = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> dbs_per_call = CRON_DBS_PER_CALL;        <span class="comment">// 默认是16</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> start = ustime(), timelimit, elapsed;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* We usually should test CRON_DBS_PER_CALL per iteration, with</span></span><br><span class="line"><span class="comment">     * two exceptions:</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 1) Don't test more DBs than we have.</span></span><br><span class="line"><span class="comment">     * 2) If last time we hit the time limit, we want to scan all DBs</span></span><br><span class="line"><span class="comment">     * in this iteration, as there is work to do in some DB and we don't want</span></span><br><span class="line"><span class="comment">     * expired keys to use memory for too much time. */</span></span><br><span class="line">    <span class="keyword">if</span> (dbs_per_call &gt; server.dbnum || timelimit_exit)</span><br><span class="line">        dbs_per_call = server.dbnum;         <span class="comment">// 如果设置库大于16个，并且</span></span><br><span class="line">									      <span class="comment">// 检验超时了，下次循环就设为16次？</span></span><br><span class="line">    <span class="comment">/* We can use at max ACTIVE_EXPIRE_CYCLE_SLOW_TIME_PERC percentage of CPU time</span></span><br><span class="line"><span class="comment">     * per iteration. Since this function gets called with a frequency of</span></span><br><span class="line"><span class="comment">     * server.hz times per second, the following is the max amount of</span></span><br><span class="line"><span class="comment">     * microseconds we can spend in this function. */</span> <span class="comment">// cpu时间的1/4</span></span><br><span class="line">    timelimit = <span class="number">1000000</span>*ACTIVE_EXPIRE_CYCLE_SLOW_TIME_PERC/server.hz/<span class="number">100</span>;<span class="comment">//250ms</span></span><br><span class="line">    timelimit_exit = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (timelimit &lt;= <span class="number">0</span>) timelimit = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (type == ACTIVE_EXPIRE_CYCLE_FAST)</span><br><span class="line">        timelimit = ACTIVE_EXPIRE_CYCLE_FAST_DURATION; <span class="comment">/* in microseconds. */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Accumulate some global stats as we expire keys, to have some idea</span></span><br><span class="line"><span class="comment">     * about the number of keys that are already logically expired, but still</span></span><br><span class="line"><span class="comment">     * existing inside the database. */</span></span><br><span class="line">    <span class="keyword">long</span> total_sampled = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">long</span> total_expired = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; dbs_per_call &amp;&amp; timelimit_exit == <span class="number">0</span>; j++) &#123;<span class="comment">// 遍历16次库</span></span><br><span class="line">        <span class="keyword">int</span> expired;</span><br><span class="line">        redisDb *db = server.db+(current_db % server.dbnum); <span class="comment">// 接着上次的跑</span></span><br><span class="line">        </span><br><span class="line">        current_db++;         <span class="comment">// 记录当前的遍历到的库</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Continue to expire if at the end of the cycle more than 25%</span></span><br><span class="line"><span class="comment">         * of the keys were expired. */</span></span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">        	...</span><br><span class="line">            <span class="comment">/* If there is nothing to expire try next DB ASAP. */</span></span><br><span class="line">            <span class="keyword">if</span> ((num = dictSize(db-&gt;expires)) == <span class="number">0</span>) &#123;</span><br><span class="line">                db-&gt;avg_ttl = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            slots = dictSlots(db-&gt;expires);</span><br><span class="line">            now = mstime();</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* When there are less than 1% filled slots getting random</span></span><br><span class="line"><span class="comment">             * keys is expensive, so stop here waiting for better times...</span></span><br><span class="line"><span class="comment">             * The dictionary will be resized asap. */</span></span><br><span class="line">            <span class="keyword">if</span> (num &amp;&amp; slots &gt; DICT_HT_INITIAL_SIZE &amp;&amp;</span><br><span class="line">                (num*<span class="number">100</span>/slots &lt; <span class="number">1</span>)) <span class="keyword">break</span>;  <span class="comment">// 过期的太少了先跳过</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">/* The main collection cycle. Sample random keys among keys</span></span><br><span class="line"><span class="comment">             * with an expire set, checking for expired ones. */</span></span><br><span class="line">		   ...</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (num &gt; ACTIVE_EXPIRE_CYCLE_LOOKUPS_PER_LOOP)</span><br><span class="line">                num = ACTIVE_EXPIRE_CYCLE_LOOKUPS_PER_LOOP; <span class="comment">//默认20</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (num--) &#123;</span><br><span class="line">                dictEntry *de;</span><br><span class="line">                <span class="keyword">long</span> <span class="keyword">long</span> ttl;</span><br><span class="line">			    <span class="comment">// 从当前库中的expire中随机挑选一个key</span></span><br><span class="line">                <span class="keyword">if</span> ((de = dictGetRandomKey(db-&gt;expires)) == <span class="literal">NULL</span>) <span class="keyword">break</span>;</span><br><span class="line">                ttl = dictGetSignedIntegerVal(de)-now;</span><br><span class="line">                <span class="keyword">if</span> (activeExpireCycleTryExpire(db,de,now)) expired++;<span class="comment">//实际删除</span></span><br><span class="line">                <span class="keyword">if</span> (ttl &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">/* We want the average TTL of keys yet not expired. */</span></span><br><span class="line">                    ttl_sum += ttl;</span><br><span class="line">                    ttl_samples++;</span><br><span class="line">                &#125;</span><br><span class="line">                total_sampled++;</span><br><span class="line">            &#125;</span><br><span class="line">            total_expired += expired;</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* Update the average TTL stats for this database. */</span></span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            <span class="comment">/* We can't block forever here even if there are many keys to</span></span><br><span class="line"><span class="comment">             * expire. So after a given amount of milliseconds return to the</span></span><br><span class="line"><span class="comment">             * caller waiting for the other active expire cycle. */</span></span><br><span class="line">            <span class="keyword">if</span> ((iteration &amp; <span class="number">0xf</span>) == <span class="number">0</span>) &#123; <span class="comment">/* check once every 16 iterations. */</span></span><br><span class="line">                elapsed = ustime()-start;</span><br><span class="line">                <span class="keyword">if</span> (elapsed &gt; timelimit) &#123;</span><br><span class="line">                    timelimit_exit = <span class="number">1</span>;</span><br><span class="line">                    server.stat_expired_time_cap_reached_count++;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* We don't repeat the cycle if there are less than 25% of keys</span></span><br><span class="line"><span class="comment">             * found expired in the current DB. */</span></span><br><span class="line">        &#125; <span class="keyword">while</span> (expired &gt; ACTIVE_EXPIRE_CYCLE_LOOKUPS_PER_LOOP/<span class="number">4</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   摘自<code>itcast</code></p>
+<p>   <img src="fig1.png" alt="*"></p>
+<h3 id="数据逐出"><a href="#数据逐出" class="headerlink" title="数据逐出"></a>数据逐出</h3><p>当内存不够时，删除哪些数据</p>
+<p>有以下相关配置：</p>
+<ol>
+<li><p>设置最大内存：<code>maxmemory &lt;bytes&gt;</code></p>
+</li>
+<li><p>设置逐出策略：<code>maxmemory-policy noeviction</code>———&gt;默认</p>
+<ul>
+<li><code>volatile-lru -&gt; Evict using approximated LRU among the keys with an expire set.</code></li>
+<li><code>volatile-lfu -&gt; Evict using approximated LFU among the keys with an expire set.</code></li>
+<li><code>volatile-random -&gt; Remove a random key among the ones with an expire set.</code></li>
+<li><code>volatile-ttl -&gt; Remove the key with the nearest expire time (minor TTL)</code></li>
+<li><code>allkeys-lru -&gt; Evict any key using approximated LRU.</code></li>
+<li><code>allkeys-lfu -&gt; Evict any key using approximated LFU.</code></li>
+<li><code>allkeys-random -&gt; Remove a random key, any key.</code></li>
+<li><code>noeviction -&gt; Don&#39;t evict anything, just return an error on write operations.</code></li>
+</ul>
+</li>
+<li><p>设置抽样数目：<code>maxmemory-samples 5</code></p>
+<p>注意上述某些策略是<code>approximated</code>,主要就体现在抽样数量上，不是从所有的键中进行选择</p>
+</li>
+</ol>
+<p><code>lru means least recently used</code>：简单理解就是按<strong>时间</strong>来说，<strong>最久</strong>没有使用的</p>
+<p><code>lfu means least frequently used</code>：简单说就是按<strong>次数</strong>来说，<strong>最少</strong>使用的 </p>
+<p>说是可以通过<code>info stats</code>中记录的<code>keyspace_hits:1</code>和<code>keyspace_misses:2</code>来调整策略 = =。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/25/redis-5/" rel="next" title="redis--事务">
+                <i class="fa fa-chevron-left"></i> redis--事务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/26/redis-7/" rel="prev" title="redis--主从复制">
+                redis--主从复制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.jpg" alt="wangz1x">
+            
+              <p class="site-author-name" itemprop="name">wangz1x</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzx22@163.com" target="_blank" title="E-Mail">
+                      E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+
+  
+</div>
+
+<!--
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
