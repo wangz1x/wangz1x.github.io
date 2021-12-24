@@ -247,6 +247,134 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/12/24/install-wifi-adapter-on-Ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangz1x">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/12/24/install-wifi-adapter-on-Ubuntu/" itemprop="url">在ubuntu中安装无线网卡驱动</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>参考链接<a href="https://blog.csdn.net/mhlwsk/article/details/52833374" target="_blank" rel="noopener">ubuntu安装无线网卡驱动（包括离线安装</a></p>
+<ol>
+<li>将iso镜像作为源</li>
+</ol>
+<p>挂载iso镜像：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -o loop -t iso9660 xx/ubuntu-xx.iso /media/cdrom/</span><br></pre></td></tr></table></figure></p>
+<p>这里可能会提示没有<code>/media/cdrom</code>目录，我是手动创建了一个</p>
+<p>添加源：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-cdrom -m -d /media/cdrom add</span><br></pre></td></tr></table></figure></p>
+<p>编辑源信息：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure></p>
+<p>只保留<code>deb cdrom xxx</code>一行，注意先备份，后边有网了再替换回去</p>
+<p>更新源：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>从iso源中安装依赖</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dkms</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装驱动</li>
+</ol>
+<p>首先要下载对应的无线网卡驱动的deb安装包，原作中给出的链接是broadcom的，正好和我匹配，但是链接地址需要修改下，可以从<a href="http://mirrors.kernel.org/ubuntu/pool/restricted/b/bcmwl/" target="_blank" rel="noopener">http://mirrors.kernel.org/ubuntu/pool/restricted/b/bcmwl/</a>这里边找，我选了最新的一个，没想到就能用，不太晓得到底需要哪一个</p>
+<p>下载完后拷到ubuntu中，然后安装该包<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i bcmwl-xx.deb</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/11/12/ISSRE-in-Wuhan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -989,115 +1117,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zero22.top/2021/08/08/search-in-github/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangz1x">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/08/08/search-in-github/" itemprop="url">search in github</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="在指定用户仓库中搜索项目"><a href="#在指定用户仓库中搜索项目" class="headerlink" title="在指定用户仓库中搜索项目"></a>在指定用户仓库中搜索项目</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user:wangz1x cim</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1150,7 +1169,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-count">103</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1163,7 +1182,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-count">127</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
