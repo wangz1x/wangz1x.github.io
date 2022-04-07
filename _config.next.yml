@@ -50,10 +50,10 @@ darkmode: false
 # ---------------------------------------------------------------
 
 favicon:
-  small: /images/head.png
-  medium: /images/head.png
-  apple_touch_icon: /images/head.png
-  safari_pinned_tab: /images/head.png
+  small: /images/head.jpg
+  medium: /images/head.jpg
+  apple_touch_icon: /images/head.jpg
+  safari_pinned_tab: /images/head.jpg
   #android_manifest: /manifest.json
 
 # Custom Logo (Warning: Do not support scheme Mist)
@@ -209,11 +209,11 @@ footer:
   # Icon between year and copyright info.
   icon:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-solid fa-campfire
+    name: fa fa-campfire
     # If you want to animate the icon, set it to true.
     animated: true
     # Change the color of icon, using Hex Code.
-    color: "#ffffff"
+    color: "#ff0000"
 
   # If not defined, `author` from Hexo `_config.yml` will be used.
   copyright:
@@ -365,11 +365,11 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: default
-    dark: stackoverflow-dark
-  prism:
-    light: prism
-    dark: prism-dark
+    light: a11y-dark
+    dark: a11y-dark
+  # prism:
+  #   light: prism
+  #   dark: prism-dark
   # Add copy button on codeblock
   copy_button:
     enable: false
@@ -840,7 +840,7 @@ mermaid:
 # Use Animate.css to animate everything.
 # For more information: https://animate.style
 motion:
-  enable: true
+  enable: false
   async: false
   transition:
     # All available transition variants: https://theme-next.js.org/animate/
