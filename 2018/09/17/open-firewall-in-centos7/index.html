@@ -234,15 +234,15 @@
         <p>Centos7之前一般是用<code>iptables</code>管理防火墙相关内容的，一般用到的就是开放一个端口供我们的应用使用，其命令如下:<br><code>iptables -I INPUT -p tcp --dport 11111 -j ACCEPT</code></p>
 <span id="more"></span>
 
-<p>添加端口:<br><img src="/fig1.png" alt="enter description here"></p>
-<p>删除端口:<br><img src="/fig2.png" alt="enter description here"></p>
+<p>添加端口:<br><img src="/2018/09/17/open-firewall-in-centos7/fig1.png" alt="enter description here"></p>
+<p>删除端口:<br><img src="/2018/09/17/open-firewall-in-centos7/fig2.png" alt="enter description here"></p>
 <p>Centos7一般新增了<code>firewall-cmd</code>，用来管理防火墙<br>首先开启<br><code>systemctl start firewalld</code></p>
 <p>查看状态<br><code>firewall-cmd --state</code></p>
 <p>添加端口<br><code>firewall-cmd --add-port=11111/tcp --zone=public --permanent</code></p>
 <p>查看端口<br><code>firewall-cmd --list-ports</code></p>
-<p><img src="/fig3.png" alt="enter description here"></p>
+<p><img src="/2018/09/17/open-firewall-in-centos7/fig3.png" alt="enter description here"></p>
 <p>添加端口后一般是用 <code>firewall-cmd --reload</code>来更新使其生效</p>
-<p><code>firewall</code>中的<code>zone</code>，不知道和<code>iptables</code>中的<code>chain</code>有没有关系，用<code>firewall-cmd</code>添加的端口在<code>iptables -L -n</code>中也可以看到(好像是废话- -)<br><img src="/fig4.png" alt="enter description here"></p>
+<p><code>firewall</code>中的<code>zone</code>，不知道和<code>iptables</code>中的<code>chain</code>有没有关系，用<code>firewall-cmd</code>添加的端口在<code>iptables -L -n</code>中也可以看到(好像是废话- -)<br><img src="/2018/09/17/open-firewall-in-centos7/fig4.png" alt="enter description here"></p>
 <p>删除端口<br><code>firewall-cmd --remove-port=11111/tcp</code></p>
 <p>基本的使用over.</p>
 

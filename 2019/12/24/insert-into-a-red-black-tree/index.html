@@ -240,30 +240,30 @@
 <li>从任一节点到叶子节点所经过的黑色节点个数相同</li>
 </ol>
 <span id="more"></span>
-<p>就像这样:<br><img src="/fig1.png"></p>
+<p>就像这样:<br><img src="/2019/12/24/insert-into-a-red-black-tree/fig1.png"></p>
 <h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>不管是插入还是删除，只要能理出节点插入时其周围节点颜色的情况，就能对操作有个整体的认识。</p>
 <p>还要注意的是，在插入时，把待处理的节点默认为红色会更方便，破坏的规则更少。</p>
-<p>整体流程图：<br><img src="/fig2.png"></p>
+<p>整体流程图：<br><img src="/2019/12/24/insert-into-a-red-black-tree/fig2.png"></p>
 <h4 id="case1"><a href="#case1" class="headerlink" title="case1"></a>case1</h4><p>如果根节点为空，则待插入节点当作根节点，并设置为黑色。</p>
 <h4 id="case2"><a href="#case2" class="headerlink" title="case2"></a>case2</h4><p>如果父节点为黑色，那么插入一个红节点不会破坏任何性质，ok</p>
 <h4 id="case3"><a href="#case3" class="headerlink" title="case3"></a>case3</h4><p>如果父节点为红色，这时候就需要考虑叔叔节点了，如果叔叔也是红色，那么就把父亲和叔叔变为黑色，爷爷变为红色，这样保持遍历该棵树时黑色节点数目不变，然后把爷爷当作待插入节点，递归处理。(因为在这里是爷爷，可能是别人的儿子)</p>
-<p><img src="/fig3.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig3.png"></p>
 <h4 id="case4"><a href="#case4" class="headerlink" title="case4"></a>case4</h4><p>还是父节点为红，叔叔为黑色或没有，这时就需要旋转操作了，如果待插入节点和父亲节点在同一边，就绕着父亲节点做一次对应的旋转:</p>
-<p><img src="/fig4.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig4.png"></p>
 <p>如果不在同一边，就需要先做一次旋转转到同一边，再继续。</p>
-<p><img src="/fig5.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig5.png"></p>
 <h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除的主要思想是用待删除节点的前继或后继节点替换该节点，再删除原前&#x2F;后继节点，这里考虑用后继节点替换该待删除节点，(那么可知后继节点左孩子是叶子节点)，把后继节点的值copy到待删除节点上，然后只用考虑把后继节点删除就行了。因此后边的待删除节点都是☞原节点的后继节点了，不要搞错对象咯。</p>
-<p>主要流程图：<br><img src="/fig6.png"></p>
+<p>主要流程图：<br><img src="/2019/12/24/insert-into-a-red-black-tree/fig6.png"></p>
 <h4 id="自己为红"><a href="#自己为红" class="headerlink" title="自己为红"></a>自己为红</h4><p>那么它已经没得孩子了，直接删除就好。</p>
-<p><img src="/fig7.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig7.png"></p>
 <h4 id="右孩子为红"><a href="#右孩子为红" class="headerlink" title="右孩子为红"></a>右孩子为红</h4><p>把自己删了之后，用右孩子顶上，并改为黑色。</p>
-<p><img src="/fig8.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig8.png"></p>
 <h4 id="兄弟为红"><a href="#兄弟为红" class="headerlink" title="兄弟为红"></a>兄弟为红</h4><p>通过旋转往这边均个点改为黑的。</p>
-<p><img src="/fig9.png"></p>
-<h4 id="兄弟同边孩子为红"><a href="#兄弟同边孩子为红" class="headerlink" title="兄弟同边孩子为红"></a>兄弟同边孩子为红</h4><p><img src="/fig10.png"></p>
-<h4 id="兄弟异边孩子为红"><a href="#兄弟异边孩子为红" class="headerlink" title="兄弟异边孩子为红"></a>兄弟异边孩子为红</h4><p><img src="/fig13.png"></p>
-<h4 id="父亲为黑"><a href="#父亲为黑" class="headerlink" title="父亲为黑"></a>父亲为黑</h4><p>删除后把兄弟节点改为红的，这时候这个子树是没问题的，但是它作为更大的树的一部分，经过<code>P</code>的路径就会比原来少一个黑点，所以要再递归平衡<code>P</code>点。<br><img src="/fig11.png"></p>
-<h4 id="父亲为红"><a href="#父亲为红" class="headerlink" title="父亲为红"></a>父亲为红</h4><p><img src="/fig12.png"></p>
+<p><img src="/2019/12/24/insert-into-a-red-black-tree/fig9.png"></p>
+<h4 id="兄弟同边孩子为红"><a href="#兄弟同边孩子为红" class="headerlink" title="兄弟同边孩子为红"></a>兄弟同边孩子为红</h4><p><img src="/2019/12/24/insert-into-a-red-black-tree/fig10.png"></p>
+<h4 id="兄弟异边孩子为红"><a href="#兄弟异边孩子为红" class="headerlink" title="兄弟异边孩子为红"></a>兄弟异边孩子为红</h4><p><img src="/2019/12/24/insert-into-a-red-black-tree/fig13.png"></p>
+<h4 id="父亲为黑"><a href="#父亲为黑" class="headerlink" title="父亲为黑"></a>父亲为黑</h4><p>删除后把兄弟节点改为红的，这时候这个子树是没问题的，但是它作为更大的树的一部分，经过<code>P</code>的路径就会比原来少一个黑点，所以要再递归平衡<code>P</code>点。<br><img src="/2019/12/24/insert-into-a-red-black-tree/fig11.png"></p>
+<h4 id="父亲为红"><a href="#父亲为红" class="headerlink" title="父亲为红"></a>父亲为红</h4><p><img src="/2019/12/24/insert-into-a-red-black-tree/fig12.png"></p>
 
     </div>
 

@@ -242,25 +242,25 @@
 <li>实现此接口，重写方法</li>
 <li>自己调用该方法进行比较或者作为Collections.sort等入参</li>
 </ol>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>代码:<br><img src="/fig1.png" alt="按照销量升序"><br>结果:<br><img src="/fig2.png" alt="enter description here"></p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>代码:<br><img src="/2018/08/10/Comparator-Comparable/fig1.png" alt="按照销量升序"><br>结果:<br><img src="/2018/08/10/Comparator-Comparable/fig2.png" alt="enter description here"></p>
 <h3 id="java-util-Comparable"><a href="#java-util-Comparable" class="headerlink" title="java.util.Comparable"></a>java.util.Comparable</h3><h4 id="只有一个方法"><a href="#只有一个方法" class="headerlink" title="只有一个方法"></a>只有一个方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span>   o the object to be compared.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>  a negative integer, zero, or a positive integer as this object</span></span><br><span class="line"><span class="comment">*          is less than, equal to, or greater than the specified object.</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> NullPointerException if the specified object is null</span></span><br><span class="line"><span class="comment">* <span class="doctag">@throws</span> ClassCastException if the specified object&#x27;s type prevents it</span></span><br><span class="line"><span class="comment">*         from being compared to this object.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(T o)</span>;</span><br></pre></td></tr></table></figure>
 <h4 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h4><ol>
 <li>实现接口，重写方法</li>
 <li>调用该方法</li>
 </ol>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>代码:<br><img src="/fig3.png" alt="enter description here"><br>结果:<br><img src="/fig4.png" alt="enter description here"></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>代码:<br><img src="/2018/08/10/Comparator-Comparable/fig3.png" alt="enter description here"><br>结果:<br><img src="/2018/08/10/Comparator-Comparable/fig4.png" alt="enter description here"></p>
 <h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>java.util.Collections.sort最终还是会调用java.util.Arrays里的sort方法，我们跟着他在源码中跳几下，看看这个过程</p>
-<h4 id="step0"><a href="#step0" class="headerlink" title="step0"></a>step0</h4><p><img src="/fig5.png" alt="程序中调用Collections.sort"></p>
-<h4 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h4><p><img src="/fig6.png" alt="调用List的sort"></p>
-<h4 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h4><p><img src="/fig7.png" alt="List中调用Arrays.sort"></p>
-<h4 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h4><p><img src="/fig8.png" alt="根据是否有比较器"></p>
-<h5 id="没有比较器"><a href="#没有比较器" class="headerlink" title="没有比较器"></a>没有比较器</h5><p><img src="/fig9.png" alt="enter description here"></p>
+<h4 id="step0"><a href="#step0" class="headerlink" title="step0"></a>step0</h4><p><img src="/2018/08/10/Comparator-Comparable/fig5.png" alt="程序中调用Collections.sort"></p>
+<h4 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h4><p><img src="/2018/08/10/Comparator-Comparable/fig6.png" alt="调用List的sort"></p>
+<h4 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h4><p><img src="/2018/08/10/Comparator-Comparable/fig7.png" alt="List中调用Arrays.sort"></p>
+<h4 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h4><p><img src="/2018/08/10/Comparator-Comparable/fig8.png" alt="根据是否有比较器"></p>
+<h5 id="没有比较器"><a href="#没有比较器" class="headerlink" title="没有比较器"></a>没有比较器</h5><p><img src="/2018/08/10/Comparator-Comparable/fig9.png" alt="enter description here"></p>
 <h6 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h6><blockquote>
 <p>&#x2F;**<br>     * Sorts the specified array of objects into ascending order, according<br>     * to the {@linkplain Comparable natural ordering} of its elements.<br>     * All elements in the array must implement the {@link Comparable}<br>     * interface.  Furthermore, all elements in the array must be<br>     * <i>mutually comparable</i> (that is, {@code e1.compareTo(e2)} must<br>     * not throw a {@code ClassCastException} for any elements {@code e1}<br>     * and {@code e2} in the array).</p>
 </blockquote>
 <p><strong>数组中的元素必须实现Comparable接口</strong></p>
-<h6 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h6><p><img src="/fig10.png" alt="enter description here"></p>
-<h5 id="有比较器"><a href="#有比较器" class="headerlink" title="有比较器"></a>有比较器</h5><p>我这里看的是 <strong>TimSort.sort</strong><br><img src="/fig11.png" alt="enter description here"><br>继续看 <strong>binarySort</strong><br><img src="/fig12.png" alt="enter description here"></p>
+<h6 id="使用-2"><a href="#使用-2" class="headerlink" title="使用"></a>使用</h6><p><img src="/2018/08/10/Comparator-Comparable/fig10.png" alt="enter description here"></p>
+<h5 id="有比较器"><a href="#有比较器" class="headerlink" title="有比较器"></a>有比较器</h5><p>我这里看的是 <strong>TimSort.sort</strong><br><img src="/2018/08/10/Comparator-Comparable/fig11.png" alt="enter description here"><br>继续看 <strong>binarySort</strong><br><img src="/2018/08/10/Comparator-Comparable/fig12.png" alt="enter description here"></p>
 <h4 id="step4"><a href="#step4" class="headerlink" title="step4"></a>step4</h4><p>哇，这里还有好多的sort啊，看的我脑袋都大了，over</p>
 
     </div>

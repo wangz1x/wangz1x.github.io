@@ -234,8 +234,8 @@
         <p>现在的情况是，本地有两个分支：master、div， 远程仓库有一个分支：master，本地master分支和远程master分支建立有跟踪联系，这样本地master分支提交时直接git push(只有一个远程仓库的情况下)</p>
 <span id="more"></span>
 
-<p><img src="/fig1.png" alt="enter description here"></p>
-<p>那么div分支也想提交到远程master怎么办呢，先试试直接git push：<br><img src="/fig2.png" alt="enter description here"><br>提示信息很清楚了</p>
+<p><img src="/2018/05/24/git_push/fig1.png" alt="enter description here"></p>
+<p>那么div分支也想提交到远程master怎么办呢，先试试直接git push：<br><img src="/2018/05/24/git_push/fig2.png" alt="enter description here"><br>提示信息很清楚了</p>
 <p>这里使用命令  git push origin HEAD:master 即可</p>
 <p>而HEAD指向的是当前的分支，git可以通过HEAD找到当前的分支名，所以该命令相当于 git push origin div:master</p>
 <p>&#x3D;&#x3D;git push&#x2F;pull &lt;远程主机名&gt; &lt;源分支&gt;:&lt;目的分支&gt;&#x3D;&#x3D; 是git push常用的精简命令的完整格式，当然还可以加git push的各种 [<options>]，这里就不说了。</p>
@@ -243,7 +243,7 @@
 <p>2018.06.20 更新</p>
 <p>在推送前，我们可以使用命令 git push -u &lt;远程主机名&gt; &lt;分支名&gt;</p>
 <p>其中-u 参数效果：如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用git push.</p>
-<p>–set-upstream 是用来和远程分支建立追踪关系<br><img src="/fig3.png" alt="enter description here"></p>
+<p>–set-upstream 是用来和远程分支建立追踪关系<br><img src="/2018/05/24/git_push/fig3.png" alt="enter description here"></p>
 
     </div>
 

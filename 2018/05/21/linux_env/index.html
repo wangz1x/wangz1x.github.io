@@ -235,13 +235,13 @@
         <p>有些东西不自己写一下，总是会忘记，当然写了也可能还是会忘，但是找起来印象会深一点吧。之前在需要配置环境变量的时候就直接查了一下，完成配置后就没管了，最近再次想到这个问题，结果已经忘记该怎么配置了。所以什么东西都是写一下比较好吧.</p>
 <span id="more"></span>
 
-<h3 id="方式一：使用export"><a href="#方式一：使用export" class="headerlink" title="方式一：使用export"></a>方式一：使用export</h3><p>使用export命令直接修改PATH变量<br><img src="/fig1.png" alt="enter description here"></p>
-<h3 id="方式二：修改-x2F-etc-x2F-profile"><a href="#方式二：修改-x2F-etc-x2F-profile" class="headerlink" title="方式二：修改&#x2F;etc&#x2F;profile"></a>方式二：修改&#x2F;etc&#x2F;profile</h3><p><img src="/fig2.png" alt="enter description here"></p>
+<h3 id="方式一：使用export"><a href="#方式一：使用export" class="headerlink" title="方式一：使用export"></a>方式一：使用export</h3><p>使用export命令直接修改PATH变量<br><img src="/2018/05/21/linux_env/fig1.png" alt="enter description here"></p>
+<h3 id="方式二：修改-x2F-etc-x2F-profile"><a href="#方式二：修改-x2F-etc-x2F-profile" class="headerlink" title="方式二：修改&#x2F;etc&#x2F;profile"></a>方式二：修改&#x2F;etc&#x2F;profile</h3><p><img src="/2018/05/21/linux_env/fig2.png" alt="enter description here"></p>
 <p>如果要立即生效需要执行命令</p>
 <p>source &#x2F;etc&#x2F;profile</p>
 <p>使用这种方式，所有用户都会受影响,当第一个用户登录时,该文件被执行.</p>
 <p>类似的还有&#x2F;etc&#x2F;enviroment文件，影响所有用户</p>
-<h3 id="方式三：修改-x2F-bashrc"><a href="#方式三：修改-x2F-bashrc" class="headerlink" title="方式三：修改~&#x2F;.bashrc"></a>方式三：修改~&#x2F;.bashrc</h3><p><img src="/fig3.png" alt="enter description here"></p>
+<h3 id="方式三：修改-x2F-bashrc"><a href="#方式三：修改-x2F-bashrc" class="headerlink" title="方式三：修改~&#x2F;.bashrc"></a>方式三：修改~&#x2F;.bashrc</h3><p><img src="/2018/05/21/linux_env/fig3.png" alt="enter description here"></p>
 <p>同样立即生效需要：</p>
 <p>source ~&#x2F;.bashrc</p>
 <p>专属于个人bash shell的信息，当该用户登录时以及每次打开新的shell时,该文件被读取.</p>

@@ -267,7 +267,7 @@
 <li>所以我们可以看到，jvm在加载StaticTwoChild时，能发现它有父类StaticTwo，所以先去加载他的父类，他的父类没有显示的父类，所以就直接加载，然后在下去加载StaticTwoChild，所以输出前两行是父类静态代码块-&gt;子类静态代码块</li>
 <li>子类在执行构造函数时，会先找父类的非默认构造方法并执行，所以下边输出结果就是先父类即StaticTwo的构造方法，再是子类即StaticTwoChild的构造方法，上边也说过了，普通代码块在每次实例化对象时都会最先执行，所以是父类普通代码块-&gt;父类构造方法-&gt;子类普通代码块-&gt;子类构造方法</li>
 </ol>
-<h3 id="static修饰内部类"><a href="#static修饰内部类" class="headerlink" title="static修饰内部类"></a>static修饰内部类</h3><p>内部类就是在一个类的内部，像定义变量方法那样，定义一个类，就叫内部类。其实在JDK中就有很多的内部类，尤其是在集合类中，比如下边:<br><img src="/fig1.png" alt="enter description here"><br><img src="/fig2.png" alt="enter description here"><br>还有很多就不放图了。<br>这里有会涉及静态内部类和普通内部类的区别，这里简单的说几点基本的吧:</p>
+<h3 id="static修饰内部类"><a href="#static修饰内部类" class="headerlink" title="static修饰内部类"></a>static修饰内部类</h3><p>内部类就是在一个类的内部，像定义变量方法那样，定义一个类，就叫内部类。其实在JDK中就有很多的内部类，尤其是在集合类中，比如下边:<br><img src="/2018/08/08/static-in-java/fig1.png" alt="enter description here"><br><img src="/2018/08/08/static-in-java/fig2.png" alt="enter description here"><br>还有很多就不放图了。<br>这里有会涉及静态内部类和普通内部类的区别，这里简单的说几点基本的吧:</p>
 <ol>
 <li>创建实例方式不同</li>
 <li>静态内部类中只能访问外部类中静态成员，普通内部类都行</li>

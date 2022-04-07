@@ -236,7 +236,7 @@
 <span id="more"></span>
 
 <h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>假设我们现在要求字符串A的前i个字符转化为字符串B的前j个字符的最小操作数，如<strong>图1</strong>所示</p>
-<p><img src="/fig1.png" alt="图1"></p>
+<p><img src="/2019/11/26/Levenshtein-distance/fig1.png" alt="图1"></p>
 <p>图中的箭头表示这个状态矩阵填写的顺序，因此我们也已经有了<code>T[i-1][j]</code>, <code>T[i][j-1]</code>, <code>T[i-1][j-1]</code>等知识</p>
 <p>那么能否利用这些已经计算的值，来计算<code>T[i][j]</code>呢?</p>
 <p>在两个字符串都进行扩充时，新增加的字符有两种可能:</p>

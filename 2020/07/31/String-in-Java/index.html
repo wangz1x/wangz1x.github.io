@@ -245,7 +245,7 @@
 
 <p>在上述输出语句打上断点，用<code>jps</code>查看进程id，用<code>jhsdb hsdb --pid id</code>连上该进程</p>
 <p>依次点击<code>Tools-&gt;Object Histogram</code>, 在列出来的类中双击<code>String</code>类型，然后找到上边写的<code>str</code>串，如下图</p>
-<p><img src="/fig1.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig1.png"></p>
 <p>发现如下三点：</p>
 <ol>
 <li>字符串已经排好序了</li>
@@ -256,22 +256,22 @@
 <h3 id="case2"><a href="#case2" class="headerlink" title="case2"></a>case2</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;str1&quot;</span>);</span><br><span class="line">    System.out.println(<span class="string">&quot;debug&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这次只修改了字符串的声明，仍然按照上述步骤，看到的信息如下</p>
-<p><img src="/fig2.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig2.png"></p>
 <p>发现这里出现了两个<code>str1</code>，继续</p>
 <h3 id="case3"><a href="#case3" class="headerlink" title="case3"></a>case3</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;str&quot;</span>).append(<span class="string">&quot;str1&quot;</span>).toString();</span><br><span class="line">    System.out.println(<span class="string">&quot;debug&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>对<strong>case1</strong>进行修改，<code>append</code>一个不一样的串，结果如下</p>
-<p><img src="/fig3.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig3.png"></p>
 <p>在类似的地址上找到了三个串，继续变</p>
 <h3 id="case4"><a href="#case4" class="headerlink" title="case4"></a>case4</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;str&quot;</span>).toString();</span><br><span class="line">    System.out.println(<span class="string">&quot;debug&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这次也不追加了，就一个，结果如下</p>
-<p><img src="/fig4.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig4.png"></p>
 <p>结果和<strong>case2</strong>一样，继续</p>
 <h3 id="case5"><a href="#case5" class="headerlink" title="case5"></a>case5</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> <span class="string">&quot;str2&quot;</span>;</span><br><span class="line">    System.out.println(<span class="string">&quot;debug&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果如下，只有一个串</p>
-<p><img src="/fig5.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig5.png"></p>
 <hr>
 <p>下面对上边五种情况作个小结，含有<strong>猜</strong>的成分</p>
 <ul>
@@ -288,7 +288,7 @@
 <li><code>str2 == str1.intern()</code> 由于<code>str2</code>在创建时，发现<strong>字符串常量池</strong>已经有指向<code>&quot;str1&quot;</code>字面值的引用了，因此直接返回了，相当与<code>str2 ---&gt; H1 &lt;--- str1.intern()</code>，指向相同的地址，返回<code>true</code></li>
 </ol>
 <p>再对这个例子画个小图</p>
-<p><img src="/fig6.png"></p>
+<p><img src="/2020/07/31/String-in-Java/fig6.png"></p>
 <hr>
 <p>最后再引用一些其他说法</p>
 <p><a target="_blank" rel="noopener" href="http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/">http://tangxman.github.io/2015/07/27/the-difference-of-java-string-pool/</a> </p>

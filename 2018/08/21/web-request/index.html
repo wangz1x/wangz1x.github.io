@@ -249,8 +249,8 @@
 <li>客户端接收完服务器返回的信息后，与服务器断开连接。</li>
 </ol>
 <h3 id="THREE-WAY-HANDSHAKE"><a href="#THREE-WAY-HANDSHAKE" class="headerlink" title="THREE-WAY HANDSHAKE"></a>THREE-WAY HANDSHAKE</h3><p>用Wireshark来看看三次握手：</p>
-<p><img src="/fig1.png" alt="总的"></p>
-<p>首先我给服务器发送一个TCP报文：<br><img src="/fig2.png" alt="第一次握手"><br>随后服务器端回我一个：<br><img src="/fig3.png" alt="第二次握手"><br>最后我再给服务器发一个：<br><img src="/fig4.png" alt="第三次握手"><br>由上边可以知道，客户端和服务器端发送的Sequence number是没有关系的，各自算各自的。</p>
+<p><img src="/2018/08/21/web-request/fig1.png" alt="总的"></p>
+<p>首先我给服务器发送一个TCP报文：<br><img src="/2018/08/21/web-request/fig2.png" alt="第一次握手"><br>随后服务器端回我一个：<br><img src="/2018/08/21/web-request/fig3.png" alt="第二次握手"><br>最后我再给服务器发一个：<br><img src="/2018/08/21/web-request/fig4.png" alt="第三次握手"><br>由上边可以知道，客户端和服务器端发送的Sequence number是没有关系的，各自算各自的。</p>
 <p>至于建立连接之后，客户端与服务器端数据的传送，现在不想看了，大概根据对方的ip和mac地址，传到相应的主机？解析后主机在给相应的应用程序？不很清楚，再看吧 - -</p>
 
     </div>

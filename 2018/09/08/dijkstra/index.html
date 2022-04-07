@@ -233,9 +233,9 @@
     <div class="post-body" itemprop="articleBody">
         <p>关于图论中的算法大多还是数据结构课上讲的, 过了这么久突然想起来, 就来复习复习吧。这里看一下<code>Dijkstra</code>算法再有向图中的使用。具体的需求就是给定一个图和一个点, 求出从该点出发到各个点的最短距离。下边放一张从<code>wiki</code>拿来的图:</p>
 <span id="more"></span>
-<p><img src="/fig1.gif" alt="来自wiki"></p>
+<p><img src="/2018/09/08/dijkstra/fig1.gif" alt="来自wiki"></p>
 <p>不过这张是无向图, 但是大致的流程是类似的。</p>
-<p>下面通过一个更具体是示例来说明, 我们的图如下所示:<br><img src="/fig2.png" alt="example"></p>
+<p>下面通过一个更具体是示例来说明, 我们的图如下所示:<br><img src="/2018/09/08/dijkstra/fig2.png" alt="example"></p>
 <p>需求: 从1开始, 到各个点的最短距离<br>准备: 我们可以利用三个数组存储相关的信息</p>
 <ul>
 <li>sign[] 记录已经被访问过的点</li>

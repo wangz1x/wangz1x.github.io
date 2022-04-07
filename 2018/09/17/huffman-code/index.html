@@ -238,8 +238,8 @@
 <h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><ol>
 <li>计算各个待编码字符出现的频率. 比如<code>HELLOWORLD</code>，一共10个字符，<code>H</code> <code>E</code> <code>W</code> <code>R</code> <code>D</code>各1次，<code>L</code>3次，<code>O</code>2次，各自出现的频率就是<strong>次数&#x2F;总数</strong>。</li>
 <li>在频率中找最小的两个值，相加，结果放进频率集中。这样做的目的是，频率越小，说明出现的次数相对越少，那么在进行<code>Huffman</code>编码时，这些小频率的字符就在<code>Huffman</code>树的底层，则生成的编码就越长，相对的，频率高的就出现在<code>Huffman</code>树的高层，生成的编码越短，这样就可能起到压缩的效果。例如当前的频率集为<code>0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3</code>，选取两个0.1进行操作，新的频率集为<code>0.1, 0.1, 0.1, 0.2, 0.2, 0.3</code>。</li>
-<li>构造<code>Huffman</code>树:<br><img src="/fig1.png" alt="enter description here"></li>
-<li>重复第二步直到构造出完整的<code>Huffman</code>树，接下来就是编码了，很简单，左右子树分别标记为0&#x2F;1，如下图:<br><img src="/fig2.png" alt="enter description here"><br>每个字符的编码就是从根节点到该节点路径上的标识，比如<code>W</code>为<code>000</code>，<code>H</code>为<code>1010</code>。</li>
+<li>构造<code>Huffman</code>树:<br><img src="/2018/09/17/huffman-code/fig1.png" alt="enter description here"></li>
+<li>重复第二步直到构造出完整的<code>Huffman</code>树，接下来就是编码了，很简单，左右子树分别标记为0&#x2F;1，如下图:<br><img src="/2018/09/17/huffman-code/fig2.png" alt="enter description here"><br>每个字符的编码就是从根节点到该节点路径上的标识，比如<code>W</code>为<code>000</code>，<code>H</code>为<code>1010</code>。</li>
 </ol>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>流程大概就是这样，从图中也可以看出来，<code>Huffman</code>编码是一种前缀编码，即每个编码不会是另外编码的前缀，因为每个字符都是叶子节点，如果有一个编码是其他编码的前缀，那么该编码的字符一定不是叶子节点。</p>
 

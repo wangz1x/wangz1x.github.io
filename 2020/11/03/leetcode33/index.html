@@ -236,7 +236,7 @@
 <span id="more"></span>
 
 <p>首先确定是二分，但是和普通的二分不一样，会存在两种情况（mid为断层的情况也包含了）：</p>
-<p><img src="/fig1.png" alt="fig1"></p>
+<p><img src="/2020/11/03/leetcode33/fig1.png" alt="fig1"></p>
 <p>这两种情况可以按照nums[mid]和nums[start]（nums[end]也可以）的大小来判断</p>
 <ul>
 <li>nums[mid] &gt; nums[start], 则是左边情况</li>
@@ -246,7 +246,7 @@
 <ol>
 <li>如果是下图这样，就把end挪到mid那；</li>
 </ol>
-<p><img src="/fig2.png" alt="fig2"></p>
+<p><img src="/2020/11/03/leetcode33/fig2.png" alt="fig2"></p>
 <ol start="2">
 <li>如果不是上图那样，就把start挪到mid那。</li>
 </ol>
