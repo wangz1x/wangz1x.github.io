@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">131</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -187,85 +187,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2021/08/09/stream-and-character/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="wangz1x">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 趁早">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/09/stream-and-character/" class="post-title-link" itemprop="url">stream and character</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>java</code>中有很多字节流, 字符流, 由于不经常见到(项目做少了), 记录下见到的</p>
-<h3 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h3><h4 id="InputStreamReader"><a href="#InputStreamReader" class="headerlink" title="InputStreamReader"></a>InputStreamReader</h4><p>三个构造方法:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InputStreamReader(InputStream in)</span><br><span class="line">InputStreamReader(InputStream in, String charsetName)</span><br><span class="line">InputStreamReader(InputStream in, Charset cs) &#123;</span><br></pre></td></tr></table></figure>
-
-<p>看到其构造方法就知道这个玩意能够指定编码</p>
-<h4 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a>FileReader</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">FileReader</span><span class="params">(String fileName)</span> <span class="keyword">throws</span> FileNotFoundException &#123;</span><br><span class="line">    <span class="built_in">super</span>(<span class="keyword">new</span> <span class="title class_">FileInputStream</span>(fileName));</span><br><span class="line">&#125;</span><br><span class="line">FileReader(File file)</span><br><span class="line">FileReader(FileDescriptor fd)</span><br></pre></td></tr></table></figure>
-
-<p>从其构造方法可以看出，这个玩意就是替我们把<code>stream</code>的创建过程省了, 但是这样只能用默认的编码了</p>
-<h4 id="PrintWriter"><a href="#PrintWriter" class="headerlink" title="PrintWriter"></a>PrintWriter</h4><p>打印流，能装挺多的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">PrintWriter(File file)</span><br><span class="line">PrintWriter(File file, String csn)</span><br><span class="line">PrintWriter(OutputStream out)</span><br><span class="line">PrintWriter(OutputStream out, <span class="type">boolean</span> autoFlush)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本都会包个 BufferedWriter</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">PrintWriter</span><span class="params">(String fileName)</span> <span class="keyword">throws</span> FileNotFoundException &#123;</span><br><span class="line">    <span class="built_in">this</span>(<span class="keyword">new</span> <span class="title class_">BufferedWriter</span>(<span class="keyword">new</span> <span class="title class_">OutputStreamWriter</span>(<span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(fileName))),</span><br><span class="line">          <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PrintWriter(String fileName, String csn)</span><br><span class="line">PrintWriter (Writer out)</span><br><span class="line">PrintWriter(Writer out, <span class="type">boolean</span> autoFlush)</span><br></pre></td></tr></table></figure>
-
-<p>就是不太懂为啥指定编码的那个构造方法要设为<code>private</code>, 上边和文件相关的构造方法如果指定了编码方式都会调用这个私有的构造方法</p>
-<p>这里可以指定一个<code>boolean</code>表示是否自动<code>flush</code></p>
-<h4 id="BufferedReader"><a href="#BufferedReader" class="headerlink" title="BufferedReader"></a>BufferedReader</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BufferedReader(Reader in, <span class="type">int</span> sz)</span><br><span class="line">BufferedReader(Reader in)</span><br></pre></td></tr></table></figure>
-
-<p>给<code>Reader</code>套一层缓冲, 一般流的最外边都会套个这个?</p>
-<h3 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h3><h4 id="FileOutputStream"><a href="#FileOutputStream" class="headerlink" title="FileOutputStream"></a>FileOutputStream</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FileOutputStream(File file)</span><br><span class="line">FileOutputStream(File file, <span class="type">boolean</span> append)</span><br><span class="line">FileOutputStream(FileDescriptor fdObj)</span><br><span class="line">FileOutputStream(String name)</span><br><span class="line">FileOutputStream(String name, <span class="type">boolean</span> append)</span><br></pre></td></tr></table></figure>
-
-<p>这里也有个<code>boolean</code>， 用来指定是否以追加的方式写入文件</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -678,6 +599,72 @@
 
 <p>带有引号的字符串在编译阶段，会放到<code>Class</code>文件的常量池中，在类加载的加载阶段，二进制字节流会按照虚拟机设定的格式存储在方法区中，而常量池就被放到运行时常量池中。</p>
 <p><code>ldc</code>指令的含义为：将<code>int</code>, <code>float</code>, <code>String</code>类型的常量值从常量池中推送至栈顶，因此<code>str0</code>,<code>str1</code>都是直接指向了常量池中的字符串；而<code>str2</code>则是根据常量池中的<code>str2</code>作为参数构造一个新的字符串对象。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2021/04/14/number-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/14/number-format/" class="post-title-link" itemprop="url">java中四舍五入保留指定位数小数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在做一些笔试编程题的时候，偶尔需要输出指定位数的小数，目前用了两种简单方式：</p>
+<ol>
+<li>直接调用<code>System.out.printf(&quot;%.4f&quot;, number)</code>，四舍五入保留4位小数, 注意该方法</li>
+<li>偶尔可能要把数据处理完了统一输出，那就先把结果保存，<code>double/float res = xx.xxxxxx</code>, 在输出的时候，调用<code>String.format(&quot;%.4f&quot;, res)</code></li>
+</ol>
+<p>上述两种形式，最终都是通过<code>Formatter().format()</code>方法实现的</p>
 
       
     </div>

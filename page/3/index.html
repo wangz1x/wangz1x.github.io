@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">131</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -187,72 +187,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2021/04/14/number-format/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="wangz1x">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 趁早">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/14/number-format/" class="post-title-link" itemprop="url">java中四舍五入保留指定位数小数</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在做一些笔试编程题的时候，偶尔需要输出指定位数的小数，目前用了两种简单方式：</p>
-<ol>
-<li>直接调用<code>System.out.printf(&quot;%.4f&quot;, number)</code>，四舍五入保留4位小数, 注意该方法</li>
-<li>偶尔可能要把数据处理完了统一输出，那就先把结果保存，<code>double/float res = xx.xxxxxx</code>, 在输出的时候，调用<code>String.format(&quot;%.4f&quot;, res)</code></li>
-</ol>
-<p>上述两种形式，最终都是通过<code>Formatter().format()</code>方法实现的</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -694,6 +628,78 @@
 
 <p>一般blog都说要加上后边的密码，但是我这不加密码也行？</p>
 <p>太多问题了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2020/11/19/password-free-using-sudo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/11/19/password-free-using-sudo/" class="post-title-link" itemprop="url">password free using sudo</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>可能有两种方式，但都是修改一个文件：<code>/etc/sudoers</code></p>
+<p>查看这个文件，要求必须使用<code>visudo</code>命令修改!!!</p>
+<h3 id="修改方式一"><a href="#修改方式一" class="headerlink" title="修改方式一"></a>修改方式一</h3><ol>
+<li><p>将当前想体验免密码的用户加到<code>sudo</code>用户组里，可以直接编辑<code>/etc/group</code>文件，或者使用<code>usermod -G sudo current_user</code></p>
+</li>
+<li><p>命令<code>sudo visudo</code>，将<code>%sudo  ALL=(ALL:ALL) ALL</code> -&gt; <code>%sudo  ALL=(ALL:ALL) NOPASSWD:ALL</code></p>
+</li>
+</ol>
+<h3 id="修改方式二"><a href="#修改方式二" class="headerlink" title="修改方式二"></a>修改方式二</h3><p>命令<code>sudo visudo</code>，将在<code>%sudo  ALL=(ALL:ALL) ALL</code>行下补充 -&gt; <code>username  ALL=(ALL) NOPASSWD:ALL</code></p>
+<p>但是生效好像要重启，暂时先这样</p>
+<h3 id="额外"><a href="#额外" class="headerlink" title="额外"></a>额外</h3><p><code>%sudo  ALL=(ALL:ALL) ALL</code></p>
+<p>对应表示：授权用户组（加%）&#x2F;用户   在哪个主机登录可进行授权&#x3D;（切换到哪些用户：切换到哪些组）[是否需要密码]  可授权执行的命令</p>
 
       
     </div>

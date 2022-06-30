@@ -144,13 +144,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">131</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -187,74 +187,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2020/10/19/kmp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="wangz1x">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="趁早">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 趁早">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/10/19/kmp/" class="post-title-link" itemprop="url">kmp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>KMP</code>是以三位发明者命名的，全称为<code>Knuth-Morris-Pratt</code>，是一种字符串查找算法，可在一个主文本字符串<code>S</code>内查找一个词<code>W</code>的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/19/kmp/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -653,6 +585,68 @@
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2020/07/30/create-not-static-inner-class-instance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/07/30/create-not-static-inner-class-instance/" class="post-title-link" itemprop="url">创建其他类中非静态内部类</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JHSDB_TestCase</span> &#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">NoStaticTest</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Outter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">JHSDB_TestCase</span> <span class="variable">jhsdb_testCase</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JHSDB_TestCase</span>();</span><br><span class="line">        JHSDB_TestCase.<span class="type">NoStaticTest</span> <span class="variable">noStaticTest</span> <span class="operator">=</span></span><br><span class="line">                jhsdb_testCase.<span class="keyword">new</span> <span class="title class_">NoStaticTest</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
