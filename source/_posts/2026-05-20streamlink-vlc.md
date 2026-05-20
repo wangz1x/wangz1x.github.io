@@ -120,20 +120,24 @@ streamlink https://live.bilibili.com/6 best
 
 ### 配置文件
 
-Streamlink 支持两种配置文件，可以设置默认参数，避免每次手动输入。
+Streamlink 使用配置文件设置默认参数，避免每次手动输入。
+
+**macOS 配置文件路径**：
 
 | 文件 | 说明 |
 |------|------|
-| `~/.streamlink/config` | 通用配置文件（推荐） |
-| `~/.streamlinkrc` | 另一种配置文件，支持按平台分段设置 |
+| `~/Library/Application Support/streamlink/config` | 通用配置文件 |
+| `~/Library/Application Support/streamlink/config.插件名` | 插件专属配置（如 `config.bilibili`） |
 
-> **区别**：`~/.streamlink/config` 是纯键值对，适合全局默认参数；`~/.streamlinkrc` 支持 `[plugin]` 段落，可以为不同平台设置不同的参数（比如给 Bilibili 单独配 Cookie），功能更灵活。
+> **Linux 用户**：配置文件路径为 `${XDG_CONFIG_HOME:-~/.config}/streamlink/config`，插件配置为 `config.插件名`。
+>
+> **⚠️ 迁移提醒**：如果你之前使用过 `~/.streamlinkrc` 或 `~/.streamlink/config`，请注意这些路径**已在 streamlink 7.0.0 中移除**，当前版本（7.6.0）不再读取。请迁移到上述新路径。
 
-#### 使用 `~/.streamlink/config`
+#### 使用通用配置文件
 
 ```bash
-mkdir -p ~/.streamlink
-cat > ~/.streamlink/config << 'EOF'
+mkdir -p "$HOME/Library/Application Support/streamlink"
+cat > "$HOME/Library/Application Support/streamlink/config" << 'EOF'
 # 默认播放器（如果 VLC 不在 PATH 中，写绝对路径）
 player=/Applications/VLC.app/Contents/MacOS/VLC
 
@@ -144,7 +148,7 @@ default-stream=best
 player-args=--network-caching=2000
 
 # VLC 播完自动退出
-player-args=--play-and-exit
+player-args=--network-caching=2000 --play-and-exit
 
 # 环形缓冲区大小（默认 16M，网络不稳定可调大）
 ringbuffer-size=32M
@@ -153,20 +157,18 @@ EOF
 
 > **注意**：如果 `player-args` 出现多次，以最后一次为准。如果需要同时传递多个参数，写在一行里即可，如 `player-args=--network-caching=2000 --play-and-exit`。
 
-#### 使用 `~/.streamlinkrc`（按平台配置）
+#### 使用插件专属配置（按平台配置）
 
-`~/.streamlinkrc` 的最大优势是支持 `[plugin]` 段落，可以对特定平台做定制化配置。一个典型的使用场景：**Bilibili 直播需要登录 Cookie 才能获取高清流**，这时可以在 `~/.streamlinkrc` 中单独为 Bilibili 配置认证信息：
+Streamlink 支持为特定插件创建独立的配置文件。文件命名规则是在通用配置文件名后追加 `.插件名`，当 URL 匹配到该插件时会自动加载。
 
-```ini
-# 全局默认配置
-player=/Applications/VLC.app/Contents/MacOS/VLC
-default-stream=best
-ringbuffer-size=32M
+一个典型的使用场景：**Bilibili 直播需要登录 Cookie 才能获取高清流**。这时可以创建 `config.bilibili` 文件，单独为 Bilibili 配置认证信息：
 
-# 以下是为 Bilibili 专门配置的参数
-[bilibili.com]
+```bash
+mkdir -p "$HOME/Library/Application Support/streamlink"
+cat > "$HOME/Library/Application Support/streamlink/config.bilibili" << 'EOF'
 # 通过 HTTP Header 注入 Cookie，解决未登录无法获取直播流的问题
 http-header=Cookie=SESSDATA=你的SESSDATA值
+EOF
 ```
 
 获取 SESSDATA 的方法：
@@ -174,11 +176,16 @@ http-header=Cookie=SESSDATA=你的SESSDATA值
 1. 在浏览器中登录 [bilibili.com](https://www.bilibili.com)
 2. 按 `F12` 打开开发者工具 → Application（应用）→ Cookies
 3. 找到 `SESSDATA` 字段，复制其值
-4. 粘贴到 `~/.streamlinkrc` 中
+4. 粘贴到 `config.bilibili` 中
 
-> **安全提醒**：SESSDATA 等同于登录凭证，请勿分享或公开。建议对 `~/.streamlinkrc` 设置文件权限：`chmod 600 ~/.streamlinkrc`
+> **安全提醒**：SESSDATA 等同于登录凭证，请勿分享或公开。建议对配置文件设置权限：
+> ```bash
+> chmod 600 "$HOME/Library/Application Support/streamlink/config.bilibili"
+> ```
 
 配置好之后，直接运行 `streamlink https://live.bilibili.com/6 best` 即可，不需要每次手动传 Cookie。
+
+同理，如果你需要为 Twitch 单独配置参数，可以创建 `config.twitch` 文件，里面写上只在观看 Twitch 直播时生效的选项。
 
 ### 播放器参数详解
 
@@ -342,7 +349,9 @@ bili 6
 
 ### Q: Bilibili 直播打不开？
 
-Bilibili 的直播流需要登录 Cookie 才能获取。最推荐的方式是在 `~/.streamlinkrc` 中配置（详见上方「使用 `~/.streamlinkrc`」段落），配置一次后无需每次手动传参。
+Bilibili 的直播流需要登录 Cookie 才能获取。推荐的方式是创建插件专属配置文件（详见上方「使用插件专属配置」段落），配置一次后无需每次手动传参。
+
+如果你之前使用 `~/.streamlinkrc` 配置过 Bilibili Cookie，请注意该文件在 streamlink 7.0.0 后已不再被读取，需要将配置迁移到新路径下的 `config.bilibili` 文件。
 
 如果只是临时使用，也可以通过命令行参数传入：
 
