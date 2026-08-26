@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg">
+  <link rel="mask-icon" href="/images/head.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wangz1x.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://wangz1x.github.io/2018/05/02/ssd/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://wangz1x.github.io/2018/05/02/ssd/","path":"2018/05/02/ssd/","title":"笔记本安装SSD, 并在SSD中安装系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>笔记本安装SSD, 并在SSD中安装系统 | 趁早</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">趁早</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%A3%85ssd"><span class="nav-number">2.</span> <span class="nav-text">笔记本装ssd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Ubuntu%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">安装Ubuntu系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8F%8C%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">实现双系统</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangz1x"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wangz1x</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangz1x" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangz1x" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangzx2222@gmail.com" title="E-Mail → mailto:wangzx2222@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2018/05/02/ssd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="笔记本安装SSD, 并在SSD中安装系统 | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          笔记本安装SSD, 并在SSD中安装系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>很早就想买个ssd了，经过一些事情之后，我也没那么多顾虑，想买就买了。本来打算是在ssd中重装一个系统的，但是后来考虑到电脑里边有些东西重装系统后再搞很麻烦，就没有选择重装系统了，但是突然想试试Linux，就选了Ubuntu，安在了ssd里边，把电脑搞成双系统，所以这篇文章有这几个部分吧：笔记本安装ssd、安装Ubuntu系统、笔记本实现双系统。</p>
+<span id="more"></span>
+
+<h3 id="笔记本装ssd"><a href="#笔记本装ssd" class="headerlink" title="笔记本装ssd"></a>笔记本装ssd</h3><p>我的笔记本没有空出的位置装ssd，所以就把光驱拆了，买ssd时候把电脑型号发给客服，客服会告诉你用什么规格的支架。然后就是拆光驱，把ssd放进支架里，在把支架安在原来放光驱的地方，挺简单的。</p>
+<p>对了，还有关于笔记本是否能发挥ssd性能的几个小点，首先是接口，就是光驱那个接口最好是sata3接口的; 然后是bios里有个地方IDE要设置成 AHCI模式。</p>
+<p>装好之后可以下载一些测试工具，这里我忘了我用的啥了，查一下就知道。</p>
+<h3 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h3><p>我用的是u盘作为启动盘，所以这里就讲讲这种方式。</p>
+<p>首先下载ubuntu系统iso， 然后用UltraISO制作启动盘，制作好后，保持u盘插入的状态，重启电脑，这时候要进入BIOS系统(具体按哪个键可以搜一下，我的华硕是F2)，在BIOS中更改启动盘，选择刚刚的u盘，应该会有名字的。</p>
+<p>启动之后应该就是安装的界面了，具体安装过程怎么选择我也忘了，这里没有截图，捡我记得的写。我在安装过程中，提示过我一个东西，好像是有个格式不对，我选择的跳过还是什么的，反正不是确认。我那时候出现这个问题，就去google了，说是启动盘要用一个别的软件做才行，然后我信了他的邪，重新一边还是这样。后边再有印象的就是分区了。</p>
+<p>首先说明一点，分区分区，分的是你电脑里，没有进行过初始化的区域，当你的ssd刚安电脑里的时候，你用硬盘管理看到这块磁盘是未分配状态的，那么在安装系统过程中就会使用这些未分配的区域。</p>
+<p>Linux分区，应该是安装系统中比较重要的一点？我也是按照网上的一般教程进行分区的，分了四个区: &#x2F;, &#x2F;boot, &#x2F;home, &#x2F;swap， 另外在分区时，需要注意的是swap分区需要选择”交换空间”，其他三个就按默认的Ext4日志文件系统。在说一下这四个分区的含义：&#x2F;，主分区相当于windows的c盘;  &#x2F;boot 引导分区;  &#x2F;home 用户存储数据用，需要大一点;  &#x2F;swap 相当于电脑的内存，设置为内存的1.5～2倍。分区设置完毕后，下方还有一项“安装启动引导器的设备”，默认是ubuntu引导windows，也就是开机启动显示的ubuntu的样子，然后选择是ubuntu还是window，如果想windows引导ubuntu，则“引导器的设备”选择之前&#x2F;boot分区的名字。</p>
+<h3 id="实现双系统"><a href="#实现双系统" class="headerlink" title="实现双系统"></a>实现双系统</h3><p>前面的说明了，我是从windows引导ubuntu的，所以还需要一些工具来设置ubuntu的启动选项，这里我用的是EasyBCD，打开easyBCD，选择add new entry，选择linux&#x2F;BSD，name那里填Ubuntu（可自行填写）。device(驱动器)这一栏选择我们刚创建的“&#x2F;boot”分区（200MB那个，可能大小会有一点出入）。最后点击Add entry（添加条目）。最后还有一点可能会出错的地方，就是设置了引导后，选择ubuntu却无法正常启动，具体原因我不记得了，应该是在新建ubuntu条目时有个选项有问题，具体是什么，我后面在看看。</p>
+<p>好了，大概就是这样了，有很多东西没有讲清楚，因为google一下总会有讲的清楚的，我在这里也只是理了一下我做这些事情的一个过程，就是一个简单的思路。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ssd/" rel="tag"># ssd</a>
+              <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/24/error_exception/" rel="next" title="error/exception in java">
+                  error/exception in java <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-campfire"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

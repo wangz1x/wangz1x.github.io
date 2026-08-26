@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg">
+  <link rel="mask-icon" href="/images/head.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wangz1x.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://wangz1x.github.io/2019/11/26/Levenshtein-distance/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://wangz1x.github.io/2019/11/26/Levenshtein-distance/","path":"2019/11/26/Levenshtein-distance/","title":"Levenshtein distance"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Levenshtein distance | 趁早</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">趁早</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis"><span class="nav-number">1.</span> <span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source"><span class="nav-number">2.</span> <span class="nav-text">Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Other"><span class="nav-number">3.</span> <span class="nav-text">Other</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangz1x"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wangz1x</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangz1x" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangz1x" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangzx2222@gmail.com" title="E-Mail → mailto:wangzx2222@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2019/11/26/Levenshtein-distance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Levenshtein distance | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Levenshtein distance
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><code>Levenshtein distance</code>就是编辑距离，简单说就是将一个字符串A通过删除、插入、替换三种操作转化为字符串B，最少的操作数就称为编辑距离。可以通过DP实现编辑距离求解.</p>
+<span id="more"></span>
+
+<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>假设我们现在要求字符串A的前i个字符转化为字符串B的前j个字符的最小操作数，如<strong>图1</strong>所示</p>
+<p><img src="/fig1.png" alt="图1"></p>
+<p>图中的箭头表示这个状态矩阵填写的顺序，因此我们也已经有了<code>T[i-1][j]</code>, <code>T[i][j-1]</code>, <code>T[i-1][j-1]</code>等知识</p>
+<p>那么能否利用这些已经计算的值，来计算<code>T[i][j]</code>呢?</p>
+<p>在两个字符串都进行扩充时，新增加的字符有两种可能:</p>
+<ol>
+<li><code>A[i] == B[j]</code></li>
+</ol>
+<p>这种情况比较好，说明当前新增的两个字符已经是匹配的，就不用再操他们的心了，此时<code>T[i][j] = T[i-1][j-1]</code></p>
+<ol start="2">
+<li><code>A[i] != B[j]</code></li>
+</ol>
+<p>这时就不好办了，肯定要对字符串A进行三种操作中的一种才能得到字符串B，此时<code>T[i][j] = min(三种操作) + 1</code></p>
+<p>那么这个<code>min(三种操作)</code>怎么理解呢?</p>
+<ul>
+<li><code>T[i][j-1]</code>表示前i个转化为前j-1个，然后A通过<strong>插入</strong>一个和B[j]一样的字符到i+1处，完成转化过程</li>
+<li><code>T[i-1][j]</code>表示前i-1个转化为前j个，然后通过<strong>删除</strong>A中第i个字符，完成转化过程</li>
+<li><code>T[i-1][j-1]</code>表示前i-1个转化为前j-1个，然后通过<strong>替换</strong>A中第i个字符为B中的第j个字符，完成转化过程</li>
+</ul>
+<p>因此第二种情况下的转移方程可以写为<code>T[i][j] = min(T[i][j-1], T[i-1][j], T[i-1][j-1]) + 1</code></p>
+<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cal_dis</span>(<span class="params">keyword1, keyword2</span>):</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	@keyword1: </span></span><br><span class="line"><span class="string">	@keyword2:</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">	len1 = <span class="built_in">len</span>(keyword1)</span><br><span class="line">	len2 = <span class="built_in">len</span>(keyword2)</span><br><span class="line">	<span class="keyword">if</span> len1 == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> len2</span><br><span class="line">	<span class="keyword">elif</span> len2 == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> len1</span><br><span class="line"></span><br><span class="line">	<span class="comment"># state matrix</span></span><br><span class="line">	T = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len2+<span class="number">1</span>)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len1+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># initial T</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len1):</span><br><span class="line">		T[i][<span class="number">0</span>] = i</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len2):</span><br><span class="line">		T[<span class="number">0</span>][j] = j</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len2):</span><br><span class="line">		char1 = keyword2[i]</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len1):</span><br><span class="line">			char2 = keyword1[j]</span><br><span class="line">      <span class="comment"># case 1</span></span><br><span class="line">			<span class="keyword">if</span> char1 == char2:</span><br><span class="line">				T[j+<span class="number">1</span>][i+<span class="number">1</span>] = T[j][i]</span><br><span class="line">      <span class="comment"># case 2</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				T[j+<span class="number">1</span>][i+<span class="number">1</span>] = <span class="built_in">min</span>(<span class="built_in">min</span>(T[j-<span class="number">1</span>][i], T[j][i-<span class="number">1</span>]), T[j-<span class="number">1</span>][i-<span class="number">1</span>]) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> T[len1][len2]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	cal_ = cal_dis(<span class="string">&#x27;kitten&#x27;</span>, <span class="string">&#x27;sitting&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;cal =&#x27;</span>, cal_)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h3><p>感觉之前做了好一些关于字符串的题，大多是用DP求解的，自己还是太垃圾了，经常会混淆不同目的下的转移过程，唉。。。</p>
+<p>比如说<a target="_blank" rel="noopener" href="https://zero22.top/2019/07/25/Distinct-Subsequences/">这一题</a>，其目的是计算从A串到B串有多少种转移方式，哎。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/" rel="tag"># 编辑距离</a>
+              <a href="/tags/dp/" rel="tag"># dp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/11/25/minhash/" rel="prev" title="Minhash">
+                  <i class="fa fa-chevron-left"></i> Minhash
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/24/insert-into-a-red-black-tree/" rel="next" title="insert into a red-black tree">
+                  insert into a red-black tree <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-campfire"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

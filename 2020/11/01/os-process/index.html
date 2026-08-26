@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg">
+  <link rel="mask-icon" href="/images/head.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wangz1x.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://wangz1x.github.io/2020/11/01/os-process/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://wangz1x.github.io/2020/11/01/os-process/","path":"2020/11/01/os-process/","title":"操作系统中的进程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>操作系统中的进程 | 趁早</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">趁早</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="nav-number">1.</span> <span class="nav-text">进程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">上下文切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">进程的创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%88%E6%AD%A2"><span class="nav-number">4.</span> <span class="nav-text">进程终止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="nav-number">5.</span> <span class="nav-text">进程间通信</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangz1x"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wangz1x</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangz1x" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangz1x" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangzx2222@gmail.com" title="E-Mail → mailto:wangzx2222@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2020/11/01/os-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="操作系统中的进程 | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          操作系统中的进程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>进程不只是运行的程序（text section&#x2F;code section），还包括</p>
+<ul>
+<li>当前活动如程序计数器（program counter）的值和处理器寄存器的内容</li>
+<li>进程堆栈（stack），存储临时数据，如函数参数，返回地址和局部变量</li>
+<li>数据段（data section），包括全局变量</li>
+<li>堆（heap），进程在运行时动态分配的内存</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p><img src="/fig1.png" alt="fig1"></p>
+<p>操作系统内的每个进程用PCB（task control block）表示，包含许多与进程相关的信息</p>
+<h4 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h4><p>切换CPU到另一个进程，需要保存当前进程状态，并恢复另一个进程的状态，这称为上下文切换。</p>
+<h4 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h4><p>Linux中进程<code>init</code>为所有用户进程的父进程</p>
+<p>通过系统调用<code>fork()</code>可以创建新进程，新进程中（子进程）该函数返回0，原进程中（父进程）该函数返回新进程的pid</p>
+<p>若在新进程中调用<code>exec()</code>, 则其不会在执行原程序中的后续代码</p>
+<h4 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h4><p>如果一个进程终止，那么它的所有子进程也会终止，称为<code>级联终止</code></p>
+<p>当进程已经终止，但是其父进程尚未调用wait(), 则称该进程为<code>僵尸进程</code></p>
+<p>如果父进程没有调用wait()就终止了，则其子进程就会变为<code>孤儿进程</code></p>
+<p>孤儿进程会称为init进程的子进程，而init会周期性的调用wait()，来释放孤儿进程的pid和进程表条目</p>
+<h4 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h4><ol>
+<li>共享内存</li>
+</ol>
+<p><code>POSIX</code>共享内存的实现为内存映射文件，它将共享内存区域与文件相关联。通过如下方式创建共享内存对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shm_fd = shm_open(name, O_CREAT | O_RDRW, 0666);</span><br></pre></td></tr></table></figure>
+
+<p>共享内存可能快于消息传递，因为消息传递需要频繁？的系统调用，因此需要消耗更多时间（涉及内核，切换）</p>
+<ol start="2">
+<li>消息队列</li>
+</ol>
+<p>对于多核系统，消息传递的性能要优于共享内存，因为共享内存会有缓存一致性问题。</p>
+<ol start="3">
+<li>套接字（socket）</li>
+</ol>
+<p>套接字是由一个IP地址和一个端口号组成的，即类似于<code>146.85.5.20:1625</code>。</p>
+<p>套接字属于分布式进程之间的一种低级通信形式，主要原因是套接字只允许在通信线程之间交换无结构的字节流，可能需要额外自定义传输数据的数据结构</p>
+<ol start="4">
+<li>远程过程调用（remote procedure call）</li>
+</ol>
+<p>RPC通信交换的信息具有明确的结构。</p>
+<p>客户端需要获取服务端执行RPC的端口，因此服务器端有个类似于DNS的服务程序matchmaker由于提供和RPC名称对应的端口号</p>
+<ol start="5">
+<li>管道</li>
+</ol>
+<p>管道是一种特殊类型的文件，可由子进程继承</p>
+<p>管道用于同一台机器上的进程通信</p>
+<ul>
+<li><p>匿名管道</p>
+<ul>
+<li>匿名管道是单向的</li>
+<li>进程通信需要有父子关系</li>
+<li>创建采用<code>pipe(int fd[])</code></li>
+<li><code>fd[0]</code>为读出端，<code>fd[1]</code>为写入端</li>
+<li>一旦通信完成并终止，匿名管道就不存在了</li>
+</ul>
+</li>
+<li><p>命名管道</p>
+<ul>
+<li>半双工（允许双向，但同一时间只能单向）</li>
+<li>不需要父子关系</li>
+<li>一旦创建，表现为文件系统的典型文件</li>
+<li>命名管道为FIFO，通过调用<code>mkfifo()</code></li>
+<li>通信进程完成后，命名管道依然存在，直到它被显示的从文件系统中删除</li>
+<li>只允许字节流的数据</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li>信号（signal）</li>
+</ol>
+<ul>
+<li>信号是由特定事件的发生而产生的</li>
+<li>信号被传递给某个进程</li>
+<li>信号一旦收到就应处理</li>
+</ul>
+<p>信号可分为同步信号和异步信号，同步信号是指信号会发送到产生该信号的进程；异步信号则可发送到另一进程。</p>
+<p>每个信号都有一个默认信号处理程序（default signal handler），用户也可定义信号处理程序</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+              <a href="/tags/OS/" rel="tag"># OS</a>
+              <a href="/tags/%E8%BF%9B%E7%A8%8B/" rel="tag"># 进程</a>
+              <a href="/tags/process/" rel="tag"># process</a>
+              <a href="/tags/%E7%90%86%E8%AE%BA/" rel="tag"># 理论</a>
+              <a href="/tags/%E6%A6%82%E5%BF%B5/" rel="tag"># 概念</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/19/kmp/" rel="prev" title="kmp">
+                  <i class="fa fa-chevron-left"></i> kmp
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/05/Euler-circuit-and-Hamiltonian-graph/" rel="next" title="欧拉回环与哈密尔顿图">
+                  欧拉回环与哈密尔顿图 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-campfire"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

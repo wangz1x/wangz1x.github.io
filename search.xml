@@ -1,0 +1,1317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>笔记本安装SSD, 并在SSD中安装系统</title>
+    <url>/2018/05/02/ssd/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>很早就想买个ssd了，经过一些事情之后，我也没那么多顾虑，想买就买了。本来打算是在ssd中重装一个系统的，但是后来考虑到电脑里边有些东西重装系统后再搞很麻烦，就没有选择重装系统了，但是突然想试试Linux，就选了Ubuntu，安在了ssd里边，把电脑搞成双系统，所以这篇文章有这几个部分吧：笔记本安装ssd、安装Ubuntu系统、笔记本实现双系统。</p>
+<span id="more"></span>
+
+<h3 id="笔记本装ssd"><a href="#笔记本装ssd" class="headerlink" title="笔记本装ssd"></a>笔记本装ssd</h3><p>我的笔记本没有空出的位置装ssd，所以就把光驱拆了，买ssd时候把电脑型号发给客服，客服会告诉你用什么规格的支架。然后就是拆光驱，把ssd放进支架里，在把支架安在原来放光驱的地方，挺简单的。</p>
+<p>对了，还有关于笔记本是否能发挥ssd性能的几个小点，首先是接口，就是光驱那个接口最好是sata3接口的; 然后是bios里有个地方IDE要设置成 AHCI模式。</p>
+<p>装好之后可以下载一些测试工具，这里我忘了我用的啥了，查一下就知道。</p>
+<h3 id="安装Ubuntu系统"><a href="#安装Ubuntu系统" class="headerlink" title="安装Ubuntu系统"></a>安装Ubuntu系统</h3><p>我用的是u盘作为启动盘，所以这里就讲讲这种方式。</p>
+<p>首先下载ubuntu系统iso， 然后用UltraISO制作启动盘，制作好后，保持u盘插入的状态，重启电脑，这时候要进入BIOS系统(具体按哪个键可以搜一下，我的华硕是F2)，在BIOS中更改启动盘，选择刚刚的u盘，应该会有名字的。</p>
+<p>启动之后应该就是安装的界面了，具体安装过程怎么选择我也忘了，这里没有截图，捡我记得的写。我在安装过程中，提示过我一个东西，好像是有个格式不对，我选择的跳过还是什么的，反正不是确认。我那时候出现这个问题，就去google了，说是启动盘要用一个别的软件做才行，然后我信了他的邪，重新一边还是这样。后边再有印象的就是分区了。</p>
+<p>首先说明一点，分区分区，分的是你电脑里，没有进行过初始化的区域，当你的ssd刚安电脑里的时候，你用硬盘管理看到这块磁盘是未分配状态的，那么在安装系统过程中就会使用这些未分配的区域。</p>
+<p>Linux分区，应该是安装系统中比较重要的一点？我也是按照网上的一般教程进行分区的，分了四个区: &#x2F;, &#x2F;boot, &#x2F;home, &#x2F;swap， 另外在分区时，需要注意的是swap分区需要选择”交换空间”，其他三个就按默认的Ext4日志文件系统。在说一下这四个分区的含义：&#x2F;，主分区相当于windows的c盘;  &#x2F;boot 引导分区;  &#x2F;home 用户存储数据用，需要大一点;  &#x2F;swap 相当于电脑的内存，设置为内存的1.5～2倍。分区设置完毕后，下方还有一项“安装启动引导器的设备”，默认是ubuntu引导windows，也就是开机启动显示的ubuntu的样子，然后选择是ubuntu还是window，如果想windows引导ubuntu，则“引导器的设备”选择之前&#x2F;boot分区的名字。</p>
+<h3 id="实现双系统"><a href="#实现双系统" class="headerlink" title="实现双系统"></a>实现双系统</h3><p>前面的说明了，我是从windows引导ubuntu的，所以还需要一些工具来设置ubuntu的启动选项，这里我用的是EasyBCD，打开easyBCD，选择add new entry，选择linux&#x2F;BSD，name那里填Ubuntu（可自行填写）。device(驱动器)这一栏选择我们刚创建的“&#x2F;boot”分区（200MB那个，可能大小会有一点出入）。最后点击Add entry（添加条目）。最后还有一点可能会出错的地方，就是设置了引导后，选择ubuntu却无法正常启动，具体原因我不记得了，应该是在新建ubuntu条目时有个选项有问题，具体是什么，我后面在看看。</p>
+<p>好了，大概就是这样了，有很多东西没有讲清楚，因为google一下总会有讲的清楚的，我在这里也只是理了一下我做这些事情的一个过程，就是一个简单的思路。</p>
+]]></content>
+      <tags>
+        <tag>ssd</tag>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>error/exception in java</title>
+    <url>/2018/06/24/error_exception/</url>
+    <content><![CDATA[<h3 id="java异常分为Error和Exception，二者都是继承自Throwable"><a href="#java异常分为Error和Exception，二者都是继承自Throwable" class="headerlink" title="java异常分为Error和Exception，二者都是继承自Throwable"></a>java异常分为Error和Exception，二者都是继承自Throwable</h3><p><img src="/fig1.png" alt="enter description here"></p>
+<span id="more"></span>
+
+<h4 id="先来看看Exception："><a href="#先来看看Exception：" class="headerlink" title="先来看看Exception："></a>先来看看Exception：</h4><blockquote>
+<p>The class Exception and its subclasses are a form of Throwable that<br>indicates conditions that a reasonable application might want to<br>catch.</p>
+</blockquote>
+<blockquote>
+<p>The class Exception and any subclasses that are not also subclasses of<br>RuntimeException are checked exceptions. Checked exceptions need to be<br>declared in a method or constructor’s throws clause if they can be<br>thrown by the execution of the method or constructor and propagate<br>outside the method or constructor boundary.</p>
+</blockquote>
+<p>可以知道Exception的子类除了RuntimeException 都是检查型异常，在程序中需要捕获处理或者抛给上层处理。</p>
+<h4 id="再看看RuntimeException"><a href="#再看看RuntimeException" class="headerlink" title="再看看RuntimeException"></a>再看看RuntimeException</h4><blockquote>
+<p>RuntimeException is the superclass of those exceptions that can be<br>thrown during the normal operation of the Java Virtual Machine.</p>
+</blockquote>
+<blockquote>
+<p>RuntimeException and its subclasses are unchecked exceptions.<br>Unchecked exceptions do not need to be declared in a method or<br>constructor’s throws clause if they can be thrown by the execution of<br>the method or constructor and propagate outside the method or<br>constructor boundary.</p>
+</blockquote>
+<p>可以看到不要求在编译的时候处理。</p>
+<h3 id="Error的定义"><a href="#Error的定义" class="headerlink" title="Error的定义"></a>Error的定义</h3><blockquote>
+<p>An Error is a subclass of Throwable that indicates serious problems<br>that a reasonable application should not try to catch. Most such<br>errors are abnormal conditions. The ThreadDeath error, though a<br>“normal” condition, is also a subclass of Error because most<br>applications should not try to catch it.</p>
+</blockquote>
+<blockquote>
+<p>A method is not required to declare in its throws clause any<br>subclasses of Error that might be thrown during the execution of the<br>method but not caught, since these errors are abnormal conditions that<br>should never occur. That is, Error and its subclasses are regarded as<br>unchecked exceptions for the purposes of compile-time checking of<br>exceptions.</p>
+</blockquote>
+<p>Error是程序中严重的错误，任何合理的程序都不能去捕获Error。<br><img src="/fig2.png" alt="enter description here"></p>
+]]></content>
+      <tags>
+        <tag>error/exception</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap如何产生环</title>
+    <url>/2018/07/31/ring-in-hashMap/</url>
+    <content><![CDATA[<p>HashMap本身不是线程安全的，所以高并发的情况下不应该使用HashMap，但是这里还是看了一下HashMap可能会产生的问题及其原因。这里讨论的主要是jdk1.7版本的HashMap。</p>
+<span id="more"></span>
+
+<h3 id="正常情况下HashMap"><a href="#正常情况下HashMap" class="headerlink" title="正常情况下HashMap"></a>正常情况下HashMap</h3><p>当HashMap中的元素超过其阀值时，HashMap要进行扩容，进行resize()操作, 下边的是jdk1.7的实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">transfer</span><span class="params">(Entry[] newTable)</span> &#123;  </span><br><span class="line">    Entry[] src = table;                   <span class="comment">//src引用了旧的Entry数组  </span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> newTable.length;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; src.length; j++) &#123; <span class="comment">//遍历旧的Entry数组  </span></span><br><span class="line">        Entry&lt;K, V&gt; e = src[j];             <span class="comment">//取得旧Entry数组的每个元素  </span></span><br><span class="line">        <span class="keyword">if</span> (e != <span class="literal">null</span>) &#123;  </span><br><span class="line">            src[j] = <span class="literal">null</span>;<span class="comment">//释放旧Entry数组的对象引用（for循环后，旧的Entry数组不再引用任何对象）  </span></span><br><span class="line">            <span class="keyword">do</span> &#123;  </span><br><span class="line">                Entry&lt;K, V&gt; next = e.next;  </span><br><span class="line">                <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> indexFor(e.hash, newCapacity); <span class="comment">//！！重新计算每个元素在数组中的位置  </span></span><br><span class="line">                e.next = newTable[i]; <span class="comment">//标记[1]  </span></span><br><span class="line">                newTable[i] = e;      <span class="comment">//将元素放在数组上  </span></span><br><span class="line">                e = next;             <span class="comment">//访问下一个Entry链上的元素  </span></span><br><span class="line">            &#125; <span class="keyword">while</span> (e != <span class="literal">null</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>单线程下的resize()<br><img src="/fig1.gif" alt="enter description here"><br>接下来进行resize()操作，首先e指向A，next指向B，然后把e放到新的HashMap中<br><img src="/fig2.gif" alt="enter description here"><br>结束这一次迭代时把e指向B<br>就这样循环的把每一个Entry都放到新的HashMap中<br><img src="/fig3.gif" alt="enter description here"><br>最终变成这样：<br><img src="/fig4.gif" alt="enter description here"><br><strong>注意while循环的结束条件为 e&#x3D;&#x3D;null</strong></p>
+<h3 id="并发下的HashMap"><a href="#并发下的HashMap" class="headerlink" title="并发下的HashMap"></a>并发下的HashMap</h3><p>假设有两个线程对上边的HashMap进行操作，在他们运行时，都知道要进行resize()，首先是线程1：<br><img src="/fig5.gif" alt="enter description here"><br>刚把e和next赋值，cpu就被线程2抢走了，而且线程2还比较厉害，一直把resize()完成才退出，那么线程2结束时我们的HashMap就变成这样了：<br><img src="/fig6.gif" alt="enter description here"><br><strong>这里线程2对HashMap的操作会影响线程1中的e和next，因为操作的都是同一块内存</strong><br>然后线程1继续执行，但是他不知道e和next的位置已经发生了变化，甚至不知道他已经不用再resize()了，需要注意的是，在resize()过程中，新表在建立过程中会把旧表中的Entry都置为null，但是线程1可不管那么多，他只知道e和next还指向内存块，他还要进行resize().</p>
+<p>然后线程1在线程2建立的新表的基础上继续resize()，要注意的是，此时线程1在循环之前就把他的新表建立了，线程1继续执行的效果如下<br><img src="/fig7.gif" alt="enter description here"><br>把A取出放入新表中，然后e指向next即B，注意此时B的next为A，然后新一轮迭代中</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">next = e.next</span><br></pre></td></tr></table></figure>
+
+<p>所以next指向了A<br><img src="/fig8.gif" alt="enter description here"></p>
+<p>下一轮迭代中，e指向next即A，next指向null，然后用头插法把A插到头，结果就变成这样了！！<br><img src="/fig9.gif" alt="enter description here"></p>
+<p>虽然建表的过程就此结束了，但是新表中含有了环！！那么下次只要有查询的需求并且查到了这个环，那么就会一直查下去造成死循环！</p>
+<hr>
+<p>上边的图参考自其他的<code>blog</code>，现在再看有些复杂了，重新画下：</p>
+<ol>
+<li><p>首先是线程1过来想要<code>rehash()</code>，刚标好<code>e</code>和<code>next</code>:</p>
+<p><img src="/fig10.png"></p>
+</li>
+<li><p>线程2抢占了线程1，也要操作这个<code>HashMap</code>，并且也需要<code>rehash()</code>，首先一点，<code>HashMap</code>是个对象，放在堆中，各个线程访问的都是一样：</p>
+<p><img src="/fig11.png"></p>
+</li>
+<li><p>线程2执行完<code>rehash()</code>后，又到线程1接着跑，但是此时线程1不知道别的线程已经完成了<code>rehash()</code>，接着之前的工作，此时线程1之前做的标记还☞着原本的节点：</p>
+<p><img src="/fig12.png"></p>
+<p>采用头插法将<code>A:3</code>插到了前边，且<code>A:3</code>.<code>next</code>指向了<code>B:7</code>，需要注意的是<code>B:7</code>.<code>next</code>由于线程2的修改指向了<code>A:3</code>，此时环就形成了。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总的说来，resize()会产生环主要是把元素放到新桶中用的头插法，在1.8中已经改进了，并且1.8一般不会再产生环了。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://mailinator.blogspot.com/2009/06/beautiful-race-condition.html">https://mailinator.blogspot.com/2009/06/beautiful-race-condition.html</a></p>
+]]></content>
+      <tags>
+        <tag>HashMap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一次WEB请求全过程</title>
+    <url>/2018/08/21/web-request/</url>
+    <content><![CDATA[<h2 id="输入URL"><a href="#输入URL" class="headerlink" title="输入URL"></a>输入URL</h2><p>首先，用户在Web浏览器（如IE）地址栏输入URL，比如：<a href="https://zero22.top/">https://zero22.top</a> 前面的https是协议类型，后面的zero22.top指定被访问的服务器的域名，没有加冒号和端口号表示访问的是默认的端口号80。</p>
+<span id="more"></span>
+
+<h2 id="DNS解析"><a href="#DNS解析" class="headerlink" title="DNS解析"></a>DNS解析</h2><p>由于所发出的数据要通过被访问主机的IP地址进行传输和路由，所以要先通过DNS服务器将域名解析为IP地址：</p>
+<ol>
+<li>主机产生一个DNS请求，传递给传输层，通过UDP产生一个UDP报文；再传递给网络层产生一个IP报文，目的地址是DNS服务器的IP地址；在数据链路层通过ARP协议得到到达DNS服务器的下一跳的MAC地址；把数据帧通过以太网传输给DNS服务器。</li>
+<li>DNS服务器将收到的帧向上传给传输层，得到UDP报文。通过UDP报文中指定的端口号传给DNS应用程序。这里，由于是内网域名和内网DNS服务器，DNS服务器中有相应的表项，如果不在当地，本地DNS服务器还要向上级的DNS服务器发出DNS查询请求，如此递归直到查到要解析的域名的IP地址。</li>
+<li>DNS把通过DNS应答将得到的IP地址返回给请求的主机。</li>
+</ol>
+<h2 id="HTTP嘶挞哆"><a href="#HTTP嘶挞哆" class="headerlink" title="HTTP嘶挞哆"></a>HTTP嘶挞哆</h2><p>现在，浏览器得到对方的IP地址了，即进入HTTP流程。HTTP的工作流程分为以下四步：</p>
+<ol>
+<li>通过三次握手建立TCP连接。</li>
+<li>客户端发送请求给服务器。</li>
+<li>服务器收到请求后，给予相应的响应消息，并传输相应的响应数据给客户端。</li>
+<li>客户端接收完服务器返回的信息后，与服务器断开连接。</li>
+</ol>
+<h3 id="THREE-WAY-HANDSHAKE"><a href="#THREE-WAY-HANDSHAKE" class="headerlink" title="THREE-WAY HANDSHAKE"></a>THREE-WAY HANDSHAKE</h3><p>用Wireshark来看看三次握手：</p>
+<p><img src="/fig1.png" alt="总的"></p>
+<p>首先我给服务器发送一个TCP报文：<br><img src="/fig2.png" alt="第一次握手"><br>随后服务器端回我一个：<br><img src="/fig3.png" alt="第二次握手"><br>最后我再给服务器发一个：<br><img src="/fig4.png" alt="第三次握手"><br>由上边可以知道，客户端和服务器端发送的Sequence number是没有关系的，各自算各自的。</p>
+<p>至于建立连接之后，客户端与服务器端数据的传送，现在不想看了，大概根据对方的ip和mac地址，传到相应的主机？解析后主机在给相应的应用程序？不很清楚，再看吧 - -</p>
+]]></content>
+      <tags>
+        <tag>web请求</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Dijkstra-单源最短路径问题</title>
+    <url>/2018/09/08/dijkstra/</url>
+    <content><![CDATA[<p>关于图论中的算法大多还是数据结构课上讲的, 过了这么久突然想起来, 就来复习复习吧。这里看一下<code>Dijkstra</code>算法再有向图中的使用。具体的需求就是给定一个图和一个点, 求出从该点出发到各个点的最短距离。下边放一张从<code>wiki</code>拿来的图:</p>
+<span id="more"></span>
+<p><img src="/fig1.gif" alt="来自wiki"></p>
+<p>不过这张是无向图, 但是大致的流程是类似的。</p>
+<p>下面通过一个更具体是示例来说明, 我们的图如下所示:<br><img src="/fig2.png" alt="example"></p>
+<p>需求: 从1开始, 到各个点的最短距离<br>准备: 我们可以利用三个数组存储相关的信息</p>
+<ul>
+<li>sign[] 记录已经被访问过的点</li>
+<li>shortest[] 保存当前点到<code>1</code>的最短距离</li>
+<li>precursor[] 记录<code>1</code>到当前点的路径中, 当前点的前驱点</li>
+</ul>
+<p>初始化:<br>根据图将三个数组分别初始化为, 规定-1为无穷远<br>sign[] 1, 0, 0, 0, 0<br>shortest[] -1, 3, -1, -1, 30<br>precursor[] 1, 1, 1, 1, 1</p>
+<p>过程:</p>
+<ol>
+<li>找到距离<code>1</code>最短的点, 一看是<code>2</code>, 距离为3, 把<code>2</code>标记为访问过的, 更新<code>sign</code>数组;</li>
+<li>然后从<code>2</code>找没标记过的点<code>x</code>, 看<code>2</code>到<code>x</code>的距离加上<code>0</code>到<code>2</code>的距离是否小于<code>0</code>到<code>x</code>的距离, 如果小于的话, 就更新<code>shortest</code>数组;</li>
+<li>把<code>x</code>的前缀改为<code>2</code>, 更新<code>precursor</code>数组。</li>
+</ol>
+<p>经过这些操作后, 三个数组变成这样了:</p>
+<p>sign[] 1, 1, 0, 0, 0<br>shortest[] -1, 3, 28, 11, 30<br>precursor[] 1, 1, 2, 2, 1</p>
+<p>接下来最短距离是11, 为<code>4</code>, 再从<code>4</code>开始重复上述步骤:</p>
+<p>sign[] 1, 1, 0, 1, 0<br>shortest[] -1, 3, 15, 11, 23<br>precursor[] 1, 1, 4, 2, 4</p>
+<p>直到所有的点都标记为访问过的, 最终结果为:</p>
+<p>sign[] 1, 1, 1, 1, 1<br>shortest[] -1, 3, 15, 11, 23<br>precursor[] 1, 1, 4, 2, 4</p>
+<p>根据这些记录我们可以得出<code>1</code>到各个点的最短距离以及路径:<br>1-&gt;2 3 1-&gt;2<br>1-&gt;3 15 1-&gt;2-&gt;4-&gt;3<br>1-&gt;4 11 1-&gt;2-&gt;4<br>1-&gt;5 23 1-&gt;2-&gt;4-&gt;5</p>
+<p>这里说一下路径的计算过程, 以1-&gt;3为例, 根据<code>precursor</code>记录的前驱, 我们看到3的前驱是<code>precursor[3]=4</code>, 即4-&gt;3, 4的前驱<code>precursor[4]=2</code>, 即2-&gt;4-&gt;3, 再看2的前驱<code>precursor[2]=1</code>, 即1-&gt;2-&gt;4-&gt;3, 这样就求出了完整的路径。</p>
+<p>下面贴份code, 写的不好看请原谅- -:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> graph;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  Dijstra 算法 有向图，有权值，求一个点到各个点的最短距离</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Dijkstra</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Scanner</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Scanner</span>(System.in);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 输入图</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> n 点的个数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> k 边的个数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a 保存图的信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">input</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k, <span class="type">int</span>[][] a)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">                <span class="comment">// 初始化</span></span><br><span class="line">                a[i][j] = -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; k; i ++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> s.nextInt();</span><br><span class="line">            <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> s.nextInt();</span><br><span class="line">            <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> s.nextInt();</span><br><span class="line">            a[start][end] = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printEdges</span><span class="params">(<span class="type">int</span>[][] a)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; a.length; i ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; a.length; j ++) &#123;</span><br><span class="line">                System.out.print(a[i][j] + <span class="string">&quot; &quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 基本思路:</span></span><br><span class="line"><span class="comment">     * 1. 从0开始, 找到最短的一条边, 假设为k点, 即0-k最短</span></span><br><span class="line"><span class="comment">     * 2. 从k点开始, 找k到各个点的距离, 如果比0到它更短, 则更新最短距离, 并且更新前驱节点</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a 图</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">doDijkstra</span><span class="params">(<span class="type">int</span>[][] a)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> a.length;</span><br><span class="line">        <span class="comment">// 标记已经访问过的点</span></span><br><span class="line">        <span class="type">int</span>[] sign = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="comment">// 存放当前0到个点的最短距离</span></span><br><span class="line">        <span class="type">int</span>[] shortest = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="comment">// 存放当前节点的前驱</span></span><br><span class="line">        <span class="type">int</span>[] precursor = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="comment">// 循环次数?</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> len - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化最短距离</span></span><br><span class="line">        System.arraycopy(a[<span class="number">0</span>], <span class="number">0</span>, shortest, <span class="number">0</span>, len);</span><br><span class="line">        <span class="comment">// 0开始的, 所以0默认已经访问过了</span></span><br><span class="line">        sign[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">0x7fffffff</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">pos</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 从shortest中找到没标记过的点, 且距离最小的</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; len; i ++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (sign[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (shortest[i] &gt; <span class="number">0</span> &amp;&amp; shortest[i] &lt; min) &#123;</span><br><span class="line">                        min = shortest[i];</span><br><span class="line">                        pos = i;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 标记访问</span></span><br><span class="line">            sign[pos] = <span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 修改最短路径</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; len; i ++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (a[pos][i] &gt; <span class="number">0</span> &amp;&amp; sign[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// -1标识无穷远, 能到达肯定比无穷远要好</span></span><br><span class="line">                    <span class="keyword">if</span> (shortest[i] == -<span class="number">1</span> || a[pos][i] + shortest[pos] &lt; shortest[i]) &#123;</span><br><span class="line">                        shortest[i] = a[pos][i] + shortest[pos];</span><br><span class="line">                        <span class="comment">// 修改前驱</span></span><br><span class="line">                        precursor[i] = pos;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            count --;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;shortest: &quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; len; i ++) &#123;</span><br><span class="line">            System.out.println(<span class="number">0</span> + <span class="string">&quot;-&gt;&quot;</span> + i);</span><br><span class="line">            System.out.print(<span class="number">0</span> + <span class="string">&quot; &quot;</span>);</span><br><span class="line">            dfs(precursor, i);</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 递归输出, 为了从头输出, 好看一点</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(<span class="type">int</span>[] a, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (end != <span class="number">0</span>) &#123;</span><br><span class="line">            dfs(a, a[end]);</span><br><span class="line">            System.out.print(end + <span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.nextInt();</span><br><span class="line">        <span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> s.nextInt();</span><br><span class="line">        <span class="type">int</span>[][] edges = <span class="keyword">new</span> <span class="title class_">int</span>[n][n];</span><br><span class="line">        <span class="comment">// 输入</span></span><br><span class="line">        Dijkstra.input(n, k, edges);</span><br><span class="line">        <span class="comment">// 打印图</span></span><br><span class="line">        <span class="comment">//Dijkstra.printEdges(edges);</span></span><br><span class="line">        <span class="comment">// 计算过程</span></span><br><span class="line">        doDijkstra(edges);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Dijkstra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Minhash</title>
+    <url>/2019/11/25/minhash/</url>
+    <content><![CDATA[<p><code>Minhash</code>可以用来降维，其最重要的特点是，<strong>降维之后，数据之间的相似度可认为保持不变</strong>，要注意的是这里的相似度是用<code>Jaccard</code>计算的。</p>
+<p><code>Stanford</code>的<a href="https://image.zero22.top/minhash/03-lsh.pdf">课件</a>讲的非常清楚。</p>
+<span id="more"></span>
+
+<p>最近真是越来越懒的，不想码字?</p>
+]]></content>
+      <tags>
+        <tag>minhash</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Huffman Code</title>
+    <url>/2018/09/17/huffman-code/</url>
+    <content><![CDATA[<p>前两天做笔试题时碰到了久违的哈夫曼编码, 想当初还用c实现过了, 但是做题的时候突然就忘了哈夫曼的实现过程- -，下面记录一下具体的步骤。</p>
+<span id="more"></span>
+
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><ol>
+<li>计算各个待编码字符出现的频率. 比如<code>HELLOWORLD</code>，一共10个字符，<code>H</code> <code>E</code> <code>W</code> <code>R</code> <code>D</code>各1次，<code>L</code>3次，<code>O</code>2次，各自出现的频率就是<strong>次数&#x2F;总数</strong>。</li>
+<li>在频率中找最小的两个值，相加，结果放进频率集中。这样做的目的是，频率越小，说明出现的次数相对越少，那么在进行<code>Huffman</code>编码时，这些小频率的字符就在<code>Huffman</code>树的底层，则生成的编码就越长，相对的，频率高的就出现在<code>Huffman</code>树的高层，生成的编码越短，这样就可能起到压缩的效果。例如当前的频率集为<code>0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.3</code>，选取两个0.1进行操作，新的频率集为<code>0.1, 0.1, 0.1, 0.2, 0.2, 0.3</code>。</li>
+<li>构造<code>Huffman</code>树:<br><img src="/fig1.png" alt="enter description here"></li>
+<li>重复第二步直到构造出完整的<code>Huffman</code>树，接下来就是编码了，很简单，左右子树分别标记为0&#x2F;1，如下图:<br><img src="/fig2.png" alt="enter description here"><br>每个字符的编码就是从根节点到该节点路径上的标识，比如<code>W</code>为<code>000</code>，<code>H</code>为<code>1010</code>。</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>流程大概就是这样，从图中也可以看出来，<code>Huffman</code>编码是一种前缀编码，即每个编码不会是另外编码的前缀，因为每个字符都是叶子节点，如果有一个编码是其他编码的前缀，那么该编码的字符一定不是叶子节点。</p>
+]]></content>
+      <tags>
+        <tag>huffman</tag>
+        <tag>哈夫曼</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Levenshtein distance</title>
+    <url>/2019/11/26/Levenshtein-distance/</url>
+    <content><![CDATA[<p><code>Levenshtein distance</code>就是编辑距离，简单说就是将一个字符串A通过删除、插入、替换三种操作转化为字符串B，最少的操作数就称为编辑距离。可以通过DP实现编辑距离求解.</p>
+<span id="more"></span>
+
+<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>假设我们现在要求字符串A的前i个字符转化为字符串B的前j个字符的最小操作数，如<strong>图1</strong>所示</p>
+<p><img src="/fig1.png" alt="图1"></p>
+<p>图中的箭头表示这个状态矩阵填写的顺序，因此我们也已经有了<code>T[i-1][j]</code>, <code>T[i][j-1]</code>, <code>T[i-1][j-1]</code>等知识</p>
+<p>那么能否利用这些已经计算的值，来计算<code>T[i][j]</code>呢?</p>
+<p>在两个字符串都进行扩充时，新增加的字符有两种可能:</p>
+<ol>
+<li><code>A[i] == B[j]</code></li>
+</ol>
+<p>这种情况比较好，说明当前新增的两个字符已经是匹配的，就不用再操他们的心了，此时<code>T[i][j] = T[i-1][j-1]</code></p>
+<ol start="2">
+<li><code>A[i] != B[j]</code></li>
+</ol>
+<p>这时就不好办了，肯定要对字符串A进行三种操作中的一种才能得到字符串B，此时<code>T[i][j] = min(三种操作) + 1</code></p>
+<p>那么这个<code>min(三种操作)</code>怎么理解呢?</p>
+<ul>
+<li><code>T[i][j-1]</code>表示前i个转化为前j-1个，然后A通过<strong>插入</strong>一个和B[j]一样的字符到i+1处，完成转化过程</li>
+<li><code>T[i-1][j]</code>表示前i-1个转化为前j个，然后通过<strong>删除</strong>A中第i个字符，完成转化过程</li>
+<li><code>T[i-1][j-1]</code>表示前i-1个转化为前j-1个，然后通过<strong>替换</strong>A中第i个字符为B中的第j个字符，完成转化过程</li>
+</ul>
+<p>因此第二种情况下的转移方程可以写为<code>T[i][j] = min(T[i][j-1], T[i-1][j], T[i-1][j-1]) + 1</code></p>
+<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cal_dis</span>(<span class="params">keyword1, keyword2</span>):</span><br><span class="line">	<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">	@keyword1: </span></span><br><span class="line"><span class="string">	@keyword2:</span></span><br><span class="line"><span class="string">	&quot;&quot;&quot;</span></span><br><span class="line">	len1 = <span class="built_in">len</span>(keyword1)</span><br><span class="line">	len2 = <span class="built_in">len</span>(keyword2)</span><br><span class="line">	<span class="keyword">if</span> len1 == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> len2</span><br><span class="line">	<span class="keyword">elif</span> len2 == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">return</span> len1</span><br><span class="line"></span><br><span class="line">	<span class="comment"># state matrix</span></span><br><span class="line">	T = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len2+<span class="number">1</span>)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len1+<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># initial T</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len1):</span><br><span class="line">		T[i][<span class="number">0</span>] = i</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len2):</span><br><span class="line">		T[<span class="number">0</span>][j] = j</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len2):</span><br><span class="line">		char1 = keyword2[i]</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len1):</span><br><span class="line">			char2 = keyword1[j]</span><br><span class="line">      <span class="comment"># case 1</span></span><br><span class="line">			<span class="keyword">if</span> char1 == char2:</span><br><span class="line">				T[j+<span class="number">1</span>][i+<span class="number">1</span>] = T[j][i]</span><br><span class="line">      <span class="comment"># case 2</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				T[j+<span class="number">1</span>][i+<span class="number">1</span>] = <span class="built_in">min</span>(<span class="built_in">min</span>(T[j-<span class="number">1</span>][i], T[j][i-<span class="number">1</span>]), T[j-<span class="number">1</span>][i-<span class="number">1</span>]) + <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> T[len1][len2]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	cal_ = cal_dis(<span class="string">&#x27;kitten&#x27;</span>, <span class="string">&#x27;sitting&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;cal =&#x27;</span>, cal_)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Other"><a href="#Other" class="headerlink" title="Other"></a>Other</h3><p>感觉之前做了好一些关于字符串的题，大多是用DP求解的，自己还是太垃圾了，经常会混淆不同目的下的转移过程，唉。。。</p>
+<p>比如说<a href="https://zero22.top/2019/07/25/Distinct-Subsequences/">这一题</a>，其目的是计算从A串到B串有多少种转移方式，哎。</p>
+]]></content>
+      <tags>
+        <tag>编辑距离</tag>
+        <tag>dp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>insert into a red-black tree</title>
+    <url>/2019/12/24/insert-into-a-red-black-tree/</url>
+    <content><![CDATA[<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ol>
+<li>每个节点是红的或黑的</li>
+<li>根节点是黑的</li>
+<li>所有的叶子节点(NIL)是黑的</li>
+<li>红色节点的孩子只能是黑的</li>
+<li>从任一节点到叶子节点所经过的黑色节点个数相同</li>
+</ol>
+<span id="more"></span>
+<p>就像这样:<br><img src="/fig1.png"></p>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><p>不管是插入还是删除，只要能理出节点插入时其周围节点颜色的情况，就能对操作有个整体的认识。</p>
+<p>还要注意的是，在插入时，把待处理的节点默认为红色会更方便，破坏的规则更少。</p>
+<p>整体流程图：<br><img src="/fig2.png"></p>
+<h4 id="case1"><a href="#case1" class="headerlink" title="case1"></a>case1</h4><p>如果根节点为空，则待插入节点当作根节点，并设置为黑色。</p>
+<h4 id="case2"><a href="#case2" class="headerlink" title="case2"></a>case2</h4><p>如果父节点为黑色，那么插入一个红节点不会破坏任何性质，ok</p>
+<h4 id="case3"><a href="#case3" class="headerlink" title="case3"></a>case3</h4><p>如果父节点为红色，这时候就需要考虑叔叔节点了，如果叔叔也是红色，那么就把父亲和叔叔变为黑色，爷爷变为红色，这样保持遍历该棵树时黑色节点数目不变，然后把爷爷当作待插入节点，递归处理。(因为在这里是爷爷，可能是别人的儿子)</p>
+<p><img src="/fig3.png"></p>
+<h4 id="case4"><a href="#case4" class="headerlink" title="case4"></a>case4</h4><p>还是父节点为红，叔叔为黑色或没有，这时就需要旋转操作了，如果待插入节点和父亲节点在同一边，就绕着父亲节点做一次对应的旋转:</p>
+<p><img src="/fig4.png"></p>
+<p>如果不在同一边，就需要先做一次旋转转到同一边，再继续。</p>
+<p><img src="/fig5.png"></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>删除的主要思想是用待删除节点的前继或后继节点替换该节点，再删除原前&#x2F;后继节点，这里考虑用后继节点替换该待删除节点，(那么可知后继节点左孩子是叶子节点)，把后继节点的值copy到待删除节点上，然后只用考虑把后继节点删除就行了。因此后边的待删除节点都是☞原节点的后继节点了，不要搞错对象咯。</p>
+<p>主要流程图：<br><img src="/fig6.png"></p>
+<h4 id="自己为红"><a href="#自己为红" class="headerlink" title="自己为红"></a>自己为红</h4><p>那么它已经没得孩子了，直接删除就好。</p>
+<p><img src="/fig7.png"></p>
+<h4 id="右孩子为红"><a href="#右孩子为红" class="headerlink" title="右孩子为红"></a>右孩子为红</h4><p>把自己删了之后，用右孩子顶上，并改为黑色。</p>
+<p><img src="/fig8.png"></p>
+<h4 id="兄弟为红"><a href="#兄弟为红" class="headerlink" title="兄弟为红"></a>兄弟为红</h4><p>通过旋转往这边均个点改为黑的。</p>
+<p><img src="/fig9.png"></p>
+<h4 id="兄弟同边孩子为红"><a href="#兄弟同边孩子为红" class="headerlink" title="兄弟同边孩子为红"></a>兄弟同边孩子为红</h4><p><img src="/fig10.png"></p>
+<h4 id="兄弟异边孩子为红"><a href="#兄弟异边孩子为红" class="headerlink" title="兄弟异边孩子为红"></a>兄弟异边孩子为红</h4><p><img src="/fig13.png"></p>
+<h4 id="父亲为黑"><a href="#父亲为黑" class="headerlink" title="父亲为黑"></a>父亲为黑</h4><p>删除后把兄弟节点改为红的，这时候这个子树是没问题的，但是它作为更大的树的一部分，经过<code>P</code>的路径就会比原来少一个黑点，所以要再递归平衡<code>P</code>点。<br><img src="/fig11.png"></p>
+<h4 id="父亲为红"><a href="#父亲为红" class="headerlink" title="父亲为红"></a>父亲为红</h4><p><img src="/fig12.png"></p>
+]]></content>
+      <tags>
+        <tag>红黑树</tag>
+        <tag>RedBlackTree</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JNI in linux</title>
+    <url>/2020/01/10/JNI-in-linux/</url>
+    <content><![CDATA[<p>在复习<code>JVM</code>时又看到了本地方法栈, 那么本地方法是个什么方法呢。<code>JNI</code>即<code>java native interface</code>, 通过这个东西可以实现在<code>Java</code>中调用其他编程语言实现的功能，在和系统底层交互时<code>Java</code>大都通过<code>JNI</code>调用<code>C/C++</code>来实现的。</p>
+<span id="more"></span>
+
+<p>下面用个实例来说明本地方法是如何实现的。</p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p><code>jdk-11.0.5</code>: 在10之后就看不到<code>javap</code>这个命令了，这个命令的主要功能是根据<code>java</code>源码中声明的<code>native</code>方法，生成对应的<code>c/c++</code>头文件，其中的主要内容就是对<code>native</code>方法的声明。现在这个功能集成到了<code>javac</code>下，使用<code>javac -h target_dic src_dic</code></p>
+<p><code>centos7</code>: 在后续的编译过程中需要用到<code>gcc</code>, <code>gcc-c++</code>等包</p>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><h4 id="1-java源码"><a href="#1-java源码" class="headerlink" title="1. java源码"></a>1. java源码</h4><p>首先写一点简单的<code>java</code>源码，其中包含一<code>native</code>方法就行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloJni</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    System.loadLibrary(<span class="string">&quot;HelloJni&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">sayHello</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String args[])</span> &#123;</span><br><span class="line">    sayHello();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-生成头文件"><a href="#2-生成头文件" class="headerlink" title="2. 生成头文件"></a>2. 生成头文件</h4><p>使用命令<code>javac -h HelloJni.java</code>, 得到的头文件如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* DO NOT EDIT THIS FILE - it is machine generated */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;jni.h&quot;</span></span></span><br><span class="line"><span class="comment">/* Header for class HelloJni */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _Included_HelloJni</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _Included_HelloJni</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Class:     HelloJni</span></span><br><span class="line"><span class="comment"> * Method:    sayHello</span></span><br><span class="line"><span class="comment"> * Signature: ()V</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">JNIEXPORT <span class="type">void</span> JNICALL <span class="title">Java_HelloJni_sayHello</span></span></span><br><span class="line"><span class="function">  <span class="params">(JNIEnv *, jclass)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>可以看到这里自动生成的头文件中需要<code>jni.h</code>, 在<code>jni.h</code>中又需要<code>jni_md.h</code>。</p>
+<h4 id="3-C-实现"><a href="#3-C-实现" class="headerlink" title="3. C++实现"></a>3. C++实现</h4><p>对头文件中方法进行实现，我用的<code>c++</code>，不晓得头文件中的<code>_cplusplus</code>是不是在暗示用<code>c++</code>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stdio.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;HelloJni.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">JNIEXPORT <span class="type">void</span> JNICALL <span class="title">Java_HelloJni_sayHello</span></span></span><br><span class="line"><span class="function">  <span class="params">(JNIEnv *, jclass)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello World By Jni\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-编译"><a href="#4-编译" class="headerlink" title="4. 编译"></a>4. 编译</h4><p>我觉得比较绕的地方就是编译的过程了。</p>
+<p>首先进行预处理，编译，汇编过程，不搞链接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc -I/root/jdk-11.0.5/include </span><br><span class="line">    -I/root/jdk-11.0.5/include/linux -fPIC -c HelloJni.cpp</span><br></pre></td></tr></table></figure>
+
+<p><code>-Idir</code>: Add the directory dir to the list of directories to be searched for header files.<br>前边提到的<code>jni.h</code>在<code>include</code>目录下，<code>jni_md.h</code>在目录<code>include/linux</code>目录下。</p>
+<p><code>-fPIC</code>: 当编译的时候不用这个指令的话，在后边生成动态库会出问题：</p>
+<pre><code>/usr/bin/ld: HelloJni.o: relocation R_X86_64_32 against .rodata can not be used when making a shared object; recompile with -fPIC
+/usr/bin/ld: final link failed: Nonrepresentable section on output
+</code></pre>
+<p>编译好后得到<code>HelloJni.o</code>文件，做进一步处理：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc -shared -o libHelloJni.so HelloJni.o</span><br></pre></td></tr></table></figure>
+<p>就能得到<code>linux</code>下动态链接库文件<code>libHelloJni.so</code>，这个文件在生成时需要规定其名字，由于在<code>java</code>代码中指定的加载库名为<code>HelloJni</code>，在生成链接库文件时需要命名为<code>libHelloJni.so</code>，否则会找不到库文件。</p>
+<p>  Exception in thread “main” java.lang.UnsatisfiedLinkError: no HelloJni in java.library.path: [&#x2F;root&#x2F;test, ., &#x2F;usr&#x2F;java&#x2F;packages&#x2F;lib, &#x2F;usr&#x2F;lib64, &#x2F;lib64, &#x2F;lib, &#x2F;usr&#x2F;lib]</p>
+<h4 id="5-运行"><a href="#5-运行" class="headerlink" title="5. 运行"></a>5. 运行</h4><p>如果直接运行，还是会报错，</p>
+<pre><code>Exception in thread &quot;main&quot; java.lang.UnsatisfiedLinkError: no HelloJni in java.library.path: [/usr/java/packages/lib, /usr/lib64, /lib64, /lib, /usr/lib]
+</code></pre>
+<p>会发现我们得到的链接文件不在后边的<code>path</code>中，可以选择把得到的链接文件拷一份，或者使用命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<p>把当前目录加到<code>path</code>中，这个变量应该是运行时生成的还是怎样，直接在<code>linux</code>中查看该变量啥也没有。</p>
+<p>最后直接运行<code>java</code>代码，当然首先要<code>javac</code>。</p>
+]]></content>
+      <tags>
+        <tag>JNI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis--主从复制</title>
+    <url>/2020/02/26/redis-7/</url>
+    <content><![CDATA[<p>主从复制：</p>
+<ol>
+<li>读写分离</li>
+<li>负载均衡</li>
+<li>故障恢复</li>
+<li>数据冗余</li>
+<li>高可用基石</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h3><p>主从复制过程大致可分为三个阶段：</p>
+<ol>
+<li>建立连接阶段</li>
+<li>数据同步阶段</li>
+<li>命令传播阶段</li>
+</ol>
+<h3 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h3><p>有三种方式完成连接：（设有两台<code>redis</code>服务器，一台叫<code>master</code>，一台叫<code>slave</code>）</p>
+<ol>
+<li>在<code>slave</code>客户端使用命令 <code>slaveof masterhost masterport</code></li>
+<li>在<code>slave</code>服务器端启动时，附加<code>--slaveof masterhost masterport</code></li>
+<li>在<code>slave</code>的配置文件中加上<code>slaveof masterhost masterport</code>   ————&gt; 提供的<code>redis.conf</code>中并没有该选项，改为<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code>了，而且示意图中也变为<code>Master----&gt;Replica</code></li>
+</ol>
+<p><code>redis</code>服务器有两种方式设置密码：</p>
+<ol>
+<li>在配置文件中<code>requirepass &lt;password&gt;</code></li>
+<li>在运行时通过客户端设置：<code>config set requirepass &lt;password&gt;</code>, 重启服务器会失效</li>
+</ol>
+<p>设置密码后，如果没有进行认证，在客户端的大部分操作（没有验证所有的）都会：<code>NOAUTH Authentication required.</code></p>
+<p>两种认证方式：</p>
+<ol>
+<li>启动<code>redis</code>客户端时附加<code>-a | -u &lt;password&gt;</code>，会提示可能不安全</li>
+<li>连接后在客户端使用命令<code>auth &lt;password&gt;</code></li>
+</ol>
+<p>如果<code>master</code>设置了密码，<code>slave</code>想要连接<code>master</code>,需要在配置文件中提前设置<code>masterauth &lt;password&gt;</code>，应该只有这一种方式。</p>
+<h3 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h3><p>数据同步是由<code>slave</code>端发起的，可以通过<code>master</code>日志看出：<code>Replica [::1]:6379 asks for synchronization</code></p>
+<p>数据同步大致分为两个阶段：</p>
+<ol>
+<li>全量复制，<code>master</code>进行<code>bgsave</code>，把得到的<code>RDB</code>文件通过<code>socket</code>发送给<code>slave</code></li>
+<li>增量&#x2F;部分复制，在<code>master</code>进行<code>bgsave</code>时，可能又修改了某些数据，会将这些修改数据的<strong>指令</strong>存储在<strong>复制缓冲区</strong>中，全量复制完成后，在发送给<code>slave</code>，可以看作<code>AOF</code></li>
+</ol>
+<p>​	注意：复制缓冲区存在溢出的情形，如果溢出，会再次进行全量复制，可能会陷入死循环</p>
+<p>相关指令：</p>
+<ol>
+<li><p>设置该缓冲区的大小：<code>repl-backlog-size 1mb</code></p>
+</li>
+<li><p>进行复制时<code>slave</code>是否提供读服务：<code>replica-serve-stale-data yes</code>——-&gt;default</p>
+</li>
+<li><p><code>slave</code>是否提供写服务：<code>replica-read-only yes</code>———-&gt;default</p>
+</li>
+</ol>
+<p><img src="/fig1.png" alt="by itcast"></p>
+<h3 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h3><p>第⑤步中使用的指令为：<code>replconf ack &lt;offset&gt;</code></p>
+]]></content>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis--哨兵(sentinel)</title>
+    <url>/2020/02/27/redis-8/</url>
+    <content><![CDATA[<p>哨兵（监视别人工作）的作用：</p>
+<ol>
+<li><p>监控：</p>
+<p>不断检测<code>master</code>和<code>slave</code>是否正常运行</p>
+</li>
+<li><p>通知：</p>
+<p>当被监控的服务器出现问题时，通知其他哨兵，客户端</p>
+</li>
+<li><p>自动故障转移</p>
+<p>断开<code>master</code>与<code>slave</code>连接，选取一个<code>slave</code>作为<code>master</code>，将其他<code>slave</code>连接到新的<code>master</code>，并告知客户端新的服务器地址</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p><code>redis</code>提供的默认哨兵配置文件为<code>sentinel.conf</code>，常用配置包括：（部分和<code>redis</code>相同配置忽略）</p>
+<ol>
+<li><p><code>sentinel monitor mymaster 127.0.0.1 6379 2</code></p>
+<p>其中<code>mymaster</code>为自定义的名称，后面地址和端口号是要监视的<code>master</code>的，最后的<code>2</code>表示后面的<strong>投票</strong>至少<code>2</code>票就通过</p>
+</li>
+<li><p><code>sentinel down-after-milliseconds mymaster 30000</code></p>
+<p>经过多久<code>master</code>没有反应就认为它<code>S_DOWN</code>（主观掉线）了，因为这是是某一个哨兵发现的，是这个哨兵的主观行为，后续这个哨兵会通知其他哨兵，其他哨兵也会去<code>hello</code>这<code>master</code>，当有<code>2</code>个哨兵都认为它<code>S_DOWN</code>了之后，就确定该<code>master</code>为<code>O_DOWN</code>（客观掉线），大众的看法</p>
+</li>
+<li><p><code>sentinel parallel-syncs mymaster 1</code></p>
+<p>设定一次可以有多少的<code>slave</code>能同时和新<code>master</code>进行同步</p>
+</li>
+<li><p><code>sentinel failover-timeout mymaster 180000</code></p>
+<p>故障转移超时时间，同步超时时间？配置文件里的注释有点看不懂</p>
+</li>
+</ol>
+<h3 id="监控阶段"><a href="#监控阶段" class="headerlink" title="监控阶段"></a>监控阶段</h3><ol>
+<li><code>sentinel</code>首先会查询<code>master</code>相关信息（<code>info</code>），随后建立<code>cmd</code>连接，根据得到的信息再去获取<code>slave</code>的信息</li>
+<li><code>sentinel</code>之间通过<code>pub/sub</code>分享自己获取的信息</li>
+</ol>
+<h3 id="通知阶段"><a href="#通知阶段" class="headerlink" title="通知阶段"></a>通知阶段</h3><ol>
+<li><code>sentinel</code>向<code>master</code>及<code>slave</code>发送消息<code>publish sentinel:hello......</code>，来确认这些点工作是否正常</li>
+<li><code>sentinel</code>向其他<code>sentinel</code>通知上述得到的结果</li>
+</ol>
+<h3 id="故障转移阶段"><a href="#故障转移阶段" class="headerlink" title="故障转移阶段"></a>故障转移阶段</h3><ol>
+<li>某个<code>sentinel</code>发现和<code>master</code>失去了连接，判断为<code>S_DOWN</code>，通知其他<code>sentinel</code></li>
+<li>其他<code>sentinel</code>也去尝试联系<code>master</code>，半数以上的<code>sentinel</code>认为<code>master</code>挂了后，判定为<code>O_DOWN</code></li>
+<li><code>sentinel</code>们竞选出一个负责处理此次事件的负责人，大家投票</li>
+<li>负责人进行处理，挑选备选<code>master</code><ul>
+<li>在线的</li>
+<li>响应快的</li>
+<li>和原<code>master</code>通信较近，丢失数据少的</li>
+<li>优先原则（优先级&#x2F;<code>offset</code>&#x2F;<code>runid</code>）</li>
+</ul>
+</li>
+<li><code>sentinel</code>向新的<code>master</code>发送<code>replicaof no one</code>， 向其他的<code>slave</code>发送<code>replicaof &lt;newmasterip&gt; &lt;newmasterport&gt;</code></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis--集群(cluster)</title>
+    <url>/2020/02/28/redis-9/</url>
+    <content><![CDATA[<p>集群的作用：</p>
+<ul>
+<li>分散单台服务器的访问压力，实现负载均衡</li>
+<li>分散单台服务器的存储压力，实现可扩展性</li>
+<li>降低单台服务器宕机带来的业务灾难</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="数据存储设计"><a href="#数据存储设计" class="headerlink" title="数据存储设计"></a>数据存储设计</h3><ol>
+<li>计算<code>key</code>应该放在哪个槽位<code>slot</code> —–&gt; <code>CRC16(key)</code>—–&gt;<code>%16384</code> </li>
+<li>集群就是对<code>16384</code>个槽位的分配，每台机器上都有记录所有槽位的分配</li>
+<li>对多两次就可命中</li>
+</ol>
+<h3 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h3><ol>
+<li><p>开启集群 —–&gt; <code>cluster-enabled yes</code></p>
+</li>
+<li><p>集群配置文件 —-&gt; <code>cluster-config-file nodes-6379.conf</code></p>
+<p>这个文件是由<code>redis</code>自己管理的，如果一个机器上跑了多个集群节点注意文件名不要一样，否则会覆盖，影响集群</p>
+</li>
+<li><p>超时时间 —-&gt;<code>cluster-node-timeout 15000</code></p>
+</li>
+</ol>
+<h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><p>用的<code>5.0.5</code>版本已经不推荐使用<code>redis-trib.rb</code>脚本来启动集群了。</p>
+<p><code>redis-cli --cluster help</code>会显示详细的使用。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">create         host1:port1 ... hostN:portN</span><br><span class="line">               --cluster-replicas &lt;arg&gt;</span><br></pre></td></tr></table></figure>
+
+<p>创建集群 —-&gt; <code>./src/redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 --cluster-replicas 1</code></p>
+<p>端口号后边跟的参数表明一个<code>master</code>会有几个<code>slave</code>，从前往后排，前面的是<code>master</code>，后边的为<code>slave</code>，当指定的个数有误时：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">*** ERROR: Invalid configuration for cluster creation.</span><br><span class="line">*** Redis Cluster requires at least 3 master nodes.</span><br><span class="line">*** This is not possible with 6 nodes and 3 replicas per node.</span><br><span class="line">*** At least 12 nodes are required.</span><br></pre></td></tr></table></figure>
+
+<p>成功启动集群：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost redis-5.0.5]# ./src/redis-cli --cluster create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 --cluster-replicas 1</span><br><span class="line">&gt;&gt;&gt; Performing hash slots allocation on 6 nodes...</span><br><span class="line">Master[0] -&gt; Slots 0 - 5460</span><br><span class="line">Master[1] -&gt; Slots 5461 - 10922</span><br><span class="line">Master[2] -&gt; Slots 10923 - 16383</span><br><span class="line">Adding replica 127.0.0.1:6383 to 127.0.0.1:6379</span><br><span class="line">Adding replica 127.0.0.1:6384 to 127.0.0.1:6380</span><br><span class="line">Adding replica 127.0.0.1:6382 to 127.0.0.1:6381</span><br><span class="line">&gt;&gt;&gt; Trying to optimize slaves allocation for anti-affinity</span><br><span class="line">[WARNING] Some slaves are in the same host as their master</span><br><span class="line">M: 8608aea70c528e8f632c083b79e44a4782630437 127.0.0.1:6379</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">M: 82829a4cfa624c3d658e33d66b67d7cfb374d5ea 127.0.0.1:6380</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">M: ee723da8dfb10b775570b9069f2fb17bff291e9f 127.0.0.1:6381</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">S: c5ea0e80c1597c349753b7191cf9bc529e6c5b56 127.0.0.1:6382</span><br><span class="line">   replicates ee723da8dfb10b775570b9069f2fb17bff291e9f</span><br><span class="line">S: 03ff774a84676e19076bd93327ec00c85c6ee015 127.0.0.1:6383</span><br><span class="line">   replicates 8608aea70c528e8f632c083b79e44a4782630437</span><br><span class="line">S: 3867efa8d6dd57f7688f0e78e3f7c098d5b0654f 127.0.0.1:6384</span><br><span class="line">   replicates 82829a4cfa624c3d658e33d66b67d7cfb374d5ea</span><br><span class="line">Can I set the above configuration? (type &#x27;yes&#x27; to accept): yes</span><br><span class="line">&gt;&gt;&gt; Nodes configuration updated</span><br><span class="line">&gt;&gt;&gt; Assign a different config epoch to each node</span><br><span class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster</span><br><span class="line">Waiting for the cluster to join</span><br><span class="line">......</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:6379)</span><br><span class="line">M: 8608aea70c528e8f632c083b79e44a4782630437 127.0.0.1:6379</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: ee723da8dfb10b775570b9069f2fb17bff291e9f 127.0.0.1:6381</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: c5ea0e80c1597c349753b7191cf9bc529e6c5b56 127.0.0.1:6382</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates ee723da8dfb10b775570b9069f2fb17bff291e9f</span><br><span class="line">M: 82829a4cfa624c3d658e33d66b67d7cfb374d5ea 127.0.0.1:6380</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 03ff774a84676e19076bd93327ec00c85c6ee015 127.0.0.1:6383</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 8608aea70c528e8f632c083b79e44a4782630437</span><br><span class="line">S: 3867efa8d6dd57f7688f0e78e3f7c098d5b0654f 127.0.0.1:6384</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 82829a4cfa624c3d658e33d66b67d7cfb374d5ea</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check for open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All 16384 slots covered.</span><br></pre></td></tr></table></figure>
+
+<p>若要使用集群，再连接的时候需要加上<code>-c</code>参数</p>
+<h3 id="下线"><a href="#下线" class="headerlink" title="下线"></a>下线</h3><ol>
+<li><p>如果<code>slave</code>掉线，和其相连的<code>master</code>过了超时时间后会将其标记—&gt;</p>
+<p><code>Marking node c5ea0e80c1597c349753b7191cf9bc529e6c5b56 as failing (quorum reached).</code></p>
+<p>且会通知其他的所有节点，其他节点会收到一个消息: </p>
+<p><code>FAIL message received from ee723da8dfb10b775570b9069f2fb17bff291e9f about c5ea0e80c1597c349753b7191cf9bc529e6c5b56</code></p>
+</li>
+<li><p>在实验的时候发现一个也会这样，停掉一台<code>slave</code>，有<strong>两台</strong><code>master</code>进行标记，该<code>slave</code>重连后，其中一台<code>master</code>(该从机的)是正常的和它进行同步，另外一台<code>master</code>和其他节点一样清除该标记</p>
+<p><code>Clear FAIL state for node c5ea0e80c1597c349753b7191cf9bc529e6c5b56: replica is reachable again.</code></p>
+</li>
+<li><p>所以说并不一定是<code>slave</code>的<code>master</code>进行标记通知，也可能是其他的<code>master</code>发现该<code>slave</code>掉线进行标记通知</p>
+</li>
+<li><p>如果是<code>master</code>掉线，其<code>slave</code>会变为<code>master</code>：</p>
+<p><code>1995:S 08 Mar 2020 01:22:34.810 # Start of election delayed for 791 milliseconds (rank #0, offset 1722). 1995:S 08 Mar 2020 01:22:34.810 # Cluster state changed: fail 1995:S 08 Mar 2020 01:22:35.214 * Connecting to MASTER 127.0.0.1:6379 1995:S 08 Mar 2020 01:22:35.215 * MASTER &lt;-&gt; REPLICA sync started 1995:S 08 Mar 2020 01:22:35.215 # Error condition on socket for SYNC: Connection refused 1995:S 08 Mar 2020 01:22:35.620 # Starting a failover election for epoch 7. 1995:S 08 Mar 2020 01:22:37.208 # Failover election won: I&#39;m the new master.</code></p>
+</li>
+<li><p>原<code>master</code>重连后，会变为新<code>master</code>的<code>slave</code></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kmp</title>
+    <url>/2020/10/19/kmp/</url>
+    <content><![CDATA[<p><code>KMP</code>是以三位发明者命名的，全称为<code>Knuth-Morris-Pratt</code>，是一种字符串查找算法，可在一个主文本字符串<code>S</code>内查找一个词<code>W</code>的出现位置。有很多关于该算法的介绍，将自己的理解进行记录。</p>
+<span id="more"></span>
+
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>采用最简单的字符串匹配时，当发现<code>W</code>当前位置和<code>S</code>当前位置不匹配时，则<code>W</code>前进一位，再从头和当前对应的<code>S</code>进行匹配，如下图1所示：</p>
+<p><img src="/fig1.png" alt="fig1"></p>
+<p>传统的做法是：</p>
+<p><img src="/fig2.png" alt="fig2"></p>
+<p>发现开头就不匹配，然后<code>W</code>再前进一位…</p>
+<p><code>KMP</code>算法就提出了一种方案，跳过这些无用匹配。在初始匹配到第五位的时候，说明前面四位都是匹配的，即<code>S[0]=W[0], S[1]=W[1]...</code>，原始方法在<code>W</code>移动时还要去比较<code>W[0]</code>与<code>S[1]</code>，其实可以通过提前比较<code>W[0]</code>与<code>W[1]</code>来实现。具体效果为，当发现第五位不匹配时，<code>W</code>可以直接移动两位，如下图3所示：</p>
+<p><img src="/fig3.png" alt="fig3"></p>
+<p>具体是如何实现的呢？</p>
+<h3 id="next"><a href="#next" class="headerlink" title="next"></a>next</h3><p><code>KMP</code>算法中有一个很重要的概念，即<code>next</code>数组，<code>next[i]</code>表示的是一个坐标，即<code>W[i]</code>和<code>W[next[i]]</code>相同，且<code>0-next[i]</code>这一段字符串也出现在<code>x-W[i]</code>中（通俗讲就是前缀和后缀要相同）。（理解与实现都是按照自己方式来的，可能和其他更专业的讲解有所不同，而且实现也没有别人的优雅，但是我感觉这样好理解一点点）</p>
+<p>下面针对<code>ababa</code>计算其<code>next</code>数组：</p>
+<p><code>next[0]</code>直接初始化为<code>-1</code></p>
+<p><code>next[1]</code>看字符串<code>ab</code>，由于<code>next[0]=-1</code>，则只用比较最后的字符<code>b</code>和开头的字符<code>a</code>，由于他们不同，则<code>next[1]=-1</code></p>
+<p><code>next[2]</code>看字符串<code>aba</code>，同样只用比较开头和结束字符，即后缀<code>a</code>和前缀<code>a</code>相同，则<code>next[1]=0</code>（指向相同点的坐标）</p>
+<p><code>next[3]</code>看字符串<code>abab</code>，由于<code>next[2]=0</code>，这里就直接比较<code>W[3]</code>和<code>W[0+1]</code>，因为是要取相同的最长前后缀，当<code>W[3]==W[0+1]</code>时，就表明了<code>W[01]==W[23]</code>，否则的话就再比较<code>W[3]</code>和<code>W[0]</code>。而这里判断是相同的，则<code>next[3]=1</code>，指向当前匹配的前边的<code>b</code>的坐标</p>
+<p><code>next[4]</code>看字符串<code>ababa</code>，由于<code>next[3]=1!=-1</code>，同上，先直接比较<code>W[4]</code>和<code>W[1+1]</code>，发现相等，此时就说明了前缀<code>aba</code>等于后缀<code>aba</code>，<code>next[4]=2</code></p>
+<p>综上，<code>next=[-1, -1, 0, 1, 2]</code></p>
+<p>其中<code>-1</code>表示当前字符字串不存在任何前缀和后缀相等的情况。</p>
+<h3 id="使用next"><a href="#使用next" class="headerlink" title="使用next"></a>使用next</h3><p>有了<code>next</code>，下一步就是要利用它来实现高效匹配，以上边的例子进行说明，为什么当<code>S[4]!=W[4]</code>时，<code>W</code>能前进两格。</p>
+<p>当<code>S[4]!=W[4]</code>时，说明前四个字符是匹配的，不然也不会匹配到这来，那么就看前四个字符<code>abab</code>最长匹配前缀和后缀了，将相同的前缀补在相同的后缀上，再接着往后匹配，画图表示为：</p>
+<p><img src="/fig4.png" alt="fig4"></p>
+<p>其中粉色部分表示<code>W</code>当前判断字符前的字串的最长的前缀和后缀，当当前字符不相符时，直接把前缀挪到后缀去：</p>
+<p><img src="/fig5.png" alt="fig5"></p>
+<p>至于为什么中间的全能跳过去，其原理就是通过<code>W</code>子串的前缀和后缀之间的关系，来反应<code>W</code>和<code>S</code>串之间的关系，因为<code>W</code>串的特点保证了就算不跳这么远，只一个一个的移动，还是无法将<code>W</code>和<code>S</code>的当前位置进行匹配的。</p>
+<p>根据这一般的情况，再看字符串<code>abab</code>，由<code>next[3]=1</code>可知<code>W[01]==W[23]</code>，因此直接把<code>ab</code>（前缀）移动到<code>ab</code>(后缀)的位置，再接着比较<code>W[2]</code>与<code>S[4]</code>即可（因为这时候已经保证了<code>W[2]</code>前边和<code>S</code>是一一对应的）。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Kmp</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">p</span> <span class="operator">=</span> <span class="string">&quot;ababa&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;ababcababaca&quot;</span>;</span><br><span class="line">        System.out.println(match(s, p));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] calculateNext(String pattern) &#123;</span><br><span class="line">        <span class="type">int</span>[] next = <span class="keyword">new</span> <span class="title class_">int</span>[pattern.length()];</span><br><span class="line">        next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">tempIndex</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">compareIndex</span> <span class="operator">=</span> next[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">while</span> (tempIndex &lt; pattern.length()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (pattern.charAt(tempIndex) == pattern.charAt(compareIndex + <span class="number">1</span>)) &#123;</span><br><span class="line">                next[tempIndex] = compareIndex + <span class="number">1</span>;</span><br><span class="line">                compareIndex = next[tempIndex];</span><br><span class="line">                tempIndex++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (compareIndex != -<span class="number">1</span>) &#123;    <span class="comment">// 可能还有较短的前缀和后缀匹配</span></span><br><span class="line">                compareIndex = next[compareIndex];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                next[tempIndex] = -<span class="number">1</span>;</span><br><span class="line">                compareIndex = -<span class="number">1</span>;</span><br><span class="line">                tempIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">match</span><span class="params">(String source, String pattern)</span> &#123;</span><br><span class="line">        <span class="comment">// not decrease</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">s_point</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// up and down</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">p_point</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span>[] next = calculateNext(pattern);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (s_point &lt; source.length() &amp;&amp; p_point &lt; next.length) &#123;</span><br><span class="line">            <span class="keyword">if</span> (source.charAt(s_point) == pattern.charAt(p_point)) &#123;</span><br><span class="line">                s_point++;</span><br><span class="line">                p_point++;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (p_point == <span class="number">0</span>) &#123;  <span class="comment">// P[0]都不和S匹配，那S只好向前挪一格</span></span><br><span class="line">                s_point++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                p_point = next[p_point - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (p_point &gt;= next.length) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;match from: &quot;</span> + (s_point - next.length));</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;not match!&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="2020-11-3-更新"><a href="#2020-11-3-更新" class="headerlink" title="2020&#x2F;11&#x2F;3 更新"></a>2020&#x2F;11&#x2F;3 更新</h1><p>以上述方法求出来next数组，再进行优化更新的时候就比较麻烦，先来看看为什么要优化</p>
+<p><img src="/fig6.png" alt="fig6"></p>
+<p>当a和c不匹配时，按照上边计算的next数组，pattern会移动到虚线框所示的位置，发现此时依然是a和c比，就浪费了一次比较的机会，更理想的情况是：</p>
+<p><img src="/fig7.png" alt="fig7"></p>
+<p>优化的主要思想是，当前待匹配位置发生失配时，如果跳到下一个位置和该字符依然相等的话，就需要更新当前待匹配位置的next值</p>
+<p>为了能够方便的优化，计算next数组的方式需要改变一下，即让next值直接表示发生失配时，下一个应匹配的位置；而上文中计算下一个位置还需要看前边元素的next值+1，实现如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[] otherNext(String pattern) &#123;</span><br><span class="line">    <span class="type">int</span>[] next = <span class="keyword">new</span> <span class="title class_">int</span>[pattern.length()];</span><br><span class="line">    next[<span class="number">0</span>] = -<span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">comparePointer</span> <span class="operator">=</span> <span class="number">0</span>;           <span class="comment">// 前缀的最后一个字符</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; pattern.length(); i++) &#123;</span><br><span class="line">        <span class="comment">// 直接指到这来</span></span><br><span class="line">        next[i] = comparePointer;</span><br><span class="line">        <span class="comment">// 调整位置</span></span><br><span class="line">        <span class="keyword">while</span> (comparePointer &gt; <span class="number">0</span> &amp;&amp; pattern.charAt(i) != pattern.charAt(comparePointer)) &#123;</span><br><span class="line">            comparePointer = next[comparePointer];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// </span></span><br><span class="line">        <span class="keyword">if</span> (pattern.charAt(comparePointer) == pattern.charAt(i)) comparePointer++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 优化过程</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; pattern.length(); i ++) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> next[i];</span><br><span class="line">        <span class="keyword">while</span> (temp &gt;= <span class="number">0</span> &amp;&amp; pattern.charAt(i) == pattern.charAt(temp)) &#123;</span><br><span class="line">            temp = next[temp];</span><br><span class="line">        &#125;</span><br><span class="line">        next[i] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">otherMatch</span><span class="params">(String s, String p)</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] next = otherNext(p);</span><br><span class="line">    <span class="type">int</span> <span class="variable">s_point</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">p_point</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="variable">compareTime</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (s_point &lt; s.length() &amp;&amp; p_point &lt; p.length()) &#123;</span><br><span class="line">        compareTime ++;</span><br><span class="line">        <span class="keyword">if</span> (s.charAt(s_point) == p.charAt(p_point)) &#123;</span><br><span class="line">            s_point++;</span><br><span class="line">            p_point++;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (next[p_point] != -<span class="number">1</span>) &#123;</span><br><span class="line">            p_point = next[p_point];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            p_point = <span class="number">0</span>;</span><br><span class="line">            s_point ++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (p_point == p.length()) &#123;</span><br><span class="line">        <span class="keyword">return</span> s_point - p.length();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述两种方式计算出来的next如下：</p>
+<p>针对字符串”ababa”</p>
+<p>next: [-1, -1, 0, 1, 2]</p>
+<p>otherNext: [-1, 0, 0, 1, 2]   优化后变为：[-1, 0, -1, 0, -1]</p>
+<p>可以发现第二种方法计算出来的next数组就是第一种方法计算出的next数组各元素加1并右移一位，同时在0补上-1</p>
+<p><img src="/fig8.png" alt="fig8"></p>
+<p>对于上述的示例，优化前和优化后需要比较的次数分别为：13，11</p>
+]]></content>
+      <tags>
+        <tag>kmp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kong Kim in plane</title>
+    <url>/2020/10/14/Kong-Kim-in-plane/</url>
+    <content><![CDATA[<p>金刚坐飞机问题，有一班飞机要起飞，乘客们正准备按机票号码（1，2，…，N）依次登机。突然来了个金刚，他也有飞机票，但是他插队第一个上了飞机，随机选个座位坐下了。其他乘客有两种反应：</p>
+<ol>
+<li>他们也随意找个位置坐下；</li>
+<li>如果自己座位没有被占领，就坐自己的位置，否则随意找个位置坐下。</li>
+</ol>
+<p>在这两种情况下，第<code>i</code>个乘客（除去金刚外）坐到自己原机票位置的概率分别是多少？</p>
+<span id="more"></span>
+
+<h3 id="Q1"><a href="#Q1" class="headerlink" title="Q1"></a>Q1</h3><p>要保证第<code>i</code>个乘客坐到自己的位置上，则前<code>i-1</code>个乘客包括金刚都别坐到第<code>i</code>个人的座位，第<code>i</code>个人就有机会坐到自己的位置，得到概率公式为：<br>$$<br>f(i)&#x3D;\frac{N-1}{N}<em>\frac{N-2}{N-1}</em>\dots*\frac{N-i+1}{N-i+2}*\frac{1}{N-i+1}&#x3D;\frac{1}{N}  （1）<br>$$</p>
+<h3 id="Q2"><a href="#Q2" class="headerlink" title="Q2"></a>Q2</h3><p>由于当乘客座位没人坐的时候，他会优先选自己的座位，那么设金刚坐在<code>n</code>号位置，当<code>n=1/n&gt;j</code>，即在最开始时，前<code>i</code>个人的座位都保留着，那么他们上机后都会坐自己的座位；当<code>n=i</code>时，第<code>i</code>个人肯定坐不到自己的位置了；比较麻烦的就是当金刚在<code>1&lt;n&lt;i</code>之间的情况，此时<code>2~n-1</code>这几位乘客还是能坐到自己的位置，而第<code>n</code>位乘客肯定坐不到自己的位置了，他要开始<strong>随便</strong>坐了，既然他都<strong>随便</strong>坐了，那和金刚有什么区别？因此我们换种想法：</p>
+<p><img src="/image-20201014131143349.png" alt="image-20201014131143349"></p>
+<p>即把金刚当作第<code>n</code>个人，而真正的第<code>n</code>人当作金刚，只不过该虚假的金刚和真正的金刚还是有点差别的，那就是他没有真正金刚那么多的座位选择，这个假金刚只能从剩下的<code>N-n+1</code>个座位里边选一个坐（1， n+1，n+2，…，N）。如此一来，当金刚坐在第<code>n</code>个座位（<code>1&lt;n&lt;i</code>）时，第<code>i</code>个人坐到自己座位的概率就变成了：<br>$$<br>f(n)&#x3D;\sum_j \frac{1}{N-n+1}*f(j),(j&#x3D;1,n+1,…,N)（2）<br>$$<br>由该递推式，进一步可以得到<code>n=n+1</code>时的情况，即：<br>$$<br>f(n+1)&#x3D;\sum_j \frac{1}{N-n}<em>f(j),(j&#x3D;1,n+2,…,N)（3）<br>$$<br>上述两个式子相减，即得到：<br>$$<br>(N-n)</em>[f(n)-f(n+1)]&#x3D;f(n+1)-f(n) &#x3D;&gt; f(n)&#x3D;f(n+1),(1&lt;n&lt;i-1)（4）<br>$$<br>最终可得：<br>$$<br>f(n)&#x3D;\frac{N-i+1}{N-i+2}（5）<br>$$<br>在不同情况下的<code>f(n)</code>都已求得，最后在把所有情况概率和相加即可：<br>$$<br>\sum_{n&#x3D;1}^N \frac{1}{N}*f(n)&#x3D;\frac{N-i+1}{N-i+2}（6）<br>$$</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>上述两种情况都假设乘客按照顺序上机，那如果乘客上机的顺序也是随机，第<code>i</code>个乘客上机坐到自己位置的概率怎么算呢？</p>
+<p>对第一种情况影响不大，因为所有人就算是按顺序上机，座位也是随便坐的，和随便登机没差。</p>
+<p>第二种情况下，当金刚坐在<code>n</code>号座位时，如果紧接着就是第<code>n</code>个人登机，那么他完全有可能坐到前<code>n</code>个人的座位，Orz</p>
+]]></content>
+      <tags>
+        <tag>kong kim</tag>
+        <tag>probability</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>欧拉回环与哈密尔顿图</title>
+    <url>/2021/03/05/Euler-circuit-and-Hamiltonian-graph/</url>
+    <content><![CDATA[<p>欧拉回环：一笔画问题，每条边只能走一次，能否遍历所有的边。</p>
+<ul>
+<li>第一种递归：后序遍历，为了保证能把中间节点的环放到整个大环里边</li>
+<li>第二种递归：先序遍历，但是需要优先访问大的边，这样可以把所有的边都访问完了才回去</li>
+</ul>
+<p>哈密尔顿图：每个节点只能访问一次，能否遍历所有的点。比上边的苛刻很多，一个点只能遍历一次，那么该点所有的边只有一条会被遍历，其他都无法访问了（不然就重复访问了该点）</p>
+]]></content>
+      <tags>
+        <tag>欧拉回环</tag>
+        <tag>Eulerian path</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统中的进程</title>
+    <url>/2020/11/01/os-process/</url>
+    <content><![CDATA[<p>进程不只是运行的程序（text section&#x2F;code section），还包括</p>
+<ul>
+<li>当前活动如程序计数器（program counter）的值和处理器寄存器的内容</li>
+<li>进程堆栈（stack），存储临时数据，如函数参数，返回地址和局部变量</li>
+<li>数据段（data section），包括全局变量</li>
+<li>堆（heap），进程在运行时动态分配的内存</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p><img src="/fig1.png" alt="fig1"></p>
+<p>操作系统内的每个进程用PCB（task control block）表示，包含许多与进程相关的信息</p>
+<h4 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h4><p>切换CPU到另一个进程，需要保存当前进程状态，并恢复另一个进程的状态，这称为上下文切换。</p>
+<h4 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h4><p>Linux中进程<code>init</code>为所有用户进程的父进程</p>
+<p>通过系统调用<code>fork()</code>可以创建新进程，新进程中（子进程）该函数返回0，原进程中（父进程）该函数返回新进程的pid</p>
+<p>若在新进程中调用<code>exec()</code>, 则其不会在执行原程序中的后续代码</p>
+<h4 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h4><p>如果一个进程终止，那么它的所有子进程也会终止，称为<code>级联终止</code></p>
+<p>当进程已经终止，但是其父进程尚未调用wait(), 则称该进程为<code>僵尸进程</code></p>
+<p>如果父进程没有调用wait()就终止了，则其子进程就会变为<code>孤儿进程</code></p>
+<p>孤儿进程会称为init进程的子进程，而init会周期性的调用wait()，来释放孤儿进程的pid和进程表条目</p>
+<h4 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h4><ol>
+<li>共享内存</li>
+</ol>
+<p><code>POSIX</code>共享内存的实现为内存映射文件，它将共享内存区域与文件相关联。通过如下方式创建共享内存对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">shm_fd = shm_open(name, O_CREAT | O_RDRW, 0666);</span><br></pre></td></tr></table></figure>
+
+<p>共享内存可能快于消息传递，因为消息传递需要频繁？的系统调用，因此需要消耗更多时间（涉及内核，切换）</p>
+<ol start="2">
+<li>消息队列</li>
+</ol>
+<p>对于多核系统，消息传递的性能要优于共享内存，因为共享内存会有缓存一致性问题。</p>
+<ol start="3">
+<li>套接字（socket）</li>
+</ol>
+<p>套接字是由一个IP地址和一个端口号组成的，即类似于<code>146.85.5.20:1625</code>。</p>
+<p>套接字属于分布式进程之间的一种低级通信形式，主要原因是套接字只允许在通信线程之间交换无结构的字节流，可能需要额外自定义传输数据的数据结构</p>
+<ol start="4">
+<li>远程过程调用（remote procedure call）</li>
+</ol>
+<p>RPC通信交换的信息具有明确的结构。</p>
+<p>客户端需要获取服务端执行RPC的端口，因此服务器端有个类似于DNS的服务程序matchmaker由于提供和RPC名称对应的端口号</p>
+<ol start="5">
+<li>管道</li>
+</ol>
+<p>管道是一种特殊类型的文件，可由子进程继承</p>
+<p>管道用于同一台机器上的进程通信</p>
+<ul>
+<li><p>匿名管道</p>
+<ul>
+<li>匿名管道是单向的</li>
+<li>进程通信需要有父子关系</li>
+<li>创建采用<code>pipe(int fd[])</code></li>
+<li><code>fd[0]</code>为读出端，<code>fd[1]</code>为写入端</li>
+<li>一旦通信完成并终止，匿名管道就不存在了</li>
+</ul>
+</li>
+<li><p>命名管道</p>
+<ul>
+<li>半双工（允许双向，但同一时间只能单向）</li>
+<li>不需要父子关系</li>
+<li>一旦创建，表现为文件系统的典型文件</li>
+<li>命名管道为FIFO，通过调用<code>mkfifo()</code></li>
+<li>通信进程完成后，命名管道依然存在，直到它被显示的从文件系统中删除</li>
+<li>只允许字节流的数据</li>
+</ul>
+</li>
+</ul>
+<ol start="6">
+<li>信号（signal）</li>
+</ol>
+<ul>
+<li>信号是由特定事件的发生而产生的</li>
+<li>信号被传递给某个进程</li>
+<li>信号一旦收到就应处理</li>
+</ul>
+<p>信号可分为同步信号和异步信号，同步信号是指信号会发送到产生该信号的进程；异步信号则可发送到另一进程。</p>
+<p>每个信号都有一个默认信号处理程序（default signal handler），用户也可定义信号处理程序</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+        <tag>OS</tag>
+        <tag>进程</tag>
+        <tag>process</tag>
+        <tag>理论</tag>
+        <tag>概念</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Create container in docker</title>
+    <url>/2021/03/06/create-container-in-docker/</url>
+    <content><![CDATA[<h2 id="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"><a href="#ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问" class="headerlink" title="ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问"></a>ftp服务，但是只能宿主机访问，我其他机子用的chrome无法访问</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 20:20 -p 21:21 -p 21000-21200 \</span><br><span class="line">-v /home/docker/ftp:/home/vsftpd \</span><br><span class="line">-e FTP_USER=ftp1103 -e FTP_PASS=1103ftp \</span><br><span class="line">-e PASV_ADDRESS=XXX.XXX.XXX.XXX \</span><br><span class="line">-e PASV_MIN_PORT=21000 \</span><br><span class="line">-e PASV_MAX_PORT=21200 \</span><br><span class="line">--name ftp-1 \</span><br><span class="line">fauria/vsftpd:latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h2><p>容器中的 WorkingDir为 <code>/usr/local/tomcat</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 8081:8080 \</span><br><span class="line">-v /home/docker/tomcat:/var/tomcat \</span><br><span class="line">--name tomcat-1 \</span><br><span class="line">tomcat:8.5.64-jdk8-adoptopenjdk-hotspot</span><br></pre></td></tr></table></figure>
+
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-v /home/docker/redis/:/var/redis \</span><br><span class="line">--name redis-1 \</span><br><span class="line">redis:latest</span><br></pre></td></tr></table></figure>
+
+<p>指定配置文件时，后边加上 <code>redis-server /xxx/redis.conf</code>，要注意容器内redis的版本和指定的配置文件的版本，不对应的话可能会报错，<code>line XXX, bad directive or wrong number of arguments</code></p>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">-p 3306:3306 \</span><br><span class="line">-v /home/docker/mysql/:/var/mysql \</span><br><span class="line">-e MYSQL_ROOT_PASSWORD=XXXX \</span><br><span class="line">--name mysql-1 \</span><br><span class="line">mysql:5.7</span><br></pre></td></tr></table></figure>
+
+<h2 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run --name zookeeper-2 --restart always -d -e &quot;ZOO_MY_ID=2&quot; -e ZOO_SERVERS=&quot;server.1=172.17.0.4:2888:3888;2181 server.2=172.17.0.5:2888:3888;2181 server.3=172.17.0.6:2888:3888;2181&quot; zookeeper</span><br></pre></td></tr></table></figure>
+
+<p>某些容器中的配置项可以通过 <code>-e</code> 来改写，如果修改的配置不多的话，这样比较方便，避免了创建文件进行映射等操作。</p>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><p>由于电脑经常死机, 重启后<code>docker</code>中的容器也可能会重启<code>(--restart always)</code>, 此时各个容器启动顺序不确定, 则其按顺序分配到的<code>ip</code>也可能会和之前不同.</p>
+<p>那我配置的<code>zookeeper</code>假集群就没法用了(因为创建这些<code>zookeeper</code>实例时需要指定各台机器的<code>ip</code>). </p>
+<p>查了一下，发现可以为容器指定固定的ip, 下面记录下步骤:</p>
+<ol>
+<li>创建自己的<code>docker</code>网络</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network create --subnet=172.18.0.0/16 mybridge</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">若使用默认的bridge，则会出现:</span></span><br><span class="line">docker: Error response from daemon: user specified IP address is supported on user defined networks only.</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建新的容器</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d --restart always --net mybridge --ip 172.18.0.2 \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">-v /home/docker/redis/:/var/redis \</span><br><span class="line">--name redis-1 \</span><br><span class="line">redis:latest</span><br><span class="line">ba55ec0fad37ccf9ed42c47871e0d79b7e6fb12a10fa08786e660caa809d1b75</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jdk Dynamic Proxy</title>
+    <url>/2021/04/09/jdk-Dynamic-Proxy/</url>
+    <content><![CDATA[<h2 id="jdk动态代理"><a href="#jdk动态代理" class="headerlink" title="jdk动态代理"></a>jdk动态代理</h2><p>使用jdk提供的动态代理技术，主要包含以下几个步骤：</p>
+<ol>
+<li>创建服务接口</li>
+<li>实现服务接口，称为服务类，作为被代理类</li>
+<li>实现<code>InvocationHandler</code>接口，可以通过构造函数的形式，将被代理类传进去<ul>
+<li>该接口主要需要实现<code>invoke(Object proxy, Method method, Object[] args)</code>方法，其中<code>proxy</code>为生成的代理对象，<code>method</code>为代理对象调用的方法(在使用时)，<code>args</code>为方法参数</li>
+<li>在实现该方法时，可以通过传进来的被代理类对象，调用被代理类的原生方法，在前后可以做增强操作</li>
+</ul>
+</li>
+<li>调用<code>Proxy.newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler h)</code>方法<ul>
+<li><code>loader</code> 指定生产代理类时的类加载器</li>
+<li><code>interfaces</code> 指定代理类实现的接口</li>
+<li><code>h</code> 上边自定义的<code>InvocationHandler</code>实现类</li>
+</ul>
+</li>
+</ol>
+<p>这样就得到了一个代理类了，在调用代理类的方法时，实际上执行的是<code>InvocationHander</code>的<code>invoke</code>方法。</p>
+<h2 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h2><p><code>jdk</code>提供的动态代理只能代理，实现了接口的类；当代理一个没有实现接口的类的时候，得到的代理对象其实是没用的。</p>
+<h2 id="从源码看代理过程"><a href="#从源码看代理过程" class="headerlink" title="从源码看代理过程"></a>从源码看代理过程</h2><ol>
+<li><p>看<code>Proxy.newProxyInstance</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">newProxyInstance</span><span class="params">(ClassLoader loader,</span></span><br><span class="line"><span class="params">                                      Class&lt;?&gt;[] interfaces,</span></span><br><span class="line"><span class="params">                                      InvocationHandler h)</span></span><br><span class="line">    <span class="keyword">throws</span> IllegalArgumentException</span><br><span class="line">&#123;</span><br><span class="line">    Objects.requireNonNull(h);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Class&lt;?&gt;[] intfs = interfaces.clone();</span><br><span class="line">    <span class="comment">// 权限检查 ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Look up or generate the designated proxy class.</span></span><br><span class="line"><span class="comment">         * !!!!!!  查找或者生成代理类， 注意是 Class  !!!!!!</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    Class&lt;?&gt; cl = getProxyClass0(loader, intfs);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Invoke its constructor with the designated invocation handler.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (sm != <span class="literal">null</span>) &#123;</span><br><span class="line">            checkNewProxyPermission(Reflection.getCallerClass(), cl);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 获取生成代理类的，参数类型为 InvocationHandler 的构造方法</span></span><br><span class="line">        <span class="keyword">final</span> Constructor&lt;?&gt; cons = cl.getConstructor(constructorParams);</span><br><span class="line">        <span class="keyword">final</span> <span class="type">InvocationHandler</span> <span class="variable">ih</span> <span class="operator">=</span> h;</span><br><span class="line">        <span class="comment">// 设置构造方法可访问</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过该构造方法创建一个代理对象</span></span><br><span class="line">        <span class="comment">// newProxyInstance方法中的InvocationHander参数,其实是该代理对象的一个参数</span></span><br><span class="line">        <span class="keyword">return</span> cons.newInstance(<span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;h&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该方法中，最重要的就是<code>Class&lt;?&gt; cl = getProxyClass0(loader, intfs);</code> 通过这个方法调用，就得到了代理对象类了，因此下一步看这个</p>
+</li>
+<li><p><code>getProxyClass0</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Class&lt;?&gt; getProxyClass0(ClassLoader loader,</span><br><span class="line">                                       Class&lt;?&gt;... interfaces) &#123;</span><br><span class="line">    <span class="keyword">if</span> (interfaces.length &gt; <span class="number">65535</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;interface limit exceeded&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the proxy class defined by the given loader implementing</span></span><br><span class="line">    <span class="comment">// the given interfaces exists, this will simply return the cached copy;</span></span><br><span class="line">    <span class="comment">// otherwise, it will create the proxy class via the ProxyClassFactory</span></span><br><span class="line">    <span class="keyword">return</span> proxyClassCache.get(loader, interfaces);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据注释得知，当该缓存中不存在时，会通过<code>ProxyClassFactory</code>创建代理类，而这个<code>ProxyClassFactory</code>类是<code>Proxy</code>类的静态内部类，直接去看这个类</p>
+</li>
+<li><p><code>ProxyClassFactory</code>类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">ProxyClassFactory</span></span><br><span class="line">    <span class="keyword">implements</span> <span class="title class_">BiFunction</span>&lt;ClassLoader, Class&lt;?&gt;[], Class&lt;?&gt;&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// prefix for all proxy class names</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">proxyClassNamePrefix</span> <span class="operator">=</span> <span class="string">&quot;$Proxy&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// next number to use for generation of unique proxy class names</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">AtomicLong</span> <span class="variable">nextUniqueNumber</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicLong</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; apply(ClassLoader loader, Class&lt;?&gt;[] interfaces) &#123;</span><br><span class="line"></span><br><span class="line">        Map&lt;Class&lt;?&gt;, Boolean&gt; interfaceSet = <span class="keyword">new</span> <span class="title class_">IdentityHashMap</span>&lt;&gt;(interfaces.length);</span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; intf : interfaces) &#123;</span><br><span class="line">            <span class="comment">// 对待实现接口的一系列验证</span></span><br><span class="line">            <span class="comment">// 确认类加载器解析该接口的到的名字一致</span></span><br><span class="line">            <span class="comment">// 确认该接口确实是接口对象</span></span><br><span class="line">            <span class="comment">// 确认接口没有重复的</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">proxyPkg</span> <span class="operator">=</span> <span class="literal">null</span>;     <span class="comment">// package to define proxy class in</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">accessFlags</span> <span class="operator">=</span> Modifier.PUBLIC | Modifier.FINAL;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * Record the package of a non-public proxy interface so that the</span></span><br><span class="line"><span class="comment">             * proxy class will be defined in the same package.  Verify that</span></span><br><span class="line"><span class="comment">             * all non-public proxy interfaces are in the same package.</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; intf : interfaces) &#123;</span><br><span class="line">		    <span class="comment">// 确认所有的 非公有 接口，都在同一个包下，因为最终生成的代理对象会定义在</span></span><br><span class="line">             <span class="comment">// 和 非公有 接口相同的包下，如果有多个，就不晓得最后要放哪了 </span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (proxyPkg == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// if no non-public proxy interfaces, use com.sun.proxy package</span></span><br><span class="line">            proxyPkg = ReflectUtil.PROXY_PACKAGE + <span class="string">&quot;.&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">	    <span class="comment">// 生成代理对象的名字，一般匿名内部类的名字也含有$</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">num</span> <span class="operator">=</span> nextUniqueNumber.getAndIncrement();</span><br><span class="line">        <span class="comment">// jdk1.8 中就是 com.sun.proxy.$Proxynum</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">proxyName</span> <span class="operator">=</span> proxyPkg + proxyClassNamePrefix + num;</span><br><span class="line"></span><br><span class="line">	    <span class="comment">// 生成具体的 代理类的 class 文件</span></span><br><span class="line">        <span class="type">byte</span>[] proxyClassFile = ProxyGenerator.generateProxyClass(</span><br><span class="line">            proxyName, interfaces, accessFlags);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> defineClass0(loader, proxyName,</span><br><span class="line">                                proxyClassFile, <span class="number">0</span>, proxyClassFile.length);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassFormatError e) &#123;</span><br><span class="line">		   <span class="comment">// invalid aspect of the arguments supplied to the proxy</span></span><br><span class="line">            <span class="comment">// class creation (such as virtual machine limitations exceeded).</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(e.toString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该类实现了一个函数式接口(简单理解为只包含一个抽象方法，会加上注解<code>@FunctionalInterface</code>)，其<code>apply</code>方法，会在上一步缓存中没找到该代理对象时调用。该类中的<code>apply</code>方法中最重要的就是<code>byte[] proxyClassFile = ProxyGenerator.generateProxyClass(proxyName, interfaces, accessFlags);</code>这一句，看看</p>
+</li>
+<li><p><code>ProxyGenerator.generateProxyClass</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] generateProxyClass(<span class="keyword">final</span> String name,</span><br><span class="line">                                        Class&lt;?&gt;[] interfaces,</span><br><span class="line">                                        <span class="type">int</span> accessFlags)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">ProxyGenerator</span> <span class="variable">gen</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProxyGenerator</span>(name, interfaces, accessFlags);</span><br><span class="line">    <span class="keyword">final</span> <span class="type">byte</span>[] classFile = gen.generateClassFile();</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">if</span> (saveGeneratedFiles) &#123;</span><br><span class="line">        <span class="comment">// 保存class文件</span></span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> classFile;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在下一步，通过<code>gen.generateClassFile()</code>方法就得到字节码文件了！！！！</p>
+</li>
+<li><p><code>generateClassFile</code>方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="type">byte</span>[] generateClassFile() &#123;</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 为接口中的方法提供代理</span></span><br><span class="line">    <span class="keyword">for</span> (Class&lt;?&gt; intf : interfaces) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Method m : intf.getMethods()) &#123;</span><br><span class="line">            addProxyMethod(m, intf);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 提供构造方法</span></span><br><span class="line">        methods.add(generateConstructor());        </span><br><span class="line">   </span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">   </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">   </span><br><span class="line">    <span class="comment">/* ============================================================</span></span><br><span class="line"><span class="comment">     * Step 3: Write the final class file.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// ... 父类: &quot;java/lang/reflect/Proxy&quot;</span></span><br><span class="line">        dout.writeShort(cp.getClass(superclassName));</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> bout.toByteArray();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过该方法就可以知道，代理类是<code>Proxy</code>的子类!!!</p>
+</li>
+</ol>
+<p>有上述可知，如果某个类没有实现接口，那么最终代理出来的类完全是和该类没有关系的，是个无用的代理类；但是如果实现了接口，那么代理类中就会有该接口的方法，在使用该代理类时，可以通过转化为相应的接口（多态）而代替原被代理类。</p>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>jdk</tag>
+        <tag>动态代理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>synchronized关键字涉及到的四种形态</title>
+    <url>/2021/06/25/biased-lock/</url>
+    <content><![CDATA[<p><code>synchronized</code>关键字经过优化后，多了两种形态：<strong>偏向锁</strong>和<strong>轻量级锁</strong></p>
+<h3 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h3><p>众所周知，锁的不同形态可以在一个对象的对象头中体现出来，具体的可以使用<code>jol</code>工具查看对象头信息，<code>maven</code>导入</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.openjdk.jol<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jol-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>即可. </p>
+<p>如果想要查看某个对象的对象头，直接</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println(ClassLayout.parseInstance(t).toPrintable());</span><br></pre></td></tr></table></figure>
+<p>即可. </p>
+<p>比如对于只包含一个<code>int</code>类型的属性的对象<code>t2</code>，其对象头显示如下:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION      VALUE</span><br><span class="line">      0     4   (object header)       01 00 00 00 (00000001 00000000 00000000 00000000) (1)</span><br><span class="line">      4     4   (object header)       00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4   (object header)       05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4   int Test.field        7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br></pre></td></tr></table></figure>
+
+<p>这里需要注意的是，本人所使用的<code>jdk1.8</code>默认是开启了<code>UseCompressedOops</code>和<code>UseCompressedClassPointers</code>两个虚拟机选项的，表示采用指针压缩，原本<code>64bit</code>的指针压缩到<code>32bit</code>了，因此，在关闭这两个选项后(关闭任意一个均可)，<code>t2</code>对象头显示如下:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION      VALUE</span><br><span class="line">      0     4   (object header)       01 00 00 00 (00000001 00000000 00000000 00000000) (1)</span><br><span class="line">      4     4   (object header)       00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4   (object header)       28 b2 0a 83 (00101000 10110010 00001010 10000011) (-2096451032)</span><br><span class="line">     12     4   (object header)       31 7f 00 00 (00110001 01111111 00000000 00000000) (32561)</span><br><span class="line">     16     4   int Test.field        7</span><br><span class="line">     20     4   (loss due to the next object alignment)</span><br><span class="line">Instance size: 24 bytes</span><br><span class="line">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br></pre></td></tr></table></figure>
+
+<p>和上边对比，发现<code>Mark Word</code>的8个字节没变化，下边的类指针多了4个字节.</p>
+<p>通过对比相关资料对于<code>Mark Word</code>组成部分的描述，可以推断出<code>jol</code>是按低位到高位顺序输出对象头的(?)，想要得到和相关资料那样的顺序，只用把<code>jol</code>输出的字节顺序逆序即可.</p>
+<p>无锁状态锁的标志位是<code>01</code>, 偏向锁状态是<code>0</code>.</p>
+<h3 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h3><p>当创建完对象，打印其对象头，发现不论怎么搞都得到的是初始无锁状态的对象，用<code>synchronized</code>加个锁就变<strong>轻量级锁</strong>了，怎么也去不到<strong>偏向锁</strong>的状态.</p>
+<p>原来是因为虚拟机启动时，默认有个参数为<code>BiasedLockingStartupDelay=4000</code>，表示虚拟机启动<code>4s</code>之后才启用<strong>偏向锁</strong>. 这一步的目的为减少虚拟机启动时由于偏向锁的不当使用造成的影响.</p>
+<p>那么可以把该参数设为0，或者等待个四五秒在创建对象，果然就是偏向状态了:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启了指针压缩</span></span><br><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION      VALUE</span><br><span class="line">      0     4   (object header)       05 00 00 00 (00000101 00000000 00000000 00000000) (5)</span><br><span class="line">      4     4   (object header)       00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4   (object header)       05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4   int Test.field        7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br></pre></td></tr></table></figure>
+
+<p>可以看到此时偏向状态为<code>1</code>, 而前边所有的bit都为0(包括线程ID, epoch, 分带年龄), 由于偏向ID为空，此时的状态也称作匿名偏向状态, 即后续可以直接偏向其他的线程. </p>
+<p>需要注意的是, 由于<code>Mark Word</code>会随着锁的不同状态而重用这部分数据结构, <strong>轻量级锁</strong>与<strong>重量级锁</strong>状态下, 对象的<code>Mark Word</code>会被保存到持有该锁的线程栈帧中, 而<strong>无锁</strong>状态下切换到<strong>偏向锁</strong>状态时, 其原本的<code>Mark Word</code>并不会保存到其他位置, 因此当调用了对象的强一致性<code>hashcode()</code>方法(即未重写过对象的<code>hashcode()</code>方法)后, 对象就无法在到达<strong>偏向锁</strong>状态了, 实验如下:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION       VALUE</span><br><span class="line">      0     4   (object header)        05 00 00 00 (00000101 00000000 00000000 00000000) (5)</span><br><span class="line">      4     4   (object header)        00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4   (object header)        05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4   int Test.field         7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里调用对象继承自Object类的hashcode()方法</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">为了突出hashcode, 把高25bit未使用的位用<span class="string">&#x27;-&#x27;</span>表示</span></span><br><span class="line">hashcode: ee7d9f1</span><br><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION       VALUE</span><br><span class="line">      0     4   (object header)        01 f1 d9 e7 (00000001 11110001 11011001 11100111) (-405147391)</span><br><span class="line">      4     4   (object header)        0e 00 00 00 (-0001110 -------- -------- --------) (14)</span><br><span class="line">      8     4   (object header)        05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4   int Test.field         7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br></pre></td></tr></table></figure>
+
+<p>从上边可以发现, 原本处于匿名偏向状态的对象, 调用过强一致性<code>hashcode()</code>方法后, 其偏向状态变为了<code>0</code>.</p>
+<p>这里突出强调是<strong>强一致性hashcode</strong>的原因在于, 如果重写了<code>hashcode()</code>方法, 那么其计算结果不会保存到<code>Mark Word</code>中, 如下:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE</span><br><span class="line">      0     4        (object header)                           05 00 00 00 (00000101 00000000 00000000 00000000) (5)</span><br><span class="line">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4        (object header)                           05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4    int Test.field                                7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重写hashcode方法</span></span><br><span class="line">hashcode: 7777777</span><br><span class="line">com.wzx.Test object internals:</span><br><span class="line"> OFFSET  SIZE   TYPE DESCRIPTION                               VALUE</span><br><span class="line">      0     4        (object header)                           05 00 00 00 (00000101 00000000 00000000 00000000) (5)</span><br><span class="line">      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)</span><br><span class="line">      8     4        (object header)                           05 c1 00 20 (00000101 11000001 00000000 00100000) (536920325)</span><br><span class="line">     12     4    int Test.field                                7</span><br><span class="line">Instance size: 16 bytes</span><br><span class="line">Space losses: 0 bytes internal + 0 bytes external = 0 bytes total</span><br></pre></td></tr></table></figure>
+
+<p>结果很明显了, 调用重写后的<code>hashcode()</code>方法并没有像上边那样写入到<code>Mark Word</code>中, 因为自定义的<code>hashcode()</code>方法很有可能和对象的属性相关, 那么对象的属性一旦修改, 计算出来的<code>hashcode</code>也就不同了, 没必要放到<code>Mark Word</code>中.</p>
+<p>除了上边的一些介绍, 最主要的还是要和其他锁状态联系起来, 探究其状态转换, 比如升级到轻量级锁, 批量重偏向, 批量撤销等.</p>
+<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><h3 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h3>]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>synchronized</tag>
+        <tag>lock</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WeakReference in ThreadLocalMap</title>
+    <url>/2021/08/13/WeakReference-in-ThreadLocalMap/</url>
+    <content><![CDATA[<p><code>ThreadLocalMap</code>提供了一种线程私有变量的机制，对于某个变量，可以做到每个线程都有自己各自的一份，不会和其他线程冲突，当然也没法访问其他线程里的该变量.</p>
+<p><code>ThreadLocalMap</code>虽然名字里有个<code>Map</code>，但其实现并未实现任何接口，也没有父类，具体由<code>Entry</code>数组以及再哈希法实现.</p>
+<p><code>ThreadLocalMap</code>中的<code>Entry</code>键值对继承与<code>WeakReference</code>，该弱引用指向的是<code>ThreadLocal</code>，即<code>Entry</code>中的<code>key</code>.</p>
+<p><code>WeakReference</code>不会对其引用的对象造成任何影响，当其引用的对象没有其他强引用引用时，垃圾回收时就会将其回收，这里使用弱引用的考虑为:</p>
+<ul>
+<li><p>假设不采用弱引用, 则对于每个<code>ThreadLocal</code>，用户代码声明其时会有一个强引用，在存值时，<code>ThreadLocalMap</code>中的<code>Entry</code>也会对该<code>ThreadLocal</code>生成一个强引用; 当用户不再使用该<code>ThreadLocal</code>时，只能去掉一个强引用，<code>Entry</code>中的强引用无法被消除, 此时就没法清理</p>
+</li>
+<li><p>采用弱引用后，用户代码中的<code>ThreadLocal</code>置为空，则没有强引用引用该对象，该对象可以被回收. 而在<code>ThreadLocal</code>中的某些操作，发现该弱引用引用的对象为空时，就知道该<code>key</code>被回收了, 那么也能对<code>value</code>作一个回收.</p>
+</li>
+</ul>
+<p>当然更保险的还是调用<code>ThreadLocal</code>的<code>remove</code>方法</p>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>WeakReference</tag>
+        <tag>ThreadLocal</tag>
+        <tag>ThreadLocalMap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hyperloglog</title>
+    <url>/2021/09/23/hyperloglog/</url>
+    <content><![CDATA[<p><code>redis</code>中的一种数据结构, 用于计数场景, 如统计某页面访问次数等</p>
+<p>常规思维，可能在计数的时候就会考虑<code>Map</code>, <code>Set</code>等数据结构，将数据进行存储，实现去重的效果</p>
+<p>这样做的话，计数所需要的内存空间就和数据本身息息相关</p>
+<p>进一步，可能考虑使用<code>bitmap</code>等数据结构，即用位代替真实的数据，这样<code>100,000,000</code>条数据需要<code>12.5MB</code>的存储空间</p>
+<p>虽然已经减少了很多，但需要的存储空间依然和数据总数息息相关</p>
+<p>上述方式都是精准统计的</p>
+<p>当数据量继续增加时，我们可能会想到是否一定要精准统计呢</p>
+<p>能否类似与布隆过滤器那样，允许计数存在些许的误差</p>
+<p><code>HyperLogLog</code>作为<code>LogLog</code>的改进，主要是降低误差</p>
+<p><code>LogLog</code>的名字应该是和该算法的空间复杂度相关</p>
+<p>下面对<code>redis</code>中该算法的实现作个概述</p>
+<h3 id="主要流程"><a href="#主要流程" class="headerlink" title="主要流程"></a>主要流程</h3><ol>
+<li>计算<code>hash</code>值</li>
+</ol>
+<p><code>hash</code>值为64位，前14位用作分桶的依据，后50位为抛硬币模拟</p>
+<ol start="2">
+<li>分桶</li>
+</ol>
+<p>一共<code>2^14=16384</code>个桶，每个桶有6个<code>bit</code>用于记录第一个1出现的位置，足够表示50</p>
+<ol start="3">
+<li>更新桶</li>
+</ol>
+<p>如果该条记录的后50位中，第一个1出现的位置更靠后，则更新该桶对应的1出现的位置</p>
+<p>比如原本该桶记录值为4(表示一条xxxx1000的记录，第4位为1)，该条记录为xxxx100000, 则需要桶对应值应更新为6，否则不变</p>
+<ol start="4">
+<li>计数</li>
+</ol>
+<p>计算所有桶中元素个数的调和平均数，在乘以桶的个数和微调因子(0.72125左右)，即为最终计数值</p>
+]]></content>
+      <tags>
+        <tag>redis</tag>
+        <tag>hyperloglog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在ubuntu中安装无线网卡驱动</title>
+    <url>/2021/12/24/install-wifi-adapter-on-Ubuntu/</url>
+    <content><![CDATA[<p>参考链接<a href="https://blog.csdn.net/mhlwsk/article/details/52833374">ubuntu安装无线网卡驱动（包括离线安装</a></p>
+<ol>
+<li>将iso镜像作为源</li>
+</ol>
+<p>挂载iso镜像：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mount -o loop -t iso9660 xx/ubuntu-xx.iso /media/cdrom/</span><br></pre></td></tr></table></figure>
+
+<p>这里可能会提示没有<code>/media/cdrom</code>目录，我是手动创建了一个</p>
+<p>添加源：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt-cdrom -m -d /media/cdrom add</span><br></pre></td></tr></table></figure>
+
+<p>编辑源信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>只保留<code>deb cdrom xxx</code>一行，注意先备份，后边有网了再替换回去</p>
+<p>更新源：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>从iso源中安装依赖</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install dkms</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安装驱动</li>
+</ol>
+<p>首先要下载对应的无线网卡驱动的deb安装包，原作中给出的链接是broadcom的，正好和我匹配，但是链接地址需要修改下，可以从<a href="http://mirrors.kernel.org/ubuntu/pool/restricted/b/bcmwl/">http://mirrors.kernel.org/ubuntu/pool/restricted/b/bcmwl/</a>这里边找，我选了最新的一个，没想到就能用，不太晓得到底需要哪一个</p>
+<p>下载完后拷到ubuntu中，然后安装该包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo dpkg -i bcmwl-xx.deb</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>adapter</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>10月是你的背锅</title>
+    <url>/2021/11/12/ISSRE-in-Wuhan/</url>
+    <content><![CDATA[<p>10月底，导师牵头举办的第32届’ISSRE’会议在武汉举办，本以为能划水玩几天，结果还是要打工。</p>
+<p>事情比较杂比较多，让我印象最深的就是造的几口锅了，虽然不是我来背，但还是很在意。</p>
+<h3 id="1-Zoom连线"><a href="#1-Zoom连线" class="headerlink" title="1. Zoom连线"></a>1. Zoom连线</h3><p>由于有些国外专家教授无法到现场参会，基本都采用线上视频会议的形式（本地会有大的LED屏幕），在之前和国外一位大牛教授学者连线测试的时候，发现ZOOM需要有主持人授权，会议室的参会人员才能共享屏幕，之前自己试用ZOOM缺根本没想着测下共享桌面的功能，导致测试那天只能开视频说说话 &#x3D; &#x3D;</p>
+<p>在正式会议期间，由于前一位教授用的Teams软件进行线上，后一位教授用的ZOOM，但由于没协调好时间，导致第二位教授干等了十几分钟！！！</p>
+<h3 id="2-最佳论文投票"><a href="#2-最佳论文投票" class="headerlink" title="2. 最佳论文投票"></a>2. 最佳论文投票</h3><p>纯属之前策划时没沟通清楚，导致老师理解有误，哎，一晚上8，9个电话 &#x3D; &#x3D;</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>不过能为这个国际会议付出自己的一些汗水，还是比较值得的。</p>
+<p>最后还蹭了一趟游轮晚宴，才发现夜晚的楼都这么亮。 </p>
+]]></content>
+      <tags>
+        <tag>issre</tag>
+        <tag>锅</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Multica：让 AI Agent 成为你的团队协作伙伴</title>
+    <url>/2026/05/08/multica-intro/</url>
+    <content><![CDATA[<p>你有没有过这样的体验：项目里有一堆琐碎但必须做的事——建个 issue、写段文档、排查个小 bug、提交个 PR——每件事都不难，但加在一起就占满了你的一天。如果能有人帮你分担这些就好了。</p>
+<p><a href="https://multica.ai/">Multica</a> 就是为此而生的。它不是一个聊天机器人，也不是一个代码补全工具——它是一个让 AI Agent 真正融入团队协作的平台。</p>
+<span id="more"></span>
+
+<h2 id="Multica-是什么？"><a href="#Multica-是什么？" class="headerlink" title="Multica 是什么？"></a>Multica 是什么？</h2><p>简单说，Multica 让你可以在工作空间中创建多个 AI Agent，每个 Agent 都有明确的身份和职责。它们不是在旁边”建议”你做什么，而是直接上手干活——领取 issue、写代码、提交 PR、在 issue 下评论汇报进展，就像一个真正的团队成员一样。</p>
+<p>核心概念非常直观：</p>
+<ul>
+<li><strong>Workspace（工作空间）</strong>：你和 Agent 们共同工作的场所，可以关联 GitHub 仓库</li>
+<li><strong>Agent（智能体）</strong>：有名字、有 ID、有分工的 AI 成员，比如”负责编码的 Atlas”、”负责审查的 Reviewer”</li>
+<li><strong>Issue（任务）</strong>：团队中的工作单元，可以分配给人或 Agent</li>
+<li><strong>Project（项目）</strong>：组织 Issue 和资源的容器</li>
+</ul>
+<h2 id="工作流长什么样？"><a href="#工作流长什么样？" class="headerlink" title="工作流长什么样？"></a>工作流长什么样？</h2><ol>
+<li>你在 Multica 中创建一个 Issue，描述要做什么</li>
+<li>把 Issue 分配给一个 Agent（比如 Atlas）</li>
+<li>Agent 自动 checkout 代码、理解需求、编写代码、提交 PR</li>
+<li>Agent 在 Issue 下评论汇报结果</li>
+<li>你 review PR，合并，完事</li>
+</ol>
+<p>整个过程中，Agent 会自己管理 Issue 状态（todo → in_progress → in_review），也会在遇到阻塞时主动标记。你不需要一步步指令，只需要告诉它目标。</p>
+<h2 id="几个让我觉得有意思的设计"><a href="#几个让我觉得有意思的设计" class="headerlink" title="几个让我觉得有意思的设计"></a>几个让我觉得有意思的设计</h2><p><strong>Agent 之间的协作</strong>：不同的 Agent 可以各司其职。一个负责写代码，一个负责审查。Agent 之间可以通过 <code>@mention</code> 互相触发，形成协作链。不过平台也做了防环路设计——避免两个 Agent 互相 mention 陷入死循环。</p>
+<p><strong>Issue 驱动</strong>：一切工作围绕 Issue 展开。Agent 的输出不是聊天记录，而是 Issue 上的评论和代码变更。这意味着工作成果是可追溯的，和人类团队的工作方式一致。</p>
+<p><strong>Repo 集成</strong>：通过 <code>multica repo checkout</code> 命令，Agent 可以直接拉取代码仓库，在独立分支上工作。这比让 AI 在沙箱里写代码要靠谱得多——它看到的是真实的代码库，遵循的是真实的代码规范。</p>
+<p><strong>评论管道</strong>：Agent 写评论时用 stdin 管道输入（<code>--content-stdin</code>），而不是命令行参数。这听起来是个小细节，但其实很重要——它确保了多行内容、代码块、引号等特殊字符不会因为 shell 转义而出问题。</p>
+<h2 id="CLI-设计的细节"><a href="#CLI-设计的细节" class="headerlink" title="CLI 设计的细节"></a>CLI 设计的细节</h2><p>Multica 的 CLI 做得相当完善。几个我注意到的点：</p>
+<ul>
+<li>所有读取命令都支持 <code>--output json</code>，方便程序化处理</li>
+<li>Issue 列表支持分页（<code>--limit</code> &#x2F; <code>--offset</code>），对大量 Issue 也不会卡住</li>
+<li>评论支持线程回复（<code>--parent</code>），可以形成讨论树</li>
+<li>有 Label 和 Subscriber 机制，和 GitHub Issues 的体验很接近</li>
+</ul>
+<h2 id="适合什么场景？"><a href="#适合什么场景？" class="headerlink" title="适合什么场景？"></a>适合什么场景？</h2><p>我觉得 Multica 特别适合以下几种情况：</p>
+<ul>
+<li><strong>个人项目维护</strong>：一个人维护多个项目时，让 Agent 帮你处理那些”改个配置、修个 typo、更新个依赖”的小事</li>
+<li><strong>团队扩容</strong>：团队人手不够但又不想招人时，Agent 可以承担一部分重复性工作</li>
+<li><strong>代码审查</strong>：让 Agent 先做一轮自动审查，人类只关注架构和业务逻辑</li>
+<li><strong>文档补充</strong>：让 Agent 根据代码自动补全文档和注释</li>
+</ul>
+<h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2><p>当然，现阶段 Agent 还不能替代人类工程师。复杂的架构决策、跨模块的重构、需要深入理解业务逻辑的需求，这些还是得人来。Agent 更像是一个能力很强的实习生——执行力不错，但需要明确的任务描述和合理的验收标准。</p>
+<p>另外，Agent 的能力受限于底层模型。如果模型对某个技术栈不熟悉，Agent 的输出质量也会打折扣。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Multica 的核心理念是：<strong>AI Agent 不是工具，而是团队成员</strong>。它不是一个你问它答的聊天框，而是一个你分配任务它就干活、遇到问题会反馈、完成工作会汇报的协作者。</p>
+<p>如果你也在寻找一种让 AI 更深入地参与日常开发工作的方式，不妨试试 Multica。毕竟，让 AI 帮你干杂活，你才能把精力花在真正重要的事情上。</p>
+]]></content>
+      <tags>
+        <tag>AI</tag>
+        <tag>productivity</tag>
+        <tag>collaboration</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>这个博客是怎么跑起来的：Hexo、双分支与 GitHub Actions 自动发布</title>
+    <url>/2026/05/20/blog-intro/</url>
+    <content><![CDATA[<p>你可能好奇这个博客是怎么搭建和运维的——写一篇文章，推一下代码，网页就自动更新了，看起来很魔法。其实背后的架构非常简单，只用到了三个东西：<a href="https://hexo.io/">Hexo</a>、Git 双分支和 <a href="https://github.com/features/actions">GitHub Actions</a>。这篇文章就来拆解一下这个博客的技术栈。</p>
+<span id="more"></span>
+
+<h2 id="Hexo：用-Markdown-写博客"><a href="#Hexo：用-Markdown-写博客" class="headerlink" title="Hexo：用 Markdown 写博客"></a>Hexo：用 Markdown 写博客</h2><p><a href="https://hexo.io/">Hexo</a> 是一个基于 Node.js 的静态博客框架。它的核心理念很简单：你用 Markdown 写文章，Hexo 帮你生成一整套静态 HTML 页面。</p>
+<h3 id="为什么选-Hexo？"><a href="#为什么选-Hexo？" class="headerlink" title="为什么选 Hexo？"></a>为什么选 Hexo？</h3><p>选择 Hexo 的理由其实很朴素：</p>
+<ul>
+<li><strong>Markdown 写作</strong>：文章就是 <code>.md</code> 文件，版本管理自然就用 Git，不用额外折腾数据库</li>
+<li><strong>生成速度快</strong>：Hexo 用 Node.js 驱动，生成数百篇文章也就几秒钟的事</li>
+<li><strong>主题丰富</strong>：本站用的是 <a href="https://theme-next.js.org/">NexT</a> 主题的 Gemini 方案，简洁大方，开箱即用</li>
+<li><strong>插件生态</strong>：搜索、分类、标签、SEO 这些都有现成插件</li>
+</ul>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>Hexo 项目的核心目录长这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── _config.yml          # 站点配置（标题、URL、部署等）</span><br><span class="line">├── _config.next.yml     # 主题配置（NexT 主题的专属配置）</span><br><span class="line">├── package.json         # Node.js 依赖</span><br><span class="line">├── scaffolds/           # 文章模板</span><br><span class="line">├── source/              # 博客源文件</span><br><span class="line">│   ├── _posts/          # 文章（Markdown）</span><br><span class="line">│   ├── categories/      # 分类页</span><br><span class="line">│   └── tags/            # 标签页</span><br><span class="line">└── themes/              # 主题文件</span><br><span class="line">    └── next/</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>_config.yml</code> 是整个站点的配置中心，包括站点名称、URL 格式、每页文章数、部署目标等。<code>_config.next.yml</code> 则是 NexT 主题的配置，采用 Hexo 推荐的 Alternate Theme Config 方式，把主题配置和站点配置分开管理，升级主题时不会冲突。</p>
+<p>写新文章只需要在 <code>source/_posts/</code> 下新建一个 Markdown 文件，加上 front-matter 头信息：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">文章标题</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2026-05-20 17:00:00</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">tag1</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">tag2</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<p>然后 <code>hexo generate</code> 就能生成对应的 HTML 页面。</p>
+<h2 id="双分支设计：源码与发布分离"><a href="#双分支设计：源码与发布分离" class="headerlink" title="双分支设计：源码与发布分离"></a>双分支设计：源码与发布分离</h2><p>这个仓库用了两个分支，分工明确：</p>
+<h3 id="hexo-分支——源码分支"><a href="#hexo-分支——源码分支" class="headerlink" title="hexo 分支——源码分支"></a><code>hexo</code> 分支——源码分支</h3><p>这是仓库的默认分支，存放博客的「源代码」：</p>
+<ul>
+<li><code>_config.yml</code>、<code>_config.next.yml</code> 等配置文件</li>
+<li><code>source/_posts/</code> 下的所有文章 Markdown</li>
+<li><code>themes/</code> 下的主题文件</li>
+<li><code>package.json</code> 和 <code>package-lock.json</code></li>
+<li><code>.github/workflows/</code> 下的 CI&#x2F;CD 配置</li>
+</ul>
+<p>所有写作和配置的变更都在这个分支上进行。你看到的每一篇文章、每一项配置，都来自这个分支。</p>
+<h3 id="master-分支——发布分支"><a href="#master-分支——发布分支" class="headerlink" title="master 分支——发布分支"></a><code>master</code> 分支——发布分支</h3><p>这个分支只存放 <code>hexo generate</code> 生成的静态文件（HTML、CSS、JS 等）。GitHub Pages 直接从这个分支读取内容，对外提供网站服务。</p>
+<p>这个分支的内容完全由自动化流程生成，<strong>不需要也不应该手动修改</strong>。每次发布都会用 <code>force_orphan</code> 模式覆写，确保发布分支的提交历史干净——只有一个提交，代表最新一次发布。</p>
+<h3 id="为什么要分成两个分支？"><a href="#为什么要分成两个分支？" class="headerlink" title="为什么要分成两个分支？"></a>为什么要分成两个分支？</h3><ol>
+<li><strong>关注点分离</strong>：源码分支关注「内容」，发布分支关注「展示」。写作时不用管生成后的 HTML 长什么样，部署时也不需要关心 Markdown 的内容</li>
+<li><strong>版本管理</strong>：文章的修改历史在 <code>hexo</code> 分支上清晰可溯，而 <code>master</code> 分支每次部署都是全新生成，不会积累无意义的提交历史</li>
+<li><strong>安全隔离</strong>：发布分支只有静态文件，不会意外泄露源码或配置中的敏感信息</li>
+</ol>
+<h2 id="GitHub-Actions：推代码即发布"><a href="#GitHub-Actions：推代码即发布" class="headerlink" title="GitHub Actions：推代码即发布"></a>GitHub Actions：推代码即发布</h2><p>手动 <code>hexo deploy</code> 当然可以，但每次写完文章都要自己跑一遍命令，时间久了难免忘记或者嫌麻烦。GitHub Actions 解决了这个问题——只要代码推到 <code>hexo</code> 分支，自动完成构建和部署。</p>
+<h3 id="工作流配置"><a href="#工作流配置" class="headerlink" title="工作流配置"></a>工作流配置</h3><p>整个 CI&#x2F;CD 流程定义在 <code>.github/workflows/deploy.yml</code> 中，核心逻辑如下：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">Hexo</span> <span class="string">Blog</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">hexo</span>    <span class="comment"># 监听 hexo 分支的 push 事件</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">deploy:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">permissions:</span></span><br><span class="line">      <span class="attr">contents:</span> <span class="string">write</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Checkout</span> <span class="string">source</span>       <span class="comment"># 1. 拉取 hexo 分支源码</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">ref:</span> <span class="string">hexo</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Setup</span> <span class="string">Node.js</span>         <span class="comment"># 2. 配置 Node.js 18 环境</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;18&#x27;</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">dependencies</span>  <span class="comment"># 3. 安装依赖</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Generate</span> <span class="string">static</span> <span class="string">files</span> <span class="comment"># 4. 生成静态文件</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npx</span> <span class="string">hexo</span> <span class="string">generate</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span> <span class="string">to</span> <span class="string">master</span>      <span class="comment"># 5. 部署到 master 分支</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_branch:</span> <span class="string">master</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span></span><br><span class="line">          <span class="attr">force_orphan:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">commit_message:</span> <span class="string">&#x27;deploy: $&#123;&#123; github.event.head_commit.message &#125;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="流程详解"><a href="#流程详解" class="headerlink" title="流程详解"></a>流程详解</h3><p>整个流程可以用一张图概括：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">推送代码到 hexo 分支</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">GitHub Actions 触发</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">Checkout 源码 ──→ 安装依赖 ──→ hexo generate</span><br><span class="line">                                    │</span><br><span class="line">                                    ▼</span><br><span class="line">                          生成 ./public 目录</span><br><span class="line">                                    │</span><br><span class="line">                                    ▼</span><br><span class="line">                    peaceiris/actions-gh-pages</span><br><span class="line">                    将 public/ 推送到 master 分支</span><br><span class="line">                                    │</span><br><span class="line">                                    ▼</span><br><span class="line">                          GitHub Pages 更新</span><br><span class="line">                                    │</span><br><span class="line">                                    ▼</span><br><span class="line">                          https://wangz1x.github.io 生效</span><br></pre></td></tr></table></figure>
+
+<p>几个值得注意的细节：</p>
+<ul>
+<li><strong><code>force_orphan: true</code></strong>：每次部署都创建一个全新的孤立提交，而不是在 master 分支的历史上追加。这样 master 分支永远只有一个提交，保持干净</li>
+<li><strong><code>github_token</code></strong>：使用 GitHub 自动提供的 <code>GITHUB_TOKEN</code>，不需要额外配置个人访问令牌，开箱即用</li>
+<li><strong><code>cache: &#39;npm&#39;</code></strong>：利用 GitHub Actions 的缓存机制加速 <code>npm install</code>，不用每次都从零下载所有依赖</li>
+<li><strong>Node.js 18</strong>：Hexo 6.x 兼容的 Node.js 版本，同时也是 LTS 版本，稳定可靠</li>
+</ul>
+<h3 id="写作-→-发布的完整流程"><a href="#写作-→-发布的完整流程" class="headerlink" title="写作 → 发布的完整流程"></a>写作 → 发布的完整流程</h3><p>有了这套自动化，日常写博客的流程变得极简：</p>
+<ol>
+<li>在 <code>source/_posts/</code> 下新建 Markdown 文件</li>
+<li>写好内容，<code>git commit</code> + <code>git push</code> 到 <code>hexo</code> 分支</li>
+<li>GitHub Actions 自动完成剩下的所有事情</li>
+</ol>
+<p>从推代码到网站更新，通常只需 1-2 分钟。你完全可以推完代码就去干别的，回来时博客已经更新好了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个博客的架构可以用三句话概括：</p>
+<ul>
+<li><strong>Hexo</strong> 负责把 Markdown 变成静态网页</li>
+<li><strong>双分支</strong> 把源码和发布产物隔离开来</li>
+<li><strong>GitHub Actions</strong> 让推代码和网站更新之间的所有步骤全自动</li>
+</ul>
+<p>没有服务器、没有数据库、没有运维——只是一个 Git 仓库和几个配置文件。简单、可靠、免费，个人博客该有的样子。</p>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>GitHub Actions</tag>
+        <tag>blog</tag>
+        <tag>devops</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Streamlink + VLC：在终端里看直播的正确姿势</title>
+    <url>/2026/05/20/streamlink-vlc/</url>
+    <content><![CDATA[<p>如果你经常看直播，可能会遇到这样的痛点：浏览器里开直播网页，弹幕窗口占一半屏幕，广告弹窗时不时冒出来，内存占用居高不下——明明只是想看个画面而已，为什么要开整个浏览器？</p>
+<p><a href="https://streamlink.github.io/">Streamlink</a> 就是解决这个问题的工具。它是一个命令行程序，可以从各种直播平台提取视频流，然后直接发送到你喜欢的播放器中播放。配合 <a href="https://www.videolan.org/">VLC</a> 这款经典播放器，你就能在终端里轻松观看直播，无需打开浏览器。</p>
+<span id="more"></span>
+
+<h2 id="为什么是-Streamlink-VLC？"><a href="#为什么是-Streamlink-VLC？" class="headerlink" title="为什么是 Streamlink + VLC？"></a>为什么是 Streamlink + VLC？</h2><p>先说说各自的定位：</p>
+<ul>
+<li><strong>Streamlink</strong>：不是播放器，而是「流提取器」。它负责从直播平台（Twitch、YouTube、Bilibili 等）解析出真实的视频流地址，然后通过管道或 HTTP 传给播放器。</li>
+<li><strong>VLC</strong>：不是浏览器，而是纯播放器。它只负责播放视频，没有网页渲染、没有 JavaScript、没有广告——干净利落。</li>
+</ul>
+<p>两者结合的好处：</p>
+<ol>
+<li><strong>省资源</strong>：不需要启动浏览器，内存占用从 GB 级降到百 MB 级</li>
+<li><strong>无广告</strong>：纯视频流播放，没有网页广告和弹窗干扰</li>
+<li><strong>灵活控制</strong>：通过命令行参数精确控制画质、缓存、录制等行为</li>
+<li><strong>支持平台广</strong>：Streamlink 内置 100+ 平台插件，Twitch、YouTube、Bilibili、抖音等主流平台均支持</li>
+</ol>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="macOS（Apple-Silicon）"><a href="#macOS（Apple-Silicon）" class="headerlink" title="macOS（Apple Silicon）"></a>macOS（Apple Silicon）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 Streamlink</span></span><br><span class="line">brew install streamlink</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 VLC</span></span><br><span class="line">brew install --cask vlc</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后验证：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink --version</span><br><span class="line"><span class="comment"># streamlink 7.6.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认 VLC 已安装</span></span><br><span class="line"><span class="built_in">ls</span> /Applications/VLC.app</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他平台"><a href="#其他平台" class="headerlink" title="其他平台"></a>其他平台</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Linux (pip)</span></span><br><span class="line">pip install streamlink</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (pip)</span></span><br><span class="line">pip install streamlink</span><br></pre></td></tr></table></figure>
+
+<p>VLC 请前往 <a href="https://www.videolan.org/">videolan.org</a> 下载对应平台的安装包。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="最简单的命令"><a href="#最简单的命令" class="headerlink" title="最简单的命令"></a>最简单的命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink &lt;直播地址&gt; best</span><br></pre></td></tr></table></figure>
+
+<p>这行命令会自动提取指定直播间的最高画质流，并调用 VLC 播放。例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Twitch 直播</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud best</span><br><span class="line"></span><br><span class="line"><span class="comment"># YouTube 直播</span></span><br><span class="line">streamlink https://www.youtube.com/watch?v=xxx best</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看可用画质"><a href="#查看可用画质" class="headerlink" title="查看可用画质"></a>查看可用画质</h3><p>不确定有哪些画质可选？去掉画质参数就行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud</span><br></pre></td></tr></table></figure>
+
+<p>输出类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[cli][info] Found matching plugin twitch for URL ...</span><br><span class="line">Available streams: audio_only, 160p, 360p, 480p, 720p, 720p60, 1080p60 (best)</span><br></pre></td></tr></table></figure>
+
+<p>然后选择你想要的画质：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud 720p60</span><br></pre></td></tr></table></figure>
+
+<p>也可以用 <code>best</code>（最高画质）和 <code>worst</code>（最低画质）作为快捷关键词，还可以用逗号指定备选：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 优先 1080p60，没有就选 best</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud 1080p60,best</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bilibili-直播"><a href="#Bilibili-直播" class="headerlink" title="Bilibili 直播"></a>Bilibili 直播</h3><p>Streamlink 同样支持 Bilibili：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://live.bilibili.com/6 best</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>Streamlink 使用配置文件设置默认参数，避免每次手动输入。</p>
+<p><strong>macOS 配置文件路径</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>~/Library/Application Support/streamlink/config</code></td>
+<td>通用配置文件</td>
+</tr>
+<tr>
+<td><code>~/Library/Application Support/streamlink/config.插件名</code></td>
+<td>插件专属配置（如 <code>config.bilibili</code>）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Linux 用户</strong>：配置文件路径为 <code>$&#123;XDG_CONFIG_HOME:-~/.config&#125;/streamlink/config</code>，插件配置为 <code>config.插件名</code>。</p>
+<p><strong>⚠️ 迁移提醒</strong>：如果你之前使用过 <code>~/.streamlinkrc</code> 或 <code>~/.streamlink/config</code>，请注意这些路径<strong>已在 streamlink 7.0.0 中移除</strong>，当前版本（7.6.0）不再读取。请迁移到上述新路径。</p>
+</blockquote>
+<h4 id="使用通用配置文件"><a href="#使用通用配置文件" class="headerlink" title="使用通用配置文件"></a>使用通用配置文件</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt; <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config&quot;</span> &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment"># 默认播放器（如果 VLC 不在 PATH 中，写绝对路径）</span></span><br><span class="line">player=/Applications/VLC.app/Contents/MacOS/VLC</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认画质</span></span><br><span class="line">default-stream=best</span><br><span class="line"></span><br><span class="line"><span class="comment"># 播放器参数：降低网络缓存到 2 秒，减少直播延迟</span></span><br><span class="line">player-args=--network-caching=2000</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLC 播完自动退出</span></span><br><span class="line">player-args=--network-caching=2000 --play-and-exit</span><br><span class="line"></span><br><span class="line"><span class="comment"># 环形缓冲区大小（默认 16M，网络不稳定可调大）</span></span><br><span class="line">ringbuffer-size=32M</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：如果 <code>player-args</code> 出现多次，以最后一次为准。如果需要同时传递多个参数，写在一行里即可，如 <code>player-args=--network-caching=2000 --play-and-exit</code>。</p>
+</blockquote>
+<h4 id="使用插件专属配置（按平台配置）"><a href="#使用插件专属配置（按平台配置）" class="headerlink" title="使用插件专属配置（按平台配置）"></a>使用插件专属配置（按平台配置）</h4><p>Streamlink 支持为特定插件创建独立的配置文件。文件命名规则是在通用配置文件名后追加 <code>.插件名</code>，当 URL 匹配到该插件时会自动加载。</p>
+<p>一个典型的使用场景：<strong>Bilibili 直播需要登录 Cookie 才能获取高清流</strong>。这时可以创建 <code>config.bilibili</code> 文件，单独为 Bilibili 配置认证信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt; <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config.bilibili&quot;</span> &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment"># 通过 HTTP Header 注入 Cookie，解决未登录无法获取直播流的问题</span></span><br><span class="line">http-header=Cookie=SESSDATA=你的SESSDATA值</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>获取 SESSDATA 的方法：</p>
+<ol>
+<li>在浏览器中登录 <a href="https://www.bilibili.com/">bilibili.com</a></li>
+<li>按 <code>F12</code> 打开开发者工具 → Application（应用）→ Cookies</li>
+<li>找到 <code>SESSDATA</code> 字段，复制其值</li>
+<li>粘贴到 <code>config.bilibili</code> 中</li>
+</ol>
+<blockquote>
+<p><strong>安全提醒</strong>：SESSDATA 等同于登录凭证，请勿分享或公开。建议对配置文件设置权限：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config.bilibili&quot;</span></span><br></pre></td></tr></table></figure></blockquote>
+<p>配置好之后，直接运行 <code>streamlink https://live.bilibili.com/6 best</code> 即可，不需要每次手动传 Cookie。</p>
+<p>同理，如果你需要为 Twitch 单独配置参数，可以创建 <code>config.twitch</code> 文件，里面写上只在观看 Twitch 直播时生效的选项。</p>
+<h3 id="播放器参数详解"><a href="#播放器参数详解" class="headerlink" title="播放器参数详解"></a>播放器参数详解</h3><p>通过 <code>--player-args</code> 可以向 VLC 传递任意参数。以下是一些实用的 VLC 参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--network-caching=2000</code></td>
+<td>网络缓存设为 2 秒（默认 1 秒），减少直播延迟</td>
+</tr>
+<tr>
+<td><code>--play-and-exit</code></td>
+<td>播放结束自动退出 VLC</td>
+</tr>
+<tr>
+<td><code>--fullscreen</code></td>
+<td>全屏播放</td>
+</tr>
+<tr>
+<td><code>--no-video-title-show</code></td>
+<td>不在画面上方显示视频标题</td>
+</tr>
+<tr>
+<td><code>--repeat</code></td>
+<td>重复播放当前项</td>
+</tr>
+<tr>
+<td><code>--loop</code></td>
+<td>循环播放全部</td>
+</tr>
+</tbody></table>
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://live.bilibili.com/6 best \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit --fullscreen&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置窗口标题"><a href="#设置窗口标题" class="headerlink" title="设置窗口标题"></a>设置窗口标题</h3><p>Streamlink 支持自定义 VLC 的窗口标题，使用 <code>--title</code> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink --title <span class="string">&quot;&#123;author&#125; - &#123;category&#125; - &#123;title&#125;&quot;</span> \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<p>可用的元数据变量因平台而异，常见的有：</p>
+<ul>
+<li><code>&#123;author&#125;</code>：主播名</li>
+<li><code>&#123;category&#125;</code>：直播分类</li>
+<li><code>&#123;title&#125;</code>：直播标题</li>
+</ul>
+<h3 id="录制直播流"><a href="#录制直播流" class="headerlink" title="录制直播流"></a>录制直播流</h3><p>边看边录，使用 <code>--record</code> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --record <span class="string">&quot;~/Recordings/&#123;author&#125;-&#123;time:%Y%m%d_%H%M%S&#125;.ts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果只想录制不播放，用 <code>--output</code> 替代：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --output <span class="string">&quot;~/Recordings/&#123;author&#125;-&#123;time:%Y%m%d_%H%M%S&#125;.ts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>&#123;time:...&#125;</code> 支持 strftime 格式，可以根据时间自动命名文件。</p>
+<h2 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h2><h3 id="1-降低直播延迟"><a href="#1-降低直播延迟" class="headerlink" title="1. 降低直播延迟"></a>1. 降低直播延迟</h3><p>看直播时，延迟是最让人头疼的问题。Streamlink 本身对直播流的处理延迟很低，大部分延迟来自播放器的缓存。调整 VLC 的网络缓存可以有效降低延迟：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=1000&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>将缓存设为 1 秒（1000ms），可以获得接近实时的体验。如果网络不稳定导致频繁缓冲，可以适当增大到 2000-3000ms。</p>
+<p>对于 Twitch 低延迟流，还可以配合 Streamlink 的 <code>--twitch-low-latency</code> 选项：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink --twitch-low-latency \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=1000&quot;</span> \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-后台播放（只要声音不要画面）"><a href="#2-后台播放（只要声音不要画面）" class="headerlink" title="2. 后台播放（只要声音不要画面）"></a>2. 后台播放（只要声音不要画面）</h3><p>如果你只需要听直播的声音（比如听播客、听音乐直播），可以让 VLC 不显示视频窗口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud audio_only \</span><br><span class="line">  --player-args=<span class="string">&quot;--intf dummy --no-video&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>audio_only</code> 是 Twitch 提供的纯音频流，配合 VLC 的 <code>--no-video</code> 参数，可以实现纯后台音频播放。</p>
+<h3 id="3-多开直播"><a href="#3-多开直播" class="headerlink" title="3. 多开直播"></a>3. 多开直播</h3><p>每个终端窗口运行一个 Streamlink 实例即可：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 终端 1</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud 480p</span><br><span class="line"></span><br><span class="line"><span class="comment"># 终端 2</span></span><br><span class="line">streamlink https://www.twitch.tv/summit1g 480p</span><br></pre></td></tr></table></figure>
+
+<p>选择较低画质可以降低带宽和资源占用。</p>
+<h3 id="4-外部-HTTP-模式"><a href="#4-外部-HTTP-模式" class="headerlink" title="4. 外部 HTTP 模式"></a>4. 外部 HTTP 模式</h3><p>想让局域网内的其他设备（手机、平板、电视盒子）也能看？使用 <code>--player-external-http</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink --player-external-http \</span><br><span class="line">  --player-external-http-port 8080 \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<p>启动后，同一局域网内的设备在浏览器中打开 <code>http://&lt;你的IP&gt;:8080</code> 即可观看。</p>
+<h3 id="5-写成-Shell-函数方便调用"><a href="#5-写成-Shell-函数方便调用" class="headerlink" title="5. 写成 Shell 函数方便调用"></a>5. 写成 Shell 函数方便调用</h3><p>在 <code>~/.zshrc</code> 或 <code>~/.bashrc</code> 中添加快捷函数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 快速看直播</span></span><br><span class="line"><span class="function"><span class="title">live</span></span>() &#123;</span><br><span class="line">  streamlink <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span> \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Twitch 低延迟模式</span></span><br><span class="line"><span class="function"><span class="title">twitch</span></span>() &#123;</span><br><span class="line">  streamlink --twitch-low-latency \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=1000&quot;</span> \</span><br><span class="line">    <span class="string">&quot;https://www.twitch.tv/<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bilibili 直播</span></span><br><span class="line"><span class="function"><span class="title">bili</span></span>() &#123;</span><br><span class="line">  streamlink <span class="string">&quot;https://live.bilibili.com/<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span> \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用方式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">live https://live.bilibili.com/6</span><br><span class="line">twitch shroud 720p60</span><br><span class="line">bili 6</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Q-提示找不到-VLC？"><a href="#Q-提示找不到-VLC？" class="headerlink" title="Q: 提示找不到 VLC？"></a>Q: 提示找不到 VLC？</h3><p>如果 VLC 不在系统 PATH 中，Streamlink 可能找不到它。有两种解决方法：</p>
+<ol>
+<li><p>在配置文件中指定 VLC 的完整路径（macOS 示例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">player=/Applications/VLC.app/Contents/MacOS/VLC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建符号链接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/VLC.app/Contents/MacOS/VLC /usr/local/bin/vlc</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Q-Bilibili-直播打不开？"><a href="#Q-Bilibili-直播打不开？" class="headerlink" title="Q: Bilibili 直播打不开？"></a>Q: Bilibili 直播打不开？</h3><p>Bilibili 的直播流需要登录 Cookie 才能获取。推荐的方式是创建插件专属配置文件（详见上方「使用插件专属配置」段落），配置一次后无需每次手动传参。</p>
+<p>如果你之前使用 <code>~/.streamlinkrc</code> 配置过 Bilibili Cookie，请注意该文件在 streamlink 7.0.0 后已不再被读取，需要将配置迁移到新路径下的 <code>config.bilibili</code> 文件。</p>
+<p>如果只是临时使用，也可以通过命令行参数传入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">streamlink --http-header=<span class="string">&quot;Cookie=SESSDATA=你的SESSDATA值&quot;</span> \</span><br><span class="line">  https://live.bilibili.com/6 best</span><br></pre></td></tr></table></figure>
+
+<h3 id="Q-画质选项里没有高清？"><a href="#Q-画质选项里没有高清？" class="headerlink" title="Q: 画质选项里没有高清？"></a>Q: 画质选项里没有高清？</h3><p>可能的原因：</p>
+<ol>
+<li>主播没有开启高画质推流</li>
+<li>部分平台的高画质需要登录或会员</li>
+<li>网络环境导致 Streamlink 检测不到某些画质档位</li>
+</ol>
+<h3 id="Q-直播频繁缓冲怎么办？"><a href="#Q-直播频繁缓冲怎么办？" class="headerlink" title="Q: 直播频繁缓冲怎么办？"></a>Q: 直播频繁缓冲怎么办？</h3><ol>
+<li>降低画质（如从 <code>best</code> 改为 <code>720p</code> 或 <code>480p</code>）</li>
+<li>增大 VLC 的网络缓存：<code>--player-args=&quot;--network-caching=5000&quot;</code></li>
+<li>增大 Streamlink 的环形缓冲区：<code>--ringbuffer-size=64M</code></li>
+<li>检查网络连接，特别是跨境直播时的网络状况</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Streamlink + VLC 的组合，本质上是把「看直播」这件事回归到最简单的形态：提取流、播放流。没有浏览器、没有网页、没有广告——只有纯粹的视频播放。</p>
+<p>如果你经常看直播，尤其是 Twitch 或 Bilibili 上的长时间直播，这套工具链能显著降低系统资源占用，同时提供更灵活的控制能力。配置好之后，一条命令就能开始观看，比打开浏览器再找到直播间要快得多。</p>
+<p>赶紧试试吧 🎬</p>
+]]></content>
+      <tags>
+        <tag>streamlink</tag>
+        <tag>VLC</tag>
+        <tag>tools</tag>
+        <tag>macOS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从一段对话到用户画像：拆解 L0→L3 四层记忆流水线</title>
+    <url>/2026/08/26/memory-l0-l3-pipeline/</url>
+    <content><![CDATA[<p>你和一个 AI Agent 聊完一轮，点下回车，发生了一件你没察觉的事：这段对话被悄悄记下、提炼、聚合，最终变成”你是什么样的人”这样一份画像，在下次对话时又自动喂回给 Agent。整个过程在后台跑，用户完全无感。</p>
+<p>最近我在读 <a href="https://github.com/Tencent/TencentDB-Agent-Memory">TencentDB Agent Memory</a> 这套记忆系统的源码，把它的核心——从 L0 到 L3 的四层记忆流水线——摸了个遍。这篇文章把这条链拆开：每一层在什么时机触发、吃什么输入、吐什么输出，而且<strong>每一层都给你看真实的数据样例</strong>，不玩抽象。</p>
+<span id="more"></span>
+
+<h2 id="先用一个场景串起全链"><a href="#先用一个场景串起全链" class="headerlink" title="先用一个场景串起全链"></a>先用一个场景串起全链</h2><p>假设你和一个叫”bug-fix engineer”的 Agent 聊这么一句：</p>
+<blockquote>
+<p><strong>你</strong>：登录接口老报 401，我查了 token 过期没自动刷新，帮我看看<br><strong>Agent</strong>：先确认下，401 是 access_token 过期还是 refresh_token 也挂了？你用的 pnpm 还是 npm 跑的？</p>
+</blockquote>
+<p>就这么一轮对话，会触发完整的 L0→L3 流水线。下面每一层，我都告诉你它什么时候动、吃进什么、吐出什么，并贴出真实的存储样例。</p>
+<h2 id="L0：把对话录下来（同步入口）"><a href="#L0：把对话录下来（同步入口）" class="headerlink" title="L0：把对话录下来（同步入口）"></a>L0：把对话录下来（同步入口）</h2><p><strong>触发时机</strong>：Agent 答完你这句的瞬间（<code>agent_end</code> 事件），立刻录。不是等会话结束，是<strong>每答完一句就录一次</strong>。</p>
+<p><strong>输入</strong>：这一轮的对话消息（你的提问 + Agent 的回答 + 中间任何工具调用）。</p>
+<p><strong>输出</strong>：两份存储——</p>
+<p>第一份是 JSONL 日志（按天分文件、append-only，每行一条消息带租户标签）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;l0_a3f7-0&quot;,&quot;sessionKey&quot;:&quot;对话A&quot;,&quot;userId&quot;:&quot;u1&quot;,&quot;agentId&quot;:&quot;bug-fix&quot;,&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;登录接口老报401，我查了token过期没自动刷新&quot;,&quot;timestamp&quot;:1693017600000&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;l0_a3f7-1&quot;,&quot;sessionKey&quot;:&quot;对话A&quot;,&quot;userId&quot;:&quot;u1&quot;,&quot;agentId&quot;:&quot;bug-fix&quot;,&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;先确认下，401是access_token过期还是refresh_token也挂了？你用的pnpm还是npm？&quot;,&quot;timestamp&quot;:1693017660000&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二份是向量库的 L0 表（元数据 + 向量 + 全文索引），供语义&#x2F;关键词检索用——内容同上，但多了 embedding 字段（一串数字，语义指纹）。</p>
+<p><strong>关键设计</strong>：录完只做”记录 + 报数”，<strong>不做任何提炼</strong>。它给调度器发个信号”又聊完一轮了”，然后立刻返回。向量计算这种慢活（2-3 秒）要么扔后台，要么靠服务端嵌入，绝不阻塞用户。所以 L0 录完你就感觉不到，能立刻接着聊。</p>
+<p>L0 的职责就一句话：<strong>干净增量地把对话存成可检索的真相源</strong>。</p>
+<h2 id="L1：从对话抽出原子记忆（异步沉淀开始）"><a href="#L1：从对话抽出原子记忆（异步沉淀开始）" class="headerlink" title="L1：从对话抽出原子记忆（异步沉淀开始）"></a>L1：从对话抽出原子记忆（异步沉淀开始）</h2><p><strong>触发时机</strong>：由调度器的计数器&#x2F;idle 定时器决定，<strong>不是 L0 直接触发</strong>。比如默认”攒满 5 轮”或”闲够 10 分钟”才跑。这是异步的——L0 录完用户就走了，L1 在后台慢慢抽。</p>
+<p><strong>输入</strong>：L0 对话（按 <code>last_l1_cursor</code> 游标增量查，只处理没抽过的新对话）。比如这一轮的上面两条 L0 消息。</p>
+<p><strong>输出</strong>：原子记忆——每条带 <code>type</code>、<code>priority</code>、<code>scene_name</code> 的结构化记录。看真实的 <code>MemoryRecord</code> 长啥样：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;mem_x1&quot;,&quot;content&quot;:&quot;用户偏好用 pnpm 而非 npm 管理 Node 依赖&quot;,&quot;type&quot;:&quot;persona&quot;,&quot;priority&quot;:75,&quot;scene_name&quot;:&quot;backend-bug-fixing&quot;,&quot;source_message_ids&quot;:[&quot;l0_a3f7-0&quot;],&quot;timestamps&quot;:[&quot;2026-08-26T15:00:00Z&quot;],&quot;createdAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;updatedAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;version&quot;:1&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;mem_x2&quot;,&quot;content&quot;:&quot;登录接口 401 错误，根因是 access_token 过期后未自动用 refresh_token 刷新&quot;,&quot;type&quot;:&quot;episodic&quot;,&quot;priority&quot;:70,&quot;scene_name&quot;:&quot;backend-bug-fixing&quot;,&quot;source_message_ids&quot;:[&quot;l0_a3f7-0&quot;,&quot;l0_a3f7-1&quot;],&quot;timestamps&quot;:[&quot;2026-08-26T15:00:00Z&quot;],&quot;createdAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;updatedAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;version&quot;:1&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意它不是”这段对话讲了什么”的笼统总结，而是<strong>拆成两条独立事实</strong>：一条是用户偏好（persona 类），一条是这次 bug 事件（episodic 类）。每条带优先级、归属场景、来源消息 ID、版本号。</p>
+<p><strong>核心机制</strong>：LLM 抽取（靠提示词指挥产出 JSON）+ <strong>去重</strong>（和已有记忆比对，判定 store&#x2F;update&#x2F;merge&#x2F;skip）+ 落库（带 embedding，可语义检索）。比如你之前已经有一条”用户偏好 npm”，这次新抽”偏好 pnpm”，去重时 LLM 判定这是 <code>update</code>（更新成 pnpm），不是再加一条。</p>
+<h2 id="L2：把原子聚合成场景（沙箱-LLM-写文件）"><a href="#L2：把原子聚合成场景（沙箱-LLM-写文件）" class="headerlink" title="L2：把原子聚合成场景（沙箱 LLM 写文件）"></a>L2：把原子聚合成场景（沙箱 LLM 写文件）</h2><p><strong>触发时机</strong>：L1 完成后链式推进——设个下行定时器（只提前不推后），延迟后触发 L2。</p>
+<p><strong>输入</strong>：L1 原子记忆 + 现有的场景文件清单。比如把上面 <code>scene_name: &quot;backend-bug-fixing&quot;</code> 的那几条原子，聚进对应场景。</p>
+<p><strong>输出</strong>：<code>scene_blocks/*.md</code>（每个文件一个场景，人可读的 Markdown 白盒），最多 15 个。看真实的场景文件长啥样：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">-----META-START-----</span><br><span class="line">created: 2026-08-20T10:00:00Z</span><br><span class="line">updated: 2026-08-26T15:05:00Z</span><br><span class="line">summary: 用户的后端 bug 修复习惯与偏好</span><br><span class="line">heat: 5</span><br><span class="line">-----META-END-----</span><br><span class="line"></span><br><span class="line"><span class="section"># 后端 Bug 修复</span></span><br><span class="line"></span><br><span class="line">用户偏好用 pnpm 管理依赖，遇到 401 这类认证错误时会先定位 token 过期与刷新机制……</span><br></pre></td></tr></table></figure>
+
+<p>文件分两部分：开头的 <strong>META 头</strong>（程序读的元数据：建&#x2F;更新时间、摘要、热度）+ 后面的<strong>正文</strong>（人&#x2F;LLM 看的场景叙事）。</p>
+<p><strong>核心机制</strong>：这层和 L1 范式完全不同——<strong>它是个沙箱 LLM agent</strong>。给 LLM 一组文件工具（read&#x2F;write&#x2F;edit），工作目录限定在 <code>scene_blocks/</code>，LLM 自己读 L1、决定”建新场景 &#x2F; 更新现有 &#x2F; 合并相似的”，<strong>直接写 .md 文件</strong>，不靠程序解析 JSON 落盘。默认策略是 UPDATE（往现有场景加），不是 CREATE（轻易建新）。</p>
+<p>这层工程细节很考究：LLM 不能真删文件，只能写个 <code>[DELETED]</code> 标记，程序代删；写前先备份，写坏了能回滚；场景数到上限就禁止新建，只能合并；提示词里处处是”CREATE 前必须先 read 两个最相似的验证”这类踩坑约束。</p>
+<h2 id="L3：从场景综合成用户画像（链的终点）"><a href="#L3：从场景综合成用户画像（链的终点）" class="headerlink" title="L3：从场景综合成用户画像（链的终点）"></a>L3：从场景综合成用户画像（链的终点）</h2><p><strong>触发时机</strong>：L2 完成后触发，但<strong>不是每次都真跑</strong>——要先过 5 个条件判定：</p>
+<ol>
+<li><strong>P1 显式请求</strong>：LLM 在 L2 时觉得画像该更新，输出 <code>[PERSONA_UPDATE_REQUEST]</code> 信号</li>
+<li><strong>P2 冷启动</strong>：首次有场景了，还没画像</li>
+<li><strong>P2.5 恢复</strong>：画像文件损坏&#x2F;丢失</li>
+<li><strong>P3 首场景</strong>：第一个场景刚建好</li>
+<li><strong>P4 阈值</strong>：攒够 N 条新记忆</li>
+</ol>
+<p><strong>输入</strong>：<strong>变化的 L2 场景</strong>（增量——按 <code>last_persona_time</code> 只看上次画像之后更新过的场景，不每次读全部）。</p>
+<p><strong>输出</strong>：单个 <code>persona.md</code>（用户画像）。看真实样例：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">-----META-START-----</span><br><span class="line">created: 2026-08-20T10:00:00Z</span><br><span class="line">updated: 2026-08-26T15:08:00Z</span><br><span class="line">-----META-END-----</span><br><span class="line"></span><br><span class="line"><span class="section"># 用户画像</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 核心特征</span></span><br><span class="line"><span class="bullet">-</span> 偏后端开发，主要做认证/鉴权相关</span><br><span class="line"><span class="bullet">-</span> 注重工程规范，偏好用 pnpm 等现代工具链</span><br><span class="line"><span class="bullet">-</span> 遇到问题习惯先定位根因（token 过期机制）再动手</span><br><span class="line"></span><br><span class="line"><span class="section">## 场景导航</span></span><br><span class="line"><span class="bullet">-</span> 后端 Bug 修复（heat: 5）</span><br><span class="line"><span class="bullet">-</span> 前端 Code Review（heat: 2）</span><br></pre></td></tr></table></figure>
+
+<p>文件分两部分：<strong>画像正文</strong>（LLM 综合所有场景生成的”用户是谁”）+ <strong>场景导航</strong>（程序追加的”有哪些场景”列表）。</p>
+<p><strong>核心机制</strong>：和 L2 同款”沙箱 LLM 写文件”，LLM 直接写画像正文；程序后处理追加场景导航。L3 全局互斥——同时只跑一个，因为画像是 team+agent 级的。P1 那条特别有意思——<strong>LLM 能在 L2 时主动请求刷新画像</strong>，不靠死阈值，是 LLM 自驱的画像更新。</p>
+<h2 id="这条链怎么闭环：recall-把记忆喂回去"><a href="#这条链怎么闭环：recall-把记忆喂回去" class="headerlink" title="这条链怎么闭环：recall 把记忆喂回去"></a>这条链怎么闭环：recall 把记忆喂回去</h2><p>沉淀链产出的东西，最终在 recall 时用上——每轮对话<strong>前</strong>，自动检索相关记忆注入 prompt：</p>
+<ul>
+<li><strong>L1 原子</strong>：混合检索（关键词 BM25 + 向量余弦 + RRF 融合），注入到 user prompt 前缀的 <code>&lt;relevant-memories&gt;</code>（每轮都变，所以放动态区，不破坏 system prompt 缓存）</li>
+<li><strong>L3 persona</strong>：读 <code>persona.md</code> 画像正文，注入到 system prompt 的 <code>&lt;user-persona&gt;</code>（稳定区，可被 Anthropic&#x2F;OpenAI 的 prompt cache 缓存省 token）</li>
+<li><strong>L2 场景导航</strong>：注入到 system prompt 的 <code>&lt;scene-navigation&gt;</code>（告诉 Agent 有哪些场景维度）</li>
+</ul>
+<p>于是闭环成立：<strong>L0 录对话 → L1&#x2F;L2&#x2F;L3 沉淀 → recall 注入 → Agent 用记忆答 → 新对话又进 L0</strong>。每轮对话都是这个环的一次循环，记忆边聊边沉淀、边沉淀边用。</p>
+<h2 id="一个贯穿全链的设计哲学"><a href="#一个贯穿全链的设计哲学" class="headerlink" title="一个贯穿全链的设计哲学"></a>一个贯穿全链的设计哲学</h2><p>拆完这四层，你会发现它们共享同一个原则：<strong>慢活扔后台、同步入口立刻返回、数据靠游标增量、存储双写（真相源 + 检索引擎）</strong>。</p>
+<ul>
+<li>L0 的向量计算扔后台，<code>agent_end</code> 立刻返回，用户不卡</li>
+<li>L1&#x2F;L2&#x2F;L3 全是调度器异步触发，不阻塞对话</li>
+<li>每层都有游标（<code>last_captured_timestamp</code> &#x2F; <code>last_l1_cursor</code> &#x2F; <code>last_persona_time</code>），只处理增量</li>
+<li>L0&#x2F;L1 双写 JSONL（不丢可重建）+ 库表（快查），L2&#x2F;L3 双写 .md（人可读）+ 索引（程序快查）</li>
+</ul>
+<p>这套”分层提炼 + 异步沉淀 + 双写存储 + 白盒可调试”的设计，是这套记忆系统最值得学的地方——它把”让 AI 记住用户”这件听起来很玄的事，拆成了一条清晰、可调试、可追溯的数据流水线。下次你用 Agent 感觉它”记得你”，背后多半就是这条 L0→L3 的链在默默运转。</p>
+<blockquote>
+<p>这篇是读 <a href="https://github.com/Tencent/TencentDB-Agent-Memory">TencentDB Agent Memory</a> 源码的总结，源码在 <code>MemoryCore/src/core/</code> 下，按 <code>conversation/</code> <code>record/</code> <code>scene/</code> <code>persona/</code> 四个目录分层，对应 L0→L3。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>AI Memory</tag>
+        <tag>LLM</tag>
+        <tag>架构</tag>
+        <tag>源码阅读</tag>
+      </tags>
+  </entry>
+</search>

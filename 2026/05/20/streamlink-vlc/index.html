@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg">
+  <link rel="mask-icon" href="/images/head.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wangz1x.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://wangz1x.github.io/2026/05/20/streamlink-vlc/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://wangz1x.github.io/2026/05/20/streamlink-vlc/","path":"2026/05/20/streamlink-vlc/","title":"Streamlink + VLC：在终端里看直播的正确姿势"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Streamlink + VLC：在终端里看直播的正确姿势 | 趁早</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">趁早</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-Streamlink-VLC%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">为什么是 Streamlink + VLC？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS%EF%BC%88Apple-Silicon%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">macOS（Apple Silicon）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B9%B3%E5%8F%B0"><span class="nav-number">2.2.</span> <span class="nav-text">其他平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">最简单的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%8F%AF%E7%94%A8%E7%94%BB%E8%B4%A8"><span class="nav-number">3.2.</span> <span class="nav-text">查看可用画质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bilibili-%E7%9B%B4%E6%92%AD"><span class="nav-number">3.3.</span> <span class="nav-text">Bilibili 直播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">进阶配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%80%9A%E7%94%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.1.</span> <span class="nav-text">使用通用配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E4%B8%93%E5%B1%9E%E9%85%8D%E7%BD%AE%EF%BC%88%E6%8C%89%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="nav-number">4.1.2.</span> <span class="nav-text">使用插件专属配置（按平台配置）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E5%99%A8%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.2.</span> <span class="nav-text">播放器参数详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AA%97%E5%8F%A3%E6%A0%87%E9%A2%98"><span class="nav-number">4.3.</span> <span class="nav-text">设置窗口标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%95%E5%88%B6%E7%9B%B4%E6%92%AD%E6%B5%81"><span class="nav-number">4.4.</span> <span class="nav-text">录制直播流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">5.</span> <span class="nav-text">实用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%99%8D%E4%BD%8E%E7%9B%B4%E6%92%AD%E5%BB%B6%E8%BF%9F"><span class="nav-number">5.1.</span> <span class="nav-text">1. 降低直播延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%90%8E%E5%8F%B0%E6%92%AD%E6%94%BE%EF%BC%88%E5%8F%AA%E8%A6%81%E5%A3%B0%E9%9F%B3%E4%B8%8D%E8%A6%81%E7%94%BB%E9%9D%A2%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">2. 后台播放（只要声音不要画面）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%A4%9A%E5%BC%80%E7%9B%B4%E6%92%AD"><span class="nav-number">5.3.</span> <span class="nav-text">3. 多开直播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%A4%96%E9%83%A8-HTTP-%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.4.</span> <span class="nav-text">4. 外部 HTTP 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%86%99%E6%88%90-Shell-%E5%87%BD%E6%95%B0%E6%96%B9%E4%BE%BF%E8%B0%83%E7%94%A8"><span class="nav-number">5.5.</span> <span class="nav-text">5. 写成 Shell 函数方便调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-%E6%8F%90%E7%A4%BA%E6%89%BE%E4%B8%8D%E5%88%B0-VLC%EF%BC%9F"><span class="nav-number">6.1.</span> <span class="nav-text">Q: 提示找不到 VLC？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-Bilibili-%E7%9B%B4%E6%92%AD%E6%89%93%E4%B8%8D%E5%BC%80%EF%BC%9F"><span class="nav-number">6.2.</span> <span class="nav-text">Q: Bilibili 直播打不开？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-%E7%94%BB%E8%B4%A8%E9%80%89%E9%A1%B9%E9%87%8C%E6%B2%A1%E6%9C%89%E9%AB%98%E6%B8%85%EF%BC%9F"><span class="nav-number">6.3.</span> <span class="nav-text">Q: 画质选项里没有高清？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-%E7%9B%B4%E6%92%AD%E9%A2%91%E7%B9%81%E7%BC%93%E5%86%B2%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">6.4.</span> <span class="nav-text">Q: 直播频繁缓冲怎么办？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangz1x"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wangz1x</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangz1x" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangz1x" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangzx2222@gmail.com" title="E-Mail → mailto:wangzx2222@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2026/05/20/streamlink-vlc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Streamlink + VLC：在终端里看直播的正确姿势 | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Streamlink + VLC：在终端里看直播的正确姿势
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>如果你经常看直播，可能会遇到这样的痛点：浏览器里开直播网页，弹幕窗口占一半屏幕，广告弹窗时不时冒出来，内存占用居高不下——明明只是想看个画面而已，为什么要开整个浏览器？</p>
+<p><a target="_blank" rel="noopener" href="https://streamlink.github.io/">Streamlink</a> 就是解决这个问题的工具。它是一个命令行程序，可以从各种直播平台提取视频流，然后直接发送到你喜欢的播放器中播放。配合 <a target="_blank" rel="noopener" href="https://www.videolan.org/">VLC</a> 这款经典播放器，你就能在终端里轻松观看直播，无需打开浏览器。</p>
+<span id="more"></span>
+
+<h2 id="为什么是-Streamlink-VLC？"><a href="#为什么是-Streamlink-VLC？" class="headerlink" title="为什么是 Streamlink + VLC？"></a>为什么是 Streamlink + VLC？</h2><p>先说说各自的定位：</p>
+<ul>
+<li><strong>Streamlink</strong>：不是播放器，而是「流提取器」。它负责从直播平台（Twitch、YouTube、Bilibili 等）解析出真实的视频流地址，然后通过管道或 HTTP 传给播放器。</li>
+<li><strong>VLC</strong>：不是浏览器，而是纯播放器。它只负责播放视频，没有网页渲染、没有 JavaScript、没有广告——干净利落。</li>
+</ul>
+<p>两者结合的好处：</p>
+<ol>
+<li><strong>省资源</strong>：不需要启动浏览器，内存占用从 GB 级降到百 MB 级</li>
+<li><strong>无广告</strong>：纯视频流播放，没有网页广告和弹窗干扰</li>
+<li><strong>灵活控制</strong>：通过命令行参数精确控制画质、缓存、录制等行为</li>
+<li><strong>支持平台广</strong>：Streamlink 内置 100+ 平台插件，Twitch、YouTube、Bilibili、抖音等主流平台均支持</li>
+</ol>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="macOS（Apple-Silicon）"><a href="#macOS（Apple-Silicon）" class="headerlink" title="macOS（Apple Silicon）"></a>macOS（Apple Silicon）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Streamlink</span></span><br><span class="line">brew install streamlink</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 VLC</span></span><br><span class="line">brew install --cask vlc</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">streamlink --version</span><br><span class="line"><span class="comment"># streamlink 7.6.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认 VLC 已安装</span></span><br><span class="line"><span class="built_in">ls</span> /Applications/VLC.app</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他平台"><a href="#其他平台" class="headerlink" title="其他平台"></a>其他平台</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux (pip)</span></span><br><span class="line">pip install streamlink</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (pip)</span></span><br><span class="line">pip install streamlink</span><br></pre></td></tr></table></figure>
+
+<p>VLC 请前往 <a target="_blank" rel="noopener" href="https://www.videolan.org/">videolan.org</a> 下载对应平台的安装包。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="最简单的命令"><a href="#最简单的命令" class="headerlink" title="最简单的命令"></a>最简单的命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">streamlink &lt;直播地址&gt; best</span><br></pre></td></tr></table></figure>
+
+<p>这行命令会自动提取指定直播间的最高画质流，并调用 VLC 播放。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Twitch 直播</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud best</span><br><span class="line"></span><br><span class="line"><span class="comment"># YouTube 直播</span></span><br><span class="line">streamlink https://www.youtube.com/watch?v=xxx best</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看可用画质"><a href="#查看可用画质" class="headerlink" title="查看可用画质"></a>查看可用画质</h3><p>不确定有哪些画质可选？去掉画质参数就行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud</span><br></pre></td></tr></table></figure>
+
+<p>输出类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cli][info] Found matching plugin twitch for URL ...</span><br><span class="line">Available streams: audio_only, 160p, 360p, 480p, 720p, 720p60, 1080p60 (best)</span><br></pre></td></tr></table></figure>
+
+<p>然后选择你想要的画质：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud 720p60</span><br></pre></td></tr></table></figure>
+
+<p>也可以用 <code>best</code>（最高画质）和 <code>worst</code>（最低画质）作为快捷关键词，还可以用逗号指定备选：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优先 1080p60，没有就选 best</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud 1080p60,best</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bilibili-直播"><a href="#Bilibili-直播" class="headerlink" title="Bilibili 直播"></a>Bilibili 直播</h3><p>Streamlink 同样支持 Bilibili：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://live.bilibili.com/6 best</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶配置"><a href="#进阶配置" class="headerlink" title="进阶配置"></a>进阶配置</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>Streamlink 使用配置文件设置默认参数，避免每次手动输入。</p>
+<p><strong>macOS 配置文件路径</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>~/Library/Application Support/streamlink/config</code></td>
+<td>通用配置文件</td>
+</tr>
+<tr>
+<td><code>~/Library/Application Support/streamlink/config.插件名</code></td>
+<td>插件专属配置（如 <code>config.bilibili</code>）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Linux 用户</strong>：配置文件路径为 <code>$&#123;XDG_CONFIG_HOME:-~/.config&#125;/streamlink/config</code>，插件配置为 <code>config.插件名</code>。</p>
+<p><strong>⚠️ 迁移提醒</strong>：如果你之前使用过 <code>~/.streamlinkrc</code> 或 <code>~/.streamlink/config</code>，请注意这些路径<strong>已在 streamlink 7.0.0 中移除</strong>，当前版本（7.6.0）不再读取。请迁移到上述新路径。</p>
+</blockquote>
+<h4 id="使用通用配置文件"><a href="#使用通用配置文件" class="headerlink" title="使用通用配置文件"></a>使用通用配置文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt; <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config&quot;</span> &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment"># 默认播放器（如果 VLC 不在 PATH 中，写绝对路径）</span></span><br><span class="line">player=/Applications/VLC.app/Contents/MacOS/VLC</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认画质</span></span><br><span class="line">default-stream=best</span><br><span class="line"></span><br><span class="line"><span class="comment"># 播放器参数：降低网络缓存到 2 秒，减少直播延迟</span></span><br><span class="line">player-args=--network-caching=2000</span><br><span class="line"></span><br><span class="line"><span class="comment"># VLC 播完自动退出</span></span><br><span class="line">player-args=--network-caching=2000 --play-and-exit</span><br><span class="line"></span><br><span class="line"><span class="comment"># 环形缓冲区大小（默认 16M，网络不稳定可调大）</span></span><br><span class="line">ringbuffer-size=32M</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：如果 <code>player-args</code> 出现多次，以最后一次为准。如果需要同时传递多个参数，写在一行里即可，如 <code>player-args=--network-caching=2000 --play-and-exit</code>。</p>
+</blockquote>
+<h4 id="使用插件专属配置（按平台配置）"><a href="#使用插件专属配置（按平台配置）" class="headerlink" title="使用插件专属配置（按平台配置）"></a>使用插件专属配置（按平台配置）</h4><p>Streamlink 支持为特定插件创建独立的配置文件。文件命名规则是在通用配置文件名后追加 <code>.插件名</code>，当 URL 匹配到该插件时会自动加载。</p>
+<p>一个典型的使用场景：<strong>Bilibili 直播需要登录 Cookie 才能获取高清流</strong>。这时可以创建 <code>config.bilibili</code> 文件，单独为 Bilibili 配置认证信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink&quot;</span></span><br><span class="line"><span class="built_in">cat</span> &gt; <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config.bilibili&quot;</span> &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment"># 通过 HTTP Header 注入 Cookie，解决未登录无法获取直播流的问题</span></span><br><span class="line">http-header=Cookie=SESSDATA=你的SESSDATA值</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>获取 SESSDATA 的方法：</p>
+<ol>
+<li>在浏览器中登录 <a target="_blank" rel="noopener" href="https://www.bilibili.com/">bilibili.com</a></li>
+<li>按 <code>F12</code> 打开开发者工具 → Application（应用）→ Cookies</li>
+<li>找到 <code>SESSDATA</code> 字段，复制其值</li>
+<li>粘贴到 <code>config.bilibili</code> 中</li>
+</ol>
+<blockquote>
+<p><strong>安全提醒</strong>：SESSDATA 等同于登录凭证，请勿分享或公开。建议对配置文件设置权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 <span class="string">&quot;<span class="variable">$HOME</span>/Library/Application Support/streamlink/config.bilibili&quot;</span></span><br></pre></td></tr></table></figure></blockquote>
+<p>配置好之后，直接运行 <code>streamlink https://live.bilibili.com/6 best</code> 即可，不需要每次手动传 Cookie。</p>
+<p>同理，如果你需要为 Twitch 单独配置参数，可以创建 <code>config.twitch</code> 文件，里面写上只在观看 Twitch 直播时生效的选项。</p>
+<h3 id="播放器参数详解"><a href="#播放器参数详解" class="headerlink" title="播放器参数详解"></a>播放器参数详解</h3><p>通过 <code>--player-args</code> 可以向 VLC 传递任意参数。以下是一些实用的 VLC 参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--network-caching=2000</code></td>
+<td>网络缓存设为 2 秒（默认 1 秒），减少直播延迟</td>
+</tr>
+<tr>
+<td><code>--play-and-exit</code></td>
+<td>播放结束自动退出 VLC</td>
+</tr>
+<tr>
+<td><code>--fullscreen</code></td>
+<td>全屏播放</td>
+</tr>
+<tr>
+<td><code>--no-video-title-show</code></td>
+<td>不在画面上方显示视频标题</td>
+</tr>
+<tr>
+<td><code>--repeat</code></td>
+<td>重复播放当前项</td>
+</tr>
+<tr>
+<td><code>--loop</code></td>
+<td>循环播放全部</td>
+</tr>
+</tbody></table>
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://live.bilibili.com/6 best \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit --fullscreen&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="设置窗口标题"><a href="#设置窗口标题" class="headerlink" title="设置窗口标题"></a>设置窗口标题</h3><p>Streamlink 支持自定义 VLC 的窗口标题，使用 <code>--title</code> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink --title <span class="string">&quot;&#123;author&#125; - &#123;category&#125; - &#123;title&#125;&quot;</span> \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<p>可用的元数据变量因平台而异，常见的有：</p>
+<ul>
+<li><code>&#123;author&#125;</code>：主播名</li>
+<li><code>&#123;category&#125;</code>：直播分类</li>
+<li><code>&#123;title&#125;</code>：直播标题</li>
+</ul>
+<h3 id="录制直播流"><a href="#录制直播流" class="headerlink" title="录制直播流"></a>录制直播流</h3><p>边看边录，使用 <code>--record</code> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --record <span class="string">&quot;~/Recordings/&#123;author&#125;-&#123;time:%Y%m%d_%H%M%S&#125;.ts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果只想录制不播放，用 <code>--output</code> 替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --output <span class="string">&quot;~/Recordings/&#123;author&#125;-&#123;time:%Y%m%d_%H%M%S&#125;.ts&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>&#123;time:...&#125;</code> 支持 strftime 格式，可以根据时间自动命名文件。</p>
+<h2 id="实用技巧"><a href="#实用技巧" class="headerlink" title="实用技巧"></a>实用技巧</h2><h3 id="1-降低直播延迟"><a href="#1-降低直播延迟" class="headerlink" title="1. 降低直播延迟"></a>1. 降低直播延迟</h3><p>看直播时，延迟是最让人头疼的问题。Streamlink 本身对直播流的处理延迟很低，大部分延迟来自播放器的缓存。调整 VLC 的网络缓存可以有效降低延迟：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud best \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=1000&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>将缓存设为 1 秒（1000ms），可以获得接近实时的体验。如果网络不稳定导致频繁缓冲，可以适当增大到 2000-3000ms。</p>
+<p>对于 Twitch 低延迟流，还可以配合 Streamlink 的 <code>--twitch-low-latency</code> 选项：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">streamlink --twitch-low-latency \</span><br><span class="line">  --player-args=<span class="string">&quot;--network-caching=1000&quot;</span> \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-后台播放（只要声音不要画面）"><a href="#2-后台播放（只要声音不要画面）" class="headerlink" title="2. 后台播放（只要声音不要画面）"></a>2. 后台播放（只要声音不要画面）</h3><p>如果你只需要听直播的声音（比如听播客、听音乐直播），可以让 VLC 不显示视频窗口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink https://www.twitch.tv/shroud audio_only \</span><br><span class="line">  --player-args=<span class="string">&quot;--intf dummy --no-video&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>audio_only</code> 是 Twitch 提供的纯音频流，配合 VLC 的 <code>--no-video</code> 参数，可以实现纯后台音频播放。</p>
+<h3 id="3-多开直播"><a href="#3-多开直播" class="headerlink" title="3. 多开直播"></a>3. 多开直播</h3><p>每个终端窗口运行一个 Streamlink 实例即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 终端 1</span></span><br><span class="line">streamlink https://www.twitch.tv/shroud 480p</span><br><span class="line"></span><br><span class="line"><span class="comment"># 终端 2</span></span><br><span class="line">streamlink https://www.twitch.tv/summit1g 480p</span><br></pre></td></tr></table></figure>
+
+<p>选择较低画质可以降低带宽和资源占用。</p>
+<h3 id="4-外部-HTTP-模式"><a href="#4-外部-HTTP-模式" class="headerlink" title="4. 外部 HTTP 模式"></a>4. 外部 HTTP 模式</h3><p>想让局域网内的其他设备（手机、平板、电视盒子）也能看？使用 <code>--player-external-http</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">streamlink --player-external-http \</span><br><span class="line">  --player-external-http-port 8080 \</span><br><span class="line">  https://www.twitch.tv/shroud best</span><br></pre></td></tr></table></figure>
+
+<p>启动后，同一局域网内的设备在浏览器中打开 <code>http://&lt;你的IP&gt;:8080</code> 即可观看。</p>
+<h3 id="5-写成-Shell-函数方便调用"><a href="#5-写成-Shell-函数方便调用" class="headerlink" title="5. 写成 Shell 函数方便调用"></a>5. 写成 Shell 函数方便调用</h3><p>在 <code>~/.zshrc</code> 或 <code>~/.bashrc</code> 中添加快捷函数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 快速看直播</span></span><br><span class="line"><span class="function"><span class="title">live</span></span>() &#123;</span><br><span class="line">  streamlink <span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span> \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Twitch 低延迟模式</span></span><br><span class="line"><span class="function"><span class="title">twitch</span></span>() &#123;</span><br><span class="line">  streamlink --twitch-low-latency \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=1000&quot;</span> \</span><br><span class="line">    <span class="string">&quot;https://www.twitch.tv/<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bilibili 直播</span></span><br><span class="line"><span class="function"><span class="title">bili</span></span>() &#123;</span><br><span class="line">  streamlink <span class="string">&quot;https://live.bilibili.com/<span class="variable">$1</span>&quot;</span> <span class="string">&quot;<span class="variable">$&#123;2:-best&#125;</span>&quot;</span> \</span><br><span class="line">    --player-args=<span class="string">&quot;--network-caching=2000 --play-and-exit&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">live https://live.bilibili.com/6</span><br><span class="line">twitch shroud 720p60</span><br><span class="line">bili 6</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Q-提示找不到-VLC？"><a href="#Q-提示找不到-VLC？" class="headerlink" title="Q: 提示找不到 VLC？"></a>Q: 提示找不到 VLC？</h3><p>如果 VLC 不在系统 PATH 中，Streamlink 可能找不到它。有两种解决方法：</p>
+<ol>
+<li><p>在配置文件中指定 VLC 的完整路径（macOS 示例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">player=/Applications/VLC.app/Contents/MacOS/VLC</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建符号链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /Applications/VLC.app/Contents/MacOS/VLC /usr/local/bin/vlc</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Q-Bilibili-直播打不开？"><a href="#Q-Bilibili-直播打不开？" class="headerlink" title="Q: Bilibili 直播打不开？"></a>Q: Bilibili 直播打不开？</h3><p>Bilibili 的直播流需要登录 Cookie 才能获取。推荐的方式是创建插件专属配置文件（详见上方「使用插件专属配置」段落），配置一次后无需每次手动传参。</p>
+<p>如果你之前使用 <code>~/.streamlinkrc</code> 配置过 Bilibili Cookie，请注意该文件在 streamlink 7.0.0 后已不再被读取，需要将配置迁移到新路径下的 <code>config.bilibili</code> 文件。</p>
+<p>如果只是临时使用，也可以通过命令行参数传入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">streamlink --http-header=<span class="string">&quot;Cookie=SESSDATA=你的SESSDATA值&quot;</span> \</span><br><span class="line">  https://live.bilibili.com/6 best</span><br></pre></td></tr></table></figure>
+
+<h3 id="Q-画质选项里没有高清？"><a href="#Q-画质选项里没有高清？" class="headerlink" title="Q: 画质选项里没有高清？"></a>Q: 画质选项里没有高清？</h3><p>可能的原因：</p>
+<ol>
+<li>主播没有开启高画质推流</li>
+<li>部分平台的高画质需要登录或会员</li>
+<li>网络环境导致 Streamlink 检测不到某些画质档位</li>
+</ol>
+<h3 id="Q-直播频繁缓冲怎么办？"><a href="#Q-直播频繁缓冲怎么办？" class="headerlink" title="Q: 直播频繁缓冲怎么办？"></a>Q: 直播频繁缓冲怎么办？</h3><ol>
+<li>降低画质（如从 <code>best</code> 改为 <code>720p</code> 或 <code>480p</code>）</li>
+<li>增大 VLC 的网络缓存：<code>--player-args=&quot;--network-caching=5000&quot;</code></li>
+<li>增大 Streamlink 的环形缓冲区：<code>--ringbuffer-size=64M</code></li>
+<li>检查网络连接，特别是跨境直播时的网络状况</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Streamlink + VLC 的组合，本质上是把「看直播」这件事回归到最简单的形态：提取流、播放流。没有浏览器、没有网页、没有广告——只有纯粹的视频播放。</p>
+<p>如果你经常看直播，尤其是 Twitch 或 Bilibili 上的长时间直播，这套工具链能显著降低系统资源占用，同时提供更灵活的控制能力。配置好之后，一条命令就能开始观看，比打开浏览器再找到直播间要快得多。</p>
+<p>赶紧试试吧 🎬</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/streamlink/" rel="tag"># streamlink</a>
+              <a href="/tags/VLC/" rel="tag"># VLC</a>
+              <a href="/tags/tools/" rel="tag"># tools</a>
+              <a href="/tags/macOS/" rel="tag"># macOS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/08/multica-intro/" rel="prev" title="Multica：让 AI Agent 成为你的团队协作伙伴">
+                  <i class="fa fa-chevron-left"></i> Multica：让 AI Agent 成为你的团队协作伙伴
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/05/20/blog-intro/" rel="next" title="这个博客是怎么跑起来的：Hexo、双分支与 GitHub Actions 自动发布">
+                  这个博客是怎么跑起来的：Hexo、双分支与 GitHub Actions 自动发布 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-campfire"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>

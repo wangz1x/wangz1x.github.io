@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/head.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/head.jpg">
+  <link rel="mask-icon" href="/images/head.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wangz1x.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+
+
+<link rel="canonical" href="https://wangz1x.github.io/2026/08/26/memory-l0-l3-pipeline/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://wangz1x.github.io/2026/08/26/memory-l0-l3-pipeline/","path":"2026/08/26/memory-l0-l3-pipeline/","title":"从一段对话到用户画像：拆解 L0→L3 四层记忆流水线"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从一段对话到用户画像：拆解 L0→L3 四层记忆流水线 | 趁早</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">趁早</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E7%94%A8%E4%B8%80%E4%B8%AA%E5%9C%BA%E6%99%AF%E4%B8%B2%E8%B5%B7%E5%85%A8%E9%93%BE"><span class="nav-number">1.</span> <span class="nav-text">先用一个场景串起全链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L0%EF%BC%9A%E6%8A%8A%E5%AF%B9%E8%AF%9D%E5%BD%95%E4%B8%8B%E6%9D%A5%EF%BC%88%E5%90%8C%E6%AD%A5%E5%85%A5%E5%8F%A3%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">L0：把对话录下来（同步入口）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%EF%BC%9A%E4%BB%8E%E5%AF%B9%E8%AF%9D%E6%8A%BD%E5%87%BA%E5%8E%9F%E5%AD%90%E8%AE%B0%E5%BF%86%EF%BC%88%E5%BC%82%E6%AD%A5%E6%B2%89%E6%B7%80%E5%BC%80%E5%A7%8B%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">L1：从对话抽出原子记忆（异步沉淀开始）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%EF%BC%9A%E6%8A%8A%E5%8E%9F%E5%AD%90%E8%81%9A%E5%90%88%E6%88%90%E5%9C%BA%E6%99%AF%EF%BC%88%E6%B2%99%E7%AE%B1-LLM-%E5%86%99%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">L2：把原子聚合成场景（沙箱 LLM 写文件）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L3%EF%BC%9A%E4%BB%8E%E5%9C%BA%E6%99%AF%E7%BB%BC%E5%90%88%E6%88%90%E7%94%A8%E6%88%B7%E7%94%BB%E5%83%8F%EF%BC%88%E9%93%BE%E7%9A%84%E7%BB%88%E7%82%B9%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">L3：从场景综合成用户画像（链的终点）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%9D%A1%E9%93%BE%E6%80%8E%E4%B9%88%E9%97%AD%E7%8E%AF%EF%BC%9Arecall-%E6%8A%8A%E8%AE%B0%E5%BF%86%E5%96%82%E5%9B%9E%E5%8E%BB"><span class="nav-number">6.</span> <span class="nav-text">这条链怎么闭环：recall 把记忆喂回去</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E8%B4%AF%E7%A9%BF%E5%85%A8%E9%93%BE%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6"><span class="nav-number">7.</span> <span class="nav-text">一个贯穿全链的设计哲学</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangz1x"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wangz1x</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangz1x" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangz1x" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangzx2222@gmail.com" title="E-Mail → mailto:wangzx2222@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="https://wangz1x.github.io/2026/08/26/memory-l0-l3-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wangz1x">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="趁早">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从一段对话到用户画像：拆解 L0→L3 四层记忆流水线 | 趁早">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从一段对话到用户画像：拆解 L0→L3 四层记忆流水线
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>你和一个 AI Agent 聊完一轮，点下回车，发生了一件你没察觉的事：这段对话被悄悄记下、提炼、聚合，最终变成”你是什么样的人”这样一份画像，在下次对话时又自动喂回给 Agent。整个过程在后台跑，用户完全无感。</p>
+<p>最近我在读 <a target="_blank" rel="noopener" href="https://github.com/Tencent/TencentDB-Agent-Memory">TencentDB Agent Memory</a> 这套记忆系统的源码，把它的核心——从 L0 到 L3 的四层记忆流水线——摸了个遍。这篇文章把这条链拆开：每一层在什么时机触发、吃什么输入、吐什么输出，而且<strong>每一层都给你看真实的数据样例</strong>，不玩抽象。</p>
+<span id="more"></span>
+
+<h2 id="先用一个场景串起全链"><a href="#先用一个场景串起全链" class="headerlink" title="先用一个场景串起全链"></a>先用一个场景串起全链</h2><p>假设你和一个叫”bug-fix engineer”的 Agent 聊这么一句：</p>
+<blockquote>
+<p><strong>你</strong>：登录接口老报 401，我查了 token 过期没自动刷新，帮我看看<br><strong>Agent</strong>：先确认下，401 是 access_token 过期还是 refresh_token 也挂了？你用的 pnpm 还是 npm 跑的？</p>
+</blockquote>
+<p>就这么一轮对话，会触发完整的 L0→L3 流水线。下面每一层，我都告诉你它什么时候动、吃进什么、吐出什么，并贴出真实的存储样例。</p>
+<h2 id="L0：把对话录下来（同步入口）"><a href="#L0：把对话录下来（同步入口）" class="headerlink" title="L0：把对话录下来（同步入口）"></a>L0：把对话录下来（同步入口）</h2><p><strong>触发时机</strong>：Agent 答完你这句的瞬间（<code>agent_end</code> 事件），立刻录。不是等会话结束，是<strong>每答完一句就录一次</strong>。</p>
+<p><strong>输入</strong>：这一轮的对话消息（你的提问 + Agent 的回答 + 中间任何工具调用）。</p>
+<p><strong>输出</strong>：两份存储——</p>
+<p>第一份是 JSONL 日志（按天分文件、append-only，每行一条消息带租户标签）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;l0_a3f7-0&quot;,&quot;sessionKey&quot;:&quot;对话A&quot;,&quot;userId&quot;:&quot;u1&quot;,&quot;agentId&quot;:&quot;bug-fix&quot;,&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;登录接口老报401，我查了token过期没自动刷新&quot;,&quot;timestamp&quot;:1693017600000&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;l0_a3f7-1&quot;,&quot;sessionKey&quot;:&quot;对话A&quot;,&quot;userId&quot;:&quot;u1&quot;,&quot;agentId&quot;:&quot;bug-fix&quot;,&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:&quot;先确认下，401是access_token过期还是refresh_token也挂了？你用的pnpm还是npm？&quot;,&quot;timestamp&quot;:1693017660000&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二份是向量库的 L0 表（元数据 + 向量 + 全文索引），供语义&#x2F;关键词检索用——内容同上，但多了 embedding 字段（一串数字，语义指纹）。</p>
+<p><strong>关键设计</strong>：录完只做”记录 + 报数”，<strong>不做任何提炼</strong>。它给调度器发个信号”又聊完一轮了”，然后立刻返回。向量计算这种慢活（2-3 秒）要么扔后台，要么靠服务端嵌入，绝不阻塞用户。所以 L0 录完你就感觉不到，能立刻接着聊。</p>
+<p>L0 的职责就一句话：<strong>干净增量地把对话存成可检索的真相源</strong>。</p>
+<h2 id="L1：从对话抽出原子记忆（异步沉淀开始）"><a href="#L1：从对话抽出原子记忆（异步沉淀开始）" class="headerlink" title="L1：从对话抽出原子记忆（异步沉淀开始）"></a>L1：从对话抽出原子记忆（异步沉淀开始）</h2><p><strong>触发时机</strong>：由调度器的计数器&#x2F;idle 定时器决定，<strong>不是 L0 直接触发</strong>。比如默认”攒满 5 轮”或”闲够 10 分钟”才跑。这是异步的——L0 录完用户就走了，L1 在后台慢慢抽。</p>
+<p><strong>输入</strong>：L0 对话（按 <code>last_l1_cursor</code> 游标增量查，只处理没抽过的新对话）。比如这一轮的上面两条 L0 消息。</p>
+<p><strong>输出</strong>：原子记忆——每条带 <code>type</code>、<code>priority</code>、<code>scene_name</code> 的结构化记录。看真实的 <code>MemoryRecord</code> 长啥样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;id&quot;:&quot;mem_x1&quot;,&quot;content&quot;:&quot;用户偏好用 pnpm 而非 npm 管理 Node 依赖&quot;,&quot;type&quot;:&quot;persona&quot;,&quot;priority&quot;:75,&quot;scene_name&quot;:&quot;backend-bug-fixing&quot;,&quot;source_message_ids&quot;:[&quot;l0_a3f7-0&quot;],&quot;timestamps&quot;:[&quot;2026-08-26T15:00:00Z&quot;],&quot;createdAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;updatedAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;version&quot;:1&#125;</span><br><span class="line">&#123;&quot;id&quot;:&quot;mem_x2&quot;,&quot;content&quot;:&quot;登录接口 401 错误，根因是 access_token 过期后未自动用 refresh_token 刷新&quot;,&quot;type&quot;:&quot;episodic&quot;,&quot;priority&quot;:70,&quot;scene_name&quot;:&quot;backend-bug-fixing&quot;,&quot;source_message_ids&quot;:[&quot;l0_a3f7-0&quot;,&quot;l0_a3f7-1&quot;],&quot;timestamps&quot;:[&quot;2026-08-26T15:00:00Z&quot;],&quot;createdAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;updatedAt&quot;:&quot;2026-08-26T15:02:00Z&quot;,&quot;version&quot;:1&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意它不是”这段对话讲了什么”的笼统总结，而是<strong>拆成两条独立事实</strong>：一条是用户偏好（persona 类），一条是这次 bug 事件（episodic 类）。每条带优先级、归属场景、来源消息 ID、版本号。</p>
+<p><strong>核心机制</strong>：LLM 抽取（靠提示词指挥产出 JSON）+ <strong>去重</strong>（和已有记忆比对，判定 store&#x2F;update&#x2F;merge&#x2F;skip）+ 落库（带 embedding，可语义检索）。比如你之前已经有一条”用户偏好 npm”，这次新抽”偏好 pnpm”，去重时 LLM 判定这是 <code>update</code>（更新成 pnpm），不是再加一条。</p>
+<h2 id="L2：把原子聚合成场景（沙箱-LLM-写文件）"><a href="#L2：把原子聚合成场景（沙箱-LLM-写文件）" class="headerlink" title="L2：把原子聚合成场景（沙箱 LLM 写文件）"></a>L2：把原子聚合成场景（沙箱 LLM 写文件）</h2><p><strong>触发时机</strong>：L1 完成后链式推进——设个下行定时器（只提前不推后），延迟后触发 L2。</p>
+<p><strong>输入</strong>：L1 原子记忆 + 现有的场景文件清单。比如把上面 <code>scene_name: &quot;backend-bug-fixing&quot;</code> 的那几条原子，聚进对应场景。</p>
+<p><strong>输出</strong>：<code>scene_blocks/*.md</code>（每个文件一个场景，人可读的 Markdown 白盒），最多 15 个。看真实的场景文件长啥样：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----META-START-----</span><br><span class="line">created: 2026-08-20T10:00:00Z</span><br><span class="line">updated: 2026-08-26T15:05:00Z</span><br><span class="line">summary: 用户的后端 bug 修复习惯与偏好</span><br><span class="line">heat: 5</span><br><span class="line">-----META-END-----</span><br><span class="line"></span><br><span class="line"><span class="section"># 后端 Bug 修复</span></span><br><span class="line"></span><br><span class="line">用户偏好用 pnpm 管理依赖，遇到 401 这类认证错误时会先定位 token 过期与刷新机制……</span><br></pre></td></tr></table></figure>
+
+<p>文件分两部分：开头的 <strong>META 头</strong>（程序读的元数据：建&#x2F;更新时间、摘要、热度）+ 后面的<strong>正文</strong>（人&#x2F;LLM 看的场景叙事）。</p>
+<p><strong>核心机制</strong>：这层和 L1 范式完全不同——<strong>它是个沙箱 LLM agent</strong>。给 LLM 一组文件工具（read&#x2F;write&#x2F;edit），工作目录限定在 <code>scene_blocks/</code>，LLM 自己读 L1、决定”建新场景 &#x2F; 更新现有 &#x2F; 合并相似的”，<strong>直接写 .md 文件</strong>，不靠程序解析 JSON 落盘。默认策略是 UPDATE（往现有场景加），不是 CREATE（轻易建新）。</p>
+<p>这层工程细节很考究：LLM 不能真删文件，只能写个 <code>[DELETED]</code> 标记，程序代删；写前先备份，写坏了能回滚；场景数到上限就禁止新建，只能合并；提示词里处处是”CREATE 前必须先 read 两个最相似的验证”这类踩坑约束。</p>
+<h2 id="L3：从场景综合成用户画像（链的终点）"><a href="#L3：从场景综合成用户画像（链的终点）" class="headerlink" title="L3：从场景综合成用户画像（链的终点）"></a>L3：从场景综合成用户画像（链的终点）</h2><p><strong>触发时机</strong>：L2 完成后触发，但<strong>不是每次都真跑</strong>——要先过 5 个条件判定：</p>
+<ol>
+<li><strong>P1 显式请求</strong>：LLM 在 L2 时觉得画像该更新，输出 <code>[PERSONA_UPDATE_REQUEST]</code> 信号</li>
+<li><strong>P2 冷启动</strong>：首次有场景了，还没画像</li>
+<li><strong>P2.5 恢复</strong>：画像文件损坏&#x2F;丢失</li>
+<li><strong>P3 首场景</strong>：第一个场景刚建好</li>
+<li><strong>P4 阈值</strong>：攒够 N 条新记忆</li>
+</ol>
+<p><strong>输入</strong>：<strong>变化的 L2 场景</strong>（增量——按 <code>last_persona_time</code> 只看上次画像之后更新过的场景，不每次读全部）。</p>
+<p><strong>输出</strong>：单个 <code>persona.md</code>（用户画像）。看真实样例：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-----META-START-----</span><br><span class="line">created: 2026-08-20T10:00:00Z</span><br><span class="line">updated: 2026-08-26T15:08:00Z</span><br><span class="line">-----META-END-----</span><br><span class="line"></span><br><span class="line"><span class="section"># 用户画像</span></span><br><span class="line"></span><br><span class="line"><span class="section">## 核心特征</span></span><br><span class="line"><span class="bullet">-</span> 偏后端开发，主要做认证/鉴权相关</span><br><span class="line"><span class="bullet">-</span> 注重工程规范，偏好用 pnpm 等现代工具链</span><br><span class="line"><span class="bullet">-</span> 遇到问题习惯先定位根因（token 过期机制）再动手</span><br><span class="line"></span><br><span class="line"><span class="section">## 场景导航</span></span><br><span class="line"><span class="bullet">-</span> 后端 Bug 修复（heat: 5）</span><br><span class="line"><span class="bullet">-</span> 前端 Code Review（heat: 2）</span><br></pre></td></tr></table></figure>
+
+<p>文件分两部分：<strong>画像正文</strong>（LLM 综合所有场景生成的”用户是谁”）+ <strong>场景导航</strong>（程序追加的”有哪些场景”列表）。</p>
+<p><strong>核心机制</strong>：和 L2 同款”沙箱 LLM 写文件”，LLM 直接写画像正文；程序后处理追加场景导航。L3 全局互斥——同时只跑一个，因为画像是 team+agent 级的。P1 那条特别有意思——<strong>LLM 能在 L2 时主动请求刷新画像</strong>，不靠死阈值，是 LLM 自驱的画像更新。</p>
+<h2 id="这条链怎么闭环：recall-把记忆喂回去"><a href="#这条链怎么闭环：recall-把记忆喂回去" class="headerlink" title="这条链怎么闭环：recall 把记忆喂回去"></a>这条链怎么闭环：recall 把记忆喂回去</h2><p>沉淀链产出的东西，最终在 recall 时用上——每轮对话<strong>前</strong>，自动检索相关记忆注入 prompt：</p>
+<ul>
+<li><strong>L1 原子</strong>：混合检索（关键词 BM25 + 向量余弦 + RRF 融合），注入到 user prompt 前缀的 <code>&lt;relevant-memories&gt;</code>（每轮都变，所以放动态区，不破坏 system prompt 缓存）</li>
+<li><strong>L3 persona</strong>：读 <code>persona.md</code> 画像正文，注入到 system prompt 的 <code>&lt;user-persona&gt;</code>（稳定区，可被 Anthropic&#x2F;OpenAI 的 prompt cache 缓存省 token）</li>
+<li><strong>L2 场景导航</strong>：注入到 system prompt 的 <code>&lt;scene-navigation&gt;</code>（告诉 Agent 有哪些场景维度）</li>
+</ul>
+<p>于是闭环成立：<strong>L0 录对话 → L1&#x2F;L2&#x2F;L3 沉淀 → recall 注入 → Agent 用记忆答 → 新对话又进 L0</strong>。每轮对话都是这个环的一次循环，记忆边聊边沉淀、边沉淀边用。</p>
+<h2 id="一个贯穿全链的设计哲学"><a href="#一个贯穿全链的设计哲学" class="headerlink" title="一个贯穿全链的设计哲学"></a>一个贯穿全链的设计哲学</h2><p>拆完这四层，你会发现它们共享同一个原则：<strong>慢活扔后台、同步入口立刻返回、数据靠游标增量、存储双写（真相源 + 检索引擎）</strong>。</p>
+<ul>
+<li>L0 的向量计算扔后台，<code>agent_end</code> 立刻返回，用户不卡</li>
+<li>L1&#x2F;L2&#x2F;L3 全是调度器异步触发，不阻塞对话</li>
+<li>每层都有游标（<code>last_captured_timestamp</code> &#x2F; <code>last_l1_cursor</code> &#x2F; <code>last_persona_time</code>），只处理增量</li>
+<li>L0&#x2F;L1 双写 JSONL（不丢可重建）+ 库表（快查），L2&#x2F;L3 双写 .md（人可读）+ 索引（程序快查）</li>
+</ul>
+<p>这套”分层提炼 + 异步沉淀 + 双写存储 + 白盒可调试”的设计，是这套记忆系统最值得学的地方——它把”让 AI 记住用户”这件听起来很玄的事，拆成了一条清晰、可调试、可追溯的数据流水线。下次你用 Agent 感觉它”记得你”，背后多半就是这条 L0→L3 的链在默默运转。</p>
+<blockquote>
+<p>这篇是读 <a target="_blank" rel="noopener" href="https://github.com/Tencent/TencentDB-Agent-Memory">TencentDB Agent Memory</a> 源码的总结，源码在 <code>MemoryCore/src/core/</code> 下，按 <code>conversation/</code> <code>record/</code> <code>scene/</code> <code>persona/</code> 四个目录分层，对应 L0→L3。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI-Memory/" rel="tag"># AI Memory</a>
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/%E6%9E%B6%E6%9E%84/" rel="tag"># 架构</a>
+              <a href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="tag"># 源码阅读</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/20/blog-intro/" rel="prev" title="这个博客是怎么跑起来的：Hexo、双分支与 GitHub Actions 自动发布">
+                  <i class="fa fa-chevron-left"></i> 这个博客是怎么跑起来的：Hexo、双分支与 GitHub Actions 自动发布
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-campfire"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangz1x</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+</body>
+</html>
